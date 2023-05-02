@@ -1,5 +1,5 @@
 import 'package:care_bookie_app/view/pages/schedule/schedule_detail_accept.dart';
-import 'package:care_bookie_app/view/pages/schedule/schedule_detail_finish.dart';
+import 'package:care_bookie_app/view/pages/schedule/schedule_detail_cancel.dart';
 import 'package:care_bookie_app/view/pages/schedule/schedule_detail_pending.dart';
 import 'package:flutter/material.dart';
 import '../../../res/constants/colors.dart';
@@ -26,7 +26,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
             )),
         ...[1, 2, 3, 4, 5, 6].map((e) => Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
-              child: containerScheduleFinish(),
+              child: containerScheduleCancel(),
             ))
       ],
     );
@@ -105,7 +105,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
         ));
   }
 
-  Widget containerScheduleFinish() {
+  Widget containerScheduleCancel() {
     return Container(
         margin: const EdgeInsets.only(right: 15),
         height: 150,
@@ -132,12 +132,12 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const ScheduleDetailFinish()));
+                    builder: (context) => const ScheduleDetailCancel()));
           },
           child: Stack(
             children: [
               contentSchedule(),
-              tagStatusFinish(),
+              tagStatusCancel(),
             ],
           ),
         ));
@@ -179,7 +179,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
         ));
   }
 
-  Widget tagStatusFinish() {
+  Widget tagStatusCancel() {
     return Positioned(
         top: 110,
         left: 285,
@@ -191,7 +191,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
             borderRadius: BorderRadius.circular(30),
           ),
           child: const Text(
-            "Hoàn tất",
+            "Đã hủy",
             style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
           ),
         ));
@@ -293,7 +293,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                                 color: ColorConstant.Grey01,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Merriweather Sans')),
-                        const Text("See Details",
+                        const Text("Chi tiết",
                             style: TextStyle(
                                 fontSize: 13,
                                 letterSpacing: 0.1,

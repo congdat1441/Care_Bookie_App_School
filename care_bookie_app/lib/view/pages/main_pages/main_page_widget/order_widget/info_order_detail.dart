@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ThongTinDatLich extends StatefulWidget {
-  const ThongTinDatLich({Key? key}) : super(key: key);
+class InfoDetailBooking extends StatefulWidget {
+  const InfoDetailBooking({Key? key}) : super(key: key);
 
   @override
-  State<ThongTinDatLich> createState() => _ThongTinDatLichState();
+  State<InfoDetailBooking> createState() => _InfoDetailBookingState();
 }
 
-class _ThongTinDatLichState extends State<ThongTinDatLich> {
+class _InfoDetailBookingState extends State<InfoDetailBooking> {
   @override
   Widget build(BuildContext context) {
     return Padding(

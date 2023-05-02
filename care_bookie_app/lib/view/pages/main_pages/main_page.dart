@@ -9,7 +9,7 @@ import 'main_page_widget/AppbarCustom.dart';
 import 'clinic/clinic_widget/clinics_nearby.dart';
 import 'main_page_widget/doctor_widget/doctors.dart';
 import 'main_page_widget/favorite_infos.dart';
-import 'main_page_widget/search_button.dart';
+import '../search_page/search_button.dart';
 
 
 class MainPage extends StatefulWidget {

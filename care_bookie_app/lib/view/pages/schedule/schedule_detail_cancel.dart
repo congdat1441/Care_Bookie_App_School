@@ -1,73 +1,68 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import '../../../res/constants/colors.dart';
-import '../layouts_page/navbar_layout.dart';
-import 'main_page_widget/order_widget/info_order_detail.dart';
-import 'main_page_widget/order_widget/price_order.dart';
+import '../history_page/note_from_doctor.dart';
+import '../main_pages/main_page_widget/order_widget/describe_problem.dart';
+import '../main_pages/main_page_widget/order_widget/info_order_detail.dart';
+import '../main_pages/main_page_widget/order_widget/price_order.dart';
+import '../review_page/review_doctor_page/add_review_doctor.dart';
 
-class OrderSuccess extends StatefulWidget {
-  const OrderSuccess({Key? key}) : super(key: key);
+class ScheduleDetailCancel extends StatefulWidget {
+  const ScheduleDetailCancel({Key? key}) : super(key: key);
 
   @override
-  State<OrderSuccess> createState() => _OrderSuccessState();
+  State<ScheduleDetailCancel> createState() => _ScheduleDetailCancelState();
 }
 
-class _OrderSuccessState extends State<OrderSuccess> {
+class _ScheduleDetailCancelState extends State<ScheduleDetailCancel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstant.BackGroundColor,
+      appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(10),
+          ),
+        ),
+        backgroundColor: Colors.grey,
+        title: const Center(
+          child: Text(
+            "Thông tin đặt lịch",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 22,
+              //fontFamily: 'Poppins',
+            ),
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            IconlyBroken.arrowLeft,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        shadowColor: Colors.white,
+      ),
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            successfulOrderingLogo(),
-            infoOrderDetail(),
-            symptom(),
-            price()
-          ],
-        ),
-      ),
-      bottomNavigationBar: bottomNavigatorBar(),
-    );
-  }
-
-  Widget successfulOrderingLogo() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 100, 0, 10.0),
-      child: Center(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images/success.png',
-              scale: 1.5,
-            ),
-            const Text(
-              "Success!",
-              style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 40,
-                  fontWeight: FontWeight.w600,
-                  color: ColorConstant.BLue05),
-            ),
-            const Text(
-              "Lịch khám của bạn đã hoàn tất",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: ColorConstant.Grey00),
-            ),
-            const Text(
-              "Vui lòng đợi phòng khám xác nhận",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: ColorConstant.Grey00),
-            )
-          ],
-        ),
-      ),
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              infoOrderDetail(),
+              symptom(),
+              price(),
+              contentNoteCancel(),
+              const SizedBox(
+                height: 50,
+              )
+            ],
+          )),
     );
   }
 
@@ -295,10 +290,10 @@ class _OrderSuccessState extends State<OrderSuccess> {
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           width: double.maxFinite,
           decoration: BoxDecoration(
-            //color: Colors.white,
+              //color: Colors.white,
               borderRadius: BorderRadius.circular(25),
               border:
-              Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
+                  Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
           child: const Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -324,148 +319,146 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget price() {
-    return Container(
-      decoration: BoxDecoration(
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text("Dịch vụ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20,10,0,0),
-                child: Text("Khám lợi",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
-              ),
-              SizedBox(
-                width: 200,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("150,000đ",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.amber,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20,10,0,0),
-                child: Text("Trám răng",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
-              ),
-              SizedBox(
-                width: 200,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("150,000đ",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.amber,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0,20,0,0),
-                child: Text("Chi phí dự kiến",
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Text("Dịch vụ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+              child: Text("Khám lợi",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ),
+            SizedBox(
+              width: 200,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text("150,000đ",
+                    maxLines: 2,
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
+                        color: Colors.amber,
+                        fontSize: 17,
+                        overflow: TextOverflow.ellipsis)),
               ),
-              SizedBox(
-                width: 200,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("300,000đ",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.amber,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+              child: Text("Trám răng",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ),
+            SizedBox(
+              width: 200,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text("150,000đ",
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.amber,
+                        fontSize: 17,
+                        overflow: TextOverflow.ellipsis)),
               ),
-            ],
-          ),
-          const Divider(
-            height: 30,
-            color: Colors.grey,
-            thickness: 0.25,
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: Text("Chi phí dự kiến",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ),
+            SizedBox(
+              width: 200,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text("300,000đ",
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.amber,
+                        fontSize: 17,
+                        overflow: TextOverflow.ellipsis)),
+              ),
+            ),
+          ],
+        ),
+        const Divider(
+          height: 30,
+          color: Colors.grey,
+          thickness: 0.25,
+        ),
+      ],
     );
   }
 
-  Widget bottomNavigatorBar() {
+  Widget contentNoteCancel() {
     return Container(
-      height: 80,
-      color: Colors.white,
+      margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(width: 1.0, color: ColorConstant.Grey01)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              child: Container(
-                width: double.maxFinite,
-                height: 70,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const  NavbarLayout(index: 0)));
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                      ),
-                      child: Text(
-                        "Trang Chủ",
-                        style: TextStyle(
-                            fontSize: 21, fontWeight: FontWeight.w600),
-                      ),
-                    )),
-              )),
+          const Text("Đơn đặt lịch đã được hủy bỏ",
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                  overflow: TextOverflow.visible)),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text("Lý do hủy lịch",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ],
+          ), // Hospital name
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text("Không thích khám nữa thì hủy thôi",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ],
+          ), // address hospital
         ],
       ),
     );

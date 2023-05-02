@@ -2,6 +2,7 @@ import 'package:care_bookie_app/view/pages/main_pages/main_page_widget/order_wid
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import '../../../../res/constants/colors.dart';
+import '../../schedule/schedule_detail_cancel.dart';
 import '../main_page_widget/order_widget/select_day_order.dart';
 import '../order_sumary.dart';
 
@@ -18,6 +19,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   bool _isExpanded = false;
   int _selectedTime = -1;
   bool isSelectedServices = false;
+  bool _isChecked = false;
 
   late ScrollController _scrollController;
   final TextEditingController _controllerTextWord = TextEditingController();
@@ -70,13 +72,14 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
       body: CustomScrollView(
         controller: _scrollController,
         slivers: <Widget>[
-          sliverappbar(),
+          sliverAppbar(),
+          bookingForOtherPerson(),
           selectDoctorTitle(),
           selectDoctor(),
           selectServices(),
           selectDay(),
           selectTime(),
-          symtom(),
+          symptom(),
           shareHistory(),
           //const ShareHistory()
         ],
@@ -85,7 +88,122 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
     );
   }
 
-  Widget sliverappbar() {
+  Widget bookingForOtherPerson() {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 5, 10, 10),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: ExpansionTile(
+            title: Column(
+              children: [
+                RichText(
+                  text: TextSpan(children: [
+                    WidgetSpan(
+                        child: Row(
+                          children: [
+                            Column(children: const [
+                              Text(
+                                'Đặt lịch cho người thân',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20.0,
+                                    color: Colors.black),
+                              ),
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Thêm thông tin người thân của bạn',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15.0,
+                                        color: ColorConstant.BLueText),
+                                  ))
+                            ]),
+                          ],
+                        )),
+                  ]),
+                ),
+              ],
+            ),
+            onExpansionChanged: (isExpanded) {
+              setState(() {
+                _isExpanded = isExpanded;
+              });
+            },
+            initiallyExpanded: _isExpanded,
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    width: 350,
+                    //height: 40,
+                    child: TextFormField(
+                        // textAlign: TextAlign.left,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                            Radius.circular(0),
+                          )),
+                          label: Text("Họ tên",
+                              style: TextStyle(color: Colors.black)),
+                          hintText: "Vui lòng nhập họ tên người bệnh",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 94, 92, 88),
+                          ),
+                        )),
+                  ),
+                  SizedBox(
+                    width: 350,
+                    //height: 40,
+                    child: TextFormField(
+                        // textAlign: TextAlign.left,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                            Radius.circular(0),
+                          )),
+                          label: Text("Tuổi",
+                              style: TextStyle(color: Colors.black)),
+                          hintText: "Vui lòng nhập tuổi người bệnh",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 94, 92, 88),
+                          ),
+                        )),
+                  ),
+                  SizedBox(
+                    width: 350,
+                    //height: 40,
+                    child: TextFormField(
+                        // textAlign: TextAlign.left,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                            Radius.circular(0),
+                          )),
+                          label: Text("Giới tính ",
+                              style: TextStyle(color: Colors.black)),
+                          hintText: "Vui lòng nhập giới tính người bệnh",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 94, 92, 88),
+                          ),
+                        )),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget sliverAppbar() {
     return SliverAppBar(
       title: Text(
         'The CIS Free Clinic',
@@ -150,7 +268,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   Widget selectDoctorTitle() {
     return SliverToBoxAdapter(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 10, 20, 0),
+        margin: const EdgeInsets.fromLTRB(15, 10, 20, 0),
         child: const Text(
           'Lựa chọn bác sỹ',
           style: TextStyle(
@@ -220,76 +338,75 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 8,
                 padding: const EdgeInsets.all(10),
-
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                childAspectRatio: (1/0.4),
+                childAspectRatio: (1 / 0.4),
                 children: List.generate(
                     5,
-                        (index) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      height: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: ColorConstant.BLue05),
-                        borderRadius: BorderRadius.circular(25),
-                        color: isSelectedServices
-                            ? Colors.blue
-                            : Colors.white, // Chuyển đổi màu nền
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            isSelectedServices =
-                            !isSelectedServices; // Chuyển đổi trạng thái
-                          });
-                        },
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "#Chăm sóc răng miệng",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: isSelectedServices
-                                      ? Colors.white
-                                      : ColorConstant.BLue05,
-                                  // Chuyển đổi màu chữ
-                                  height: 0.9,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Merriweather Sans',
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Align(
-                                alignment: Alignment.topRight,
-                                child: Text(
-                                  "150,000đ",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                    height: 0.9,
-                                    fontSize: 15,
-                                    color: Colors.amber,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Merriweather Sans',
-                                  ),
-                                ),
-                              ),
-                            ],
+                    (index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          height: 100,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: ColorConstant.BLue05),
+                            borderRadius: BorderRadius.circular(25),
+                            color: isSelectedServices
+                                ? Colors.blue
+                                : Colors.white, // Chuyển đổi màu nền
                           ),
-                        ),
-                      ),
-                    ))),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                isSelectedServices =
+                                    !isSelectedServices; // Chuyển đổi trạng thái
+                              });
+                            },
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "#Chăm sóc răng miệng",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: isSelectedServices
+                                          ? Colors.white
+                                          : ColorConstant.BLue05,
+                                      // Chuyển đổi màu chữ
+                                      height: 0.9,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Merriweather Sans',
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  const Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(
+                                      "150,000đ",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        height: 0.9,
+                                        fontSize: 15,
+                                        color: Colors.amber,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Merriweather Sans',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ))),
           ],
         ),
       ),
@@ -398,7 +515,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
     );
   }
 
-  Widget symtom() {
+  Widget symptom() {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 5, 10, 10),
@@ -448,7 +565,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   Widget shareHistory() {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 5, 10, 10),
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
@@ -469,22 +586,114 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
             initiallyExpanded: _isExpanded,
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 10, right: 0),
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
-                    border: Border.all(width: 0.5, color: Colors.grey)),
-                child: TextFormField(
-                  controller: _controllerTextWord,
-                  maxLines: 10,
-                  maxLength: 350,
-                  decoration: const InputDecoration(
-                    hintText: 'Triệu chứng của bạn',
+                  margin: const EdgeInsets.only(right: 0, top: 20, bottom: 10),
+                  height: 110,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(27),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 0,
+                          blurRadius: 7,
+                          offset: const Offset(0, 10))
+                    ],
                   ),
-                ),
-              ),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ScheduleDetailCancel()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Center(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Image.network(
+                                    'https://www.stanleywellnesscentre.com/images/blogs/142/FREE_CLINIC_thumbnail_ok.png',
+                                    fit: BoxFit.cover,
+                                    scale: 4),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+                                child: Column(
+                                  children: const [
+                                    SizedBox(
+                                        width: 190,
+                                        child: Text("Supporting the CIS",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color(0xff1c335b),
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily:
+                                                    'Merriweather Sans '))),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: SizedBox(
+                                          width: 190,
+                                          child: Text(
+                                              "Restore Medical Clinic CIS",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  height: 1,
+                                                  fontSize: 15,
+                                                  color: ColorConstant.Grey01,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily:
+                                                      'Merriweather Sans'))),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: SizedBox(
+                                          width: 190,
+                                          child: Text(
+                                              "19 Tháng 4 2023 lúc 11:00AM",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: ColorConstant.Grey01,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily:
+                                                      'Merriweather Sans '))),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Checkbox(
+                          value: _isChecked,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              _isChecked = newValue!;
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  ))
             ],
           ),
         ),

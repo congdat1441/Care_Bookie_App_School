@@ -34,10 +34,10 @@ class _DetailDoctorState extends State<DetailDoctor>
       body: CustomScrollView(
         slivers: <Widget>[
           sliverAppBar(),
-          thongTinCoBan(),
-          thongTinBacSy(),
-          chungNhan(),
-          datLichKham(context)
+          basicInfoDoctor(),
+          detailInfoDoctor(),
+          certification(),
+          bookingApointment(context)
         ],
       ),
     );
@@ -201,12 +201,12 @@ class _DetailDoctorState extends State<DetailDoctor>
     );
   }
 
-  Widget thongTinCoBan() {
+  Widget basicInfoDoctor() {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
         child: Container(
-          height: 130,
+          height: 180,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.only(
@@ -249,7 +249,32 @@ class _DetailDoctorState extends State<DetailDoctor>
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ),
+                  ), //hospital of doctor
+                  Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(5, 10, 0, 0.0),
+                        child: Icon(
+                          FontAwesomeIcons.userDoctor,
+                          size: 20,
+                          color: Colors.amber,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                        child: const Text("Chuyên khoa răng hàm mặt",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                height: 1.9,
+                                fontSize: 16,
+                                color: ColorConstant.Grey01,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Merriweather Sans')),
+                      ),
+                    ],
+                  ), // Speciality of doctor
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -291,7 +316,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Merriweather Sans')))
                     ],
-                  ),
+                  ), // star doctor
                   Row(
                     children: [
                       const Padding(
@@ -316,7 +341,32 @@ class _DetailDoctorState extends State<DetailDoctor>
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ),
+                  ), //experience doctor
+                  Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(5, 10, 0, 0.0),
+                        child: Icon(
+                          FontAwesomeIcons.phone,
+                          size: 20,
+                          color: Colors.amber,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                        child: const Text("0363755320",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                height: 1.9,
+                                fontSize: 16,
+                                color: ColorConstant.Grey01,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Merriweather Sans')),
+                      ),
+                    ],
+                  ), // number phone doctor
                 ],
               ),
             ),
@@ -326,7 +376,7 @@ class _DetailDoctorState extends State<DetailDoctor>
     );
   }
 
-  Widget thongTinBacSy() {
+  Widget detailInfoDoctor() {
     const String longText =
         'sit amet saidunt ante. Nullam fringilla, justo nec ultrices euismod, velit ipsum congue arcu, vel gravida eros mauris sit amet lorem. Mauris tincidunt justo sed nunc pretium fermentum. Vivamus vel aliquam enim. Vivamus tincidunt nunc eu orci venenatis, ut bibendum lorem bibendum. Sed feugiat tincidunt ipsum non feugiat. Suspendisse nec bibendum arcu Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque est eu mauris venenatis volutpat. In hac habitasse platea dictumst. Nulla feugiat lectus velit, nec dapibus purus lobortis et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eu eros ut orci commodo consequat a quis neque. Sed non justo non quam ultrices tempus sit amet non nulla. Nam vel arcu Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget convallis tortor. Suspendisse potenti. Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque tellus maximus bibendum .';
     return SliverToBoxAdapter(
@@ -381,7 +431,7 @@ class _DetailDoctorState extends State<DetailDoctor>
     );
   }
 
-  Widget chungNhan() {
+  Widget certification() {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -472,7 +522,7 @@ class _DetailDoctorState extends State<DetailDoctor>
     );
   }
 
-  Widget datLichKham(BuildContext context) {
+  Widget bookingApointment(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),

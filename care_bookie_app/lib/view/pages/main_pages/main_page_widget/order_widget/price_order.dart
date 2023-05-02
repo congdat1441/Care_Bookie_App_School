@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ChiPhiDuKien extends StatefulWidget {
-  const ChiPhiDuKien({Key? key}) : super(key: key);
+class Price extends StatefulWidget {
+  const Price({Key? key}) : super(key: key);
 
   @override
-  State<ChiPhiDuKien> createState() => _ChiPhiDuKienState();
+  State<Price> createState() => _PriceState();
 }
 
-class _ChiPhiDuKienState extends State<ChiPhiDuKien> {
+class _PriceState extends State<Price> {
   @override
   Widget build(BuildContext context) {
     return Row(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
-import '../../../../res/constants/colors.dart';
-import '../../search_page/search_screen.dart';
+import '../../../res/constants/colors.dart';
+import 'search_screen.dart';
 
 class SearchButton extends StatefulWidget {
   const SearchButton({Key? key}) : super(key: key);

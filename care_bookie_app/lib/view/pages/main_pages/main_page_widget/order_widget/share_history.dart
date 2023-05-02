@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../res/constants/colors.dart';
-import '../../../schedule/schedule_detail_finish.dart';
+import '../../../schedule/schedule_detail_cancel.dart';
 
 class ShareHistory extends StatefulWidget {
   const ShareHistory({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _ShareHistoryState extends State<ShareHistory> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const ScheduleDetailFinish()));
+                    builder: (context) => const ScheduleDetailCancel()));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

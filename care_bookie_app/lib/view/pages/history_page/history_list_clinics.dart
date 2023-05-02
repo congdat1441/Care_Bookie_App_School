@@ -1,7 +1,8 @@
+import 'package:care_bookie_app/view/pages/history_page/history_detail_invoice.dart';
 import 'package:flutter/material.dart';
 
 import '../../../res/constants/colors.dart';
-import '../schedule/schedule_detail_finish.dart';
+import '../schedule/schedule_detail_cancel.dart';
 class HistorylistClinics extends StatefulWidget {
   const HistorylistClinics({Key? key}) : super(key: key);
 
@@ -49,7 +50,7 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const ScheduleDetailFinish()));
+                    builder: (context) => const HistoryDetailInvoice()));
           },
           child: Stack(
             children: [
@@ -174,7 +175,7 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
                                 color: ColorConstant.Grey01,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Merriweather Sans')),
-                        const Text("See Details",
+                        const Text("Chi tiết",
                             style: TextStyle(
                                 fontSize: 13,
                                 letterSpacing: 0.1,

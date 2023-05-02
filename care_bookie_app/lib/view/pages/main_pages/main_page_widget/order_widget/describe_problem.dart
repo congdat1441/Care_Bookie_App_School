@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MoTaTrieuChung extends StatefulWidget {
-  const MoTaTrieuChung({Key? key}) : super(key: key);
+class Symptom extends StatefulWidget {
+  const Symptom({Key? key}) : super(key: key);
 
   @override
-  State<MoTaTrieuChung> createState() => _MoTaTrieuChungState();
+  State<Symptom> createState() => _SymptomState();
 }
 
-class _MoTaTrieuChungState extends State<MoTaTrieuChung> {
+class _SymptomState extends State<Symptom> {
   @override
   Widget build(BuildContext context) {
     return Column(
