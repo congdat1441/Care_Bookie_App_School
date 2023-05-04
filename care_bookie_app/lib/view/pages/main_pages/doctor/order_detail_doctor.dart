@@ -16,11 +16,12 @@ class OrderDetailDoctor extends StatefulWidget {
 
 class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
   bool _isAppBarCollapsed = false;
-  int _selectedIndex = -1;
   bool _isExpanded = false;
-  int _selectedTime = -1;
   bool isSelectedServices = false;
   bool _isChecked = false;
+  int _selectedTime = -1;
+  int _selectedService = -1;
+  String? _gender;
 
   late ScrollController _scrollController;
   final TextEditingController _controllerTextWord = TextEditingController();
@@ -42,6 +43,22 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
     'Option 2',
     'Option 3',
     'Option 4',
+  ];
+
+  final List<String> _serviceList = [
+    "#Chăm sóc răng miệng",
+    "#Nhổ răng khôn",
+    "#Lấy cao răng",
+    "#Trám răng",
+    "#Bọc răng sứ",
+  ];
+
+  final List<String> _servicePriceList = [
+    "150,000đ",
+    "150,000đ",
+    "150,000đ",
+    "150,000đ",
+    "150,000đ",
   ];
 
   @override
@@ -266,13 +283,13 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                       Row(
                         children: [
                           ...[1].map((e) => Container(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: const Icon(
-                              IconlyBold.star,
-                              size: 25,
-                              color: Colors.amber,
-                            ),
-                          )),
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: const Icon(
+                                  IconlyBold.star,
+                                  size: 25,
+                                  color: Colors.amber,
+                                ),
+                              )),
                           const SizedBox(
                             width: 10,
                           ),
@@ -291,7 +308,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const ReviewDoctor()));
+                                        const ReviewDoctor()));
                           },
                           child: const Text("xem đánh giá",
                               style: TextStyle(
@@ -376,28 +393,28 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                   text: TextSpan(children: [
                     WidgetSpan(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(children: const [
-                              Text(
-                                'Đặt lịch cho người thân',
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(children: const [
+                          Text(
+                            'Đặt lịch cho người thân',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20.0,
+                                color: Colors.black),
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Thêm thông tin người thân của bạn',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 20.0,
-                                    color: Colors.black),
-                              ),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Thêm thông tin người thân của bạn',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15.0,
-                                        color: ColorConstant.BLueText),
-                                  ))
-                            ]),
-                          ],
-                        )),
+                                    fontSize: 15.0,
+                                    color: ColorConstant.BLueText),
+                              ))
+                        ]),
+                      ],
+                    )),
                   ]),
                 ),
               ],
@@ -415,13 +432,13 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                     width: 350,
                     //height: 40,
                     child: TextFormField(
-                      // textAlign: TextAlign.left,
+                        // textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.black),
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(0),
-                              )),
+                            Radius.circular(0),
+                          )),
                           label: Text("Họ tên",
                               style: TextStyle(color: Colors.black)),
                           hintText: "Vui lòng nhập họ tên người bệnh",
@@ -434,13 +451,13 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                     width: 350,
                     //height: 40,
                     child: TextFormField(
-                      // textAlign: TextAlign.left,
+                        // textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.black),
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(0),
-                              )),
+                            Radius.circular(0),
+                          )),
                           label: Text("Tuổi",
                               style: TextStyle(color: Colors.black)),
                           hintText: "Vui lòng nhập tuổi người bệnh",
@@ -451,22 +468,34 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                   ),
                   SizedBox(
                     width: 350,
-                    //height: 40,
-                    child: TextFormField(
-                      // textAlign: TextAlign.left,
-                        style: const TextStyle(color: Colors.black),
-                        decoration: const InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(0),
-                              )),
-                          label: Text("Giới tính ",
-                              style: TextStyle(color: Colors.black)),
-                          hintText: "Vui lòng nhập giới tính người bệnh",
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 94, 92, 88),
-                          ),
-                        )),
+                    child: DropdownButtonFormField<String>(
+                      value: _gender,
+                      decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(0)),
+                        ),
+                        labelText: "Giới tính",
+                        hintText: "Vui lòng chọn giới tính",
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 94, 92, 88),
+                        ),
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                          value: "male",
+                          child: Text("Nam"),
+                        ),
+                        DropdownMenuItem(
+                          value: "female",
+                          child: Text("Nữ"),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _gender = value;
+                        });
+                      },
+                    ),
                   ),
                 ],
               )
@@ -504,71 +533,72 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                 physics: const NeverScrollableScrollPhysics(),
                 childAspectRatio: (1 / 0.4),
                 children: List.generate(
-                    5,
-                        (index) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      height: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: ColorConstant.BLue05),
-                        borderRadius: BorderRadius.circular(25),
-                        color: isSelectedServices
-                            ? Colors.blue
-                            : Colors.white, // Chuyển đổi màu nền
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            isSelectedServices =
-                            !isSelectedServices; // Chuyển đổi trạng thái
-                          });
-                        },
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "#Chăm sóc răng miệng",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: isSelectedServices
-                                      ? Colors.white
-                                      : ColorConstant.BLue05,
-                                  // Chuyển đổi màu chữ
-                                  height: 0.9,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Merriweather Sans',
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Align(
-                                alignment: Alignment.topRight,
-                                child: Text(
-                                  "150,000đ",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                    height: 0.9,
-                                    fontSize: 15,
-                                    color: Colors.amber,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Merriweather Sans',
+                    _serviceList.length,
+                    (index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedService = index;
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 100,
+                            decoration: BoxDecoration(
+                                color: _selectedService == index
+                                    ? ColorConstant.BLue02
+                                    : const Color(0x0fffffff),
+                                borderRadius: BorderRadius.circular(20.0),
+                                border: Border.all(
+                                    width: 1.0, color: ColorConstant.BLue02)),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      _serviceList[index],
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        color: _selectedService == index
+                                            ? Colors.white
+                                            : ColorConstant.BLue05,
+                                        height: 1,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Merriweather Sans',
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(
+                                      _servicePriceList[index],
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        height: 1,
+                                        fontSize: 15,
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Merriweather Sans',
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ))),
+                        ))),
           ],
         ),
       ),
@@ -578,18 +608,16 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
   Widget selectDay() {
     return SliverToBoxAdapter(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-          child: Container(
-            width: double.maxFinite,
-            height: 220,
-            decoration: const BoxDecoration(
-              // color: Colors.amber
+      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+      child: Container(
+        width: double.maxFinite,
+        height: 220,
+        decoration: const BoxDecoration(
+            // color: Colors.amber
             ),
-            child: const SelectDay(
-              title: 'SelectDayForU',
-            ),
-          ),
-        ));
+        child: const SelectDay(),
+      ),
+    ));
   }
 
   Widget selectTime() {
@@ -620,7 +648,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                 childAspectRatio: (1 / .4),
                 children: List.generate(
                   _timeList.length,
-                      (index) {
+                  (index) {
                     return GestureDetector(
                       onTap: () {
                         setState(() {
@@ -774,7 +802,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                              const ScheduleDetailCancel()));
+                                  const ScheduleDetailCancel()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -804,7 +832,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                                 color: Color(0xff1c335b),
                                                 fontWeight: FontWeight.w600,
                                                 fontFamily:
-                                                'Merriweather Sans '))),
+                                                    'Merriweather Sans '))),
                                     SizedBox(
                                       height: 3,
                                     ),
@@ -822,7 +850,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                                   color: ColorConstant.Grey01,
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                  'Merriweather Sans'))),
+                                                      'Merriweather Sans'))),
                                     ),
                                     Expanded(
                                       flex: 1,
@@ -837,7 +865,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                                   color: ColorConstant.Grey01,
                                                   fontWeight: FontWeight.w600,
                                                   fontFamily:
-                                                  'Merriweather Sans '))),
+                                                      'Merriweather Sans '))),
                                     )
                                   ],
                                 ),

@@ -5,9 +5,8 @@ import '../../../../../res/constants/colors.dart';
 import '../../../../../utils/colors_util.dart';
 
 class SelectDay extends StatefulWidget {
-  final String title;
 
-  const SelectDay({Key? key, required this.title}) : super(key: key);
+  const SelectDay({Key? key}) : super(key: key);
 
   @override
   _SelectDayState createState() => _SelectDayState();
