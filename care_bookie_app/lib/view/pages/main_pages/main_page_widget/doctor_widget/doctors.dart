@@ -1,5 +1,8 @@
+import 'package:care_bookie_app/providers/doctor_detail_page_provider.dart';
+import 'package:care_bookie_app/providers/home_page_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../res/constants/colors.dart';
 import '../../doctor/detail_doctor.dart';
@@ -16,123 +19,119 @@ class Doctors extends StatefulWidget {
 class _DoctorsState extends State<Doctors> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0.0),
-      child: SizedBox(
-        height: 225,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            const SizedBox(
-              width: 35,
-            ),
-            ...[1].map((e) => Container(
-              margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              alignment: Alignment.topCenter,
-              child: Container(
-                margin: const EdgeInsets.only(right: 15),
-                height: 200,
-                width: 155,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(27),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.15),
-                        spreadRadius: 0,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3))
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(top: 7),
-                          height: 135,
-                          width: 140,
+    return Consumer<HomePageProvider>(
+      builder: (context, homePageProvider, child) => Padding(
+        padding: const EdgeInsets.only(top: 0.0),
+        child: SizedBox(
+          height: 225,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: homePageProvider.doctors.length,
+            itemBuilder: (context, index) => Container(
+              margin: const EdgeInsets.only(right: 15),
+              height: 200,
+              width: 155,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(27),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.15),
+                      spreadRadius: 0,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3))
+                ],
+              ),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 7),
+                        height: 135,
+                        width: 140,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 15,
+                                offset: const Offset(0, 20))
+                          ],
+                        ),
+                        child: Ink(
                           decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 15,
-                                  offset: const Offset(0, 20))
-                            ],
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailDoctor()));
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.asset(
-                                  'assets/images/doctor03.jpg',
-                                  fit: BoxFit.fitWidth,
+                          child: InkWell(
+                            onTap: () async{
 
-                                  //scale: 30,
-                                ),
+                              final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
+                              doctorDetailPageProvider.setDoctorDetail(homePageProvider.doctors[index]);
+
+                              await doctorDetailPageProvider.getHospitalById(homePageProvider.doctors[index].hospitalId);
+
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const DetailDoctor()));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                homePageProvider.doctors[index].image,
+                                fit: BoxFit.fill,
+                                width: 100,
+                                height: 100,
+                                //scale: 30,
                               ),
                             ),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(105, 10, 0, 0),
-                          height: 28,
-                          width: 28,
-                          child: FloatingActionButton(
-                              heroTag: 'tagtag 03',
-                              backgroundColor: Colors.white,
-                              child: const Icon(
-                                IconlyBroken.heart,
-                                color: Color(0xffee5353),
-                                size: 20,
-                              ),
-                              onPressed: () {}),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                              width: 130,
-                              height: 20,
-                              //color: Colors.grey,
-                              child: Text("Dr. Nguyễn Văn A aaaaaaaaaaa",
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            width: 130,
+                            height: 20,
+                            //color: Colors.grey,
+                            child: Text(
+                                "Dr. ${homePageProvider.doctors[index].firstName} ${homePageProvider.doctors[index].lastName}",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    //overflow: TextOverflow.ellipsis,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Merriweather Sans'))),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(homePageProvider.doctors[index].speciality,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      //overflow: TextOverflow.ellipsis,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Merriweather Sans'))),
-                          Row(
-                            children: const [
-                              Text("Răng hàm mặt",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       //overflow: TextOverflow.ellipsis,
                                       color: ColorConstant.Grey01,
                                       fontWeight: FontWeight.w400,
                                       fontFamily: 'Merriweather Sans')),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-            )),
-          ],
+            ),
+          ),
         ),
       ),
     );

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../../../providers/doctor_detail_page_provider.dart';
+import '../../../../providers/hospital_detail_page_provider.dart';
 import '../../review_page/review_clinic_page/review_clinic.dart';
+import '../doctor/detail_doctor.dart';
 import '../main_page_widget/doctor_widget/doctors.dart';
 import 'order_detail_clinic.dart';
 
@@ -21,11 +26,32 @@ class _DetailClinicState extends State<DetailClinic>
   bool isExpanded = false;
   late TabController _tabController;
 
+  List<num> removeDuplicates(List<num> numbers) {
+    Set<num> numberSet = Set<num>.from(numbers);
+    List<num> uniqueNumbers = numberSet.toList();
+    return uniqueNumbers;
+  }
+
+  List<num> numbers = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
+    numbers = [];
+
+    for (var element in hospitalDetailPageProvider.hospitalDetail!.workingDayDetails) {
+      if(element.date.isNotEmpty) {
+        numbers.add(num.parse(element.date));
+      }
+    }
+
+    numbers = removeDuplicates(numbers);
+
+    _tabController = TabController(length: numbers.length, vsync: this);
   }
 
   @override
@@ -47,12 +73,15 @@ class _DetailClinicState extends State<DetailClinic>
   }
 
   Widget sliverAppBar() {
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
     return SliverAppBar(
-      title: const Padding(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      title: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Text(
-          "The CIS Free Clinic",
-          style: TextStyle(
+          hospitalDetailPageProvider.hospitalDetail!.hospitalName,
+          style: const TextStyle(
               overflow: TextOverflow.ellipsis,
               //letterSpacing: 2,
               fontSize: 20,
@@ -98,8 +127,8 @@ class _DetailClinicState extends State<DetailClinic>
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(34),
                   bottomRight: Radius.circular(34)),
-              child: Image.asset(
-                "assets/images/cisdemo.png",
+              child: Image.network(
+                hospitalDetailPageProvider.hospitalDetail!.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -134,29 +163,29 @@ class _DetailClinicState extends State<DetailClinic>
               padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   SizedBox(
                     width: 210,
                     child: Text(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      "The CIS Fre Clinic",
+                      hospitalDetailPageProvider.hospitalDetail!.hospitalName,
                       style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 21),
+                          const TextStyle(fontWeight: FontWeight.w500, fontSize: 21),
                     ),
                   ),
-                  SizedBox(
-                    width: 100,
-                    //height: 100,
-                    child: Text("150,000 - 500,000đ",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            height: 1.2,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xfffcb13d),
-                            fontSize: 18)),
+                  Expanded(
+                    child: SizedBox(
+                      child: Text("${hospitalDetailPageProvider.hospitalDetail!.priceFrom}00đ - ${hospitalDetailPageProvider.hospitalDetail!.priceTo}00đ",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              height: 1.2,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xfffcb13d),
+                              fontSize: 18)),
+                    ),
                   )
                 ],
               ),
@@ -166,11 +195,14 @@ class _DetailClinicState extends State<DetailClinic>
   }
 
   Widget addressAndReview() {
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
         child: Container(
-          height: 180,
+          height: 200,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.only(
@@ -194,10 +226,10 @@ class _DetailClinicState extends State<DetailClinic>
                     Container(
                       width: 215,
                       padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
-                      child: const Text("124, Nguyễn Thái Học, Huế",
+                      child: Text(hospitalDetailPageProvider.hospitalDetail!.address,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               overflow: TextOverflow.ellipsis,
                               height: 1,
                               fontSize: 16,
@@ -207,7 +239,7 @@ class _DetailClinicState extends State<DetailClinic>
                     ),
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
-                      child: const Text("lH: 0805179559",
+                      child: const Text("LH: 0805179559",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -227,16 +259,21 @@ class _DetailClinicState extends State<DetailClinic>
                     children: [
                       Row(
                         children: [
-                          ...[1, 2, 3, 4, 5].map((e) => const Icon(
-                                IconlyBold.star,
-                                size: 25,
-                                color: Colors.amber,
-                              )),
+                          RatingBarIndicator(
+                            rating: hospitalDetailPageProvider.hospitalDetail!.star.toDouble(),
+                            itemBuilder: (context, index) => const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                            direction: Axis.horizontal,
+                          ),
                           const SizedBox(
                             width: 5,
                           ),
-                          const Text("4.5",
-                              style: TextStyle(
+                          Text("${hospitalDetailPageProvider.hospitalDetail!.star}",
+                              style: const TextStyle(
                                   height: 1.5,
                                   fontSize: 20,
                                   color: Colors.black87,
@@ -284,7 +321,7 @@ class _DetailClinicState extends State<DetailClinic>
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      ...[1, 2, 3, 4, 5, 6, 7].map((e) => Container(
+                      ...hospitalDetailPageProvider.hospitalDetail!.services.map((e) => Container(
                             margin: const EdgeInsets.symmetric(horizontal: 5),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             height: 50,
@@ -297,11 +334,11 @@ class _DetailClinicState extends State<DetailClinic>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children: const [
-                                  Text("#Chăm sóc răng miệng",
+                                children: [
+                                  Text("#${e.serviceName}",
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           overflow: TextOverflow.ellipsis,
                                           color: ColorConstant.BLue05,
                                           height: 0.9,
@@ -309,15 +346,15 @@ class _DetailClinicState extends State<DetailClinic>
                                           //color: ColorConstant.Grey01,
                                           fontWeight: FontWeight.w500,
                                           fontFamily: 'Merriweather Sans')),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Align(
                                     alignment: Alignment.topRight,
-                                    child: Text("150,000đ",
+                                    child: Text("${e.price},000đ",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             overflow: TextOverflow.ellipsis,
                                             height: 0.9,
                                             fontSize: 15,
@@ -341,14 +378,133 @@ class _DetailClinicState extends State<DetailClinic>
   }
 
   Widget doctorClinic() {
-    return const SliverToBoxAdapter(
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
+    return SliverToBoxAdapter(
         child: Padding(
-      padding: EdgeInsets.fromLTRB(0, 10, 5, 0),
-      child: Doctors(),
+      padding: const EdgeInsets.fromLTRB(0, 10, 5, 0),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 0.0),
+        child: SizedBox(
+          height: 225,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: hospitalDetailPageProvider.doctors.length,
+            itemBuilder: (context, index) => Container(
+              margin: const EdgeInsets.only(right: 15),
+              height: 200,
+              width: 155,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(27),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.15),
+                      spreadRadius: 0,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3))
+                ],
+              ),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 7),
+                        height: 135,
+                        width: 140,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 15,
+                                offset: const Offset(0, 20))
+                          ],
+                        ),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: InkWell(
+                            onTap: () async{
+
+                              final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
+                              doctorDetailPageProvider.setDoctorDetail(hospitalDetailPageProvider.doctors[index]);
+
+                              await doctorDetailPageProvider.getHospitalById(hospitalDetailPageProvider.doctors[index].hospitalId);
+
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const DetailDoctor()));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                hospitalDetailPageProvider.doctors[index].image,
+                                fit: BoxFit.fill,
+                                width: 100,
+                                height: 100,
+                                //scale: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            width: 130,
+                            height: 20,
+                            //color: Colors.grey,
+                            child: Text(
+                                "Dr. ${hospitalDetailPageProvider.doctors[index].firstName} ${hospitalDetailPageProvider.doctors[index].lastName}",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    //overflow: TextOverflow.ellipsis,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Merriweather Sans'))),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(hospitalDetailPageProvider.doctors[index].speciality,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      //overflow: TextOverflow.ellipsis,
+                                      color: ColorConstant.Grey01,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Merriweather Sans')),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     ));
   }
 
   Widget timeWorking() {
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -379,49 +535,25 @@ class _DetailClinicState extends State<DetailClinic>
                 height: 60,
                 child: TabBar(
                   controller: _tabController,
-                  tabs: const [
-                    Tab(
-                      child: Text(
-                        "T2",
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "T3",
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "T4",
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "T5",
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "T6",
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "T7",
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "CN",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
+                  tabs: [
+
+                    ...numbers.map((e) {
+                      if(e != 8) {
+                        return Tab(
+                          child: Text(
+                            "T$e",
+                            style: const TextStyle(fontSize: 19),
+                          ),
+                        );
+                      } else {
+                        return const Tab(
+                            child: Text(
+                            "CN",
+                            style: TextStyle(fontSize: 16),
+                          )
+                        );
+                      }
+                    })
                   ],
                   indicatorWeight: 2,
                   //indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -431,134 +563,110 @@ class _DetailClinicState extends State<DetailClinic>
               ),
               Expanded(
                 child: TabBarView(controller: _tabController, children: [
-                  ...[1, 2, 3, 4, 5, 6, 7].map((e) => Padding(
+                  ...numbers.map((e) => Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              height: 60,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                color: ColorConstant.BLue01,
-                                border: Border.all(color: ColorConstant.BLue05),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: const [
-                                    Text("Sáng",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Colors.white,
-                                            height: 1,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Merriweather Sans')),
-                                    Text("8:00 - 12:00",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Colors.white,
-                                            height: 1,
-                                            letterSpacing: 0.05,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Merriweather Sans')),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              height: 60,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                color: ColorConstant.BLue02,
-                                border: Border.all(color: ColorConstant.BLue05),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: const [
-                                    Text("Chiều ",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Colors.white,
-                                            height: 1,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Merriweather Sans')),
-                                    Text("13:00 - 17:00",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Colors.white,
-                                            height: 1,
-                                            letterSpacing: 0.05,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Merriweather Sans'))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              height: 60,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                color: ColorConstant.BLue03,
-                                border: Border.all(color: ColorConstant.BLue05),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: const [
-                                  Text("Tối ",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          overflow: TextOverflow.ellipsis,
-                                          color: Colors.white,
-                                          height: 1,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Merriweather Sans')),
-                                  Text("18:00 - 21:00",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          overflow: TextOverflow.ellipsis,
-                                          color: Colors.white,
-                                          height: 1,
-                                          letterSpacing: 0.05,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Merriweather Sans'))
-                                ],
-                              ),
-                            ),
+
+                            ...hospitalDetailPageProvider.hospitalDetail!.workingDayDetails.map((day) {
+
+                              if(day.date.isNotEmpty) {
+                                if(e == num.parse(day.date)) {
+                                  if(day.session == "MORNING") {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                                      padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                      height: 60,
+                                      width: 110,
+                                      decoration: BoxDecoration(
+                                        color: ColorConstant.BLue01,
+                                        border: Border.all(color: ColorConstant.BLue05),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            const Text("Sáng",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    overflow: TextOverflow.ellipsis,
+                                                    color: Colors.white,
+                                                    height: 1,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'Merriweather Sans')),
+                                            Text("${day.startHour} - ${day.endHour}",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    overflow: TextOverflow.ellipsis,
+                                                    color: Colors.white,
+                                                    height: 1,
+                                                    letterSpacing: 0.05,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'Merriweather Sans')),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  else {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                                      padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                      height: 60,
+                                      width: 110,
+                                      decoration: BoxDecoration(
+                                        color: ColorConstant.BLue02,
+                                        border: Border.all(color: ColorConstant.BLue05),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                          children:[
+                                            const Text("Chiều ",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    overflow: TextOverflow.ellipsis,
+                                                    color: Colors.white,
+                                                    height: 1,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'Merriweather Sans')),
+                                            Text("${day.startHour} - ${day.endHour}",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    overflow: TextOverflow.ellipsis,
+                                                    color: Colors.white,
+                                                    height: 1,
+                                                    letterSpacing: 0.05,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'Merriweather Sans'))
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                              }
+
+                              return Container();
+
+                            })
                           ],
                         ),
                       )),
@@ -572,8 +680,9 @@ class _DetailClinicState extends State<DetailClinic>
   }
 
   Widget infoClinic() {
-    const String longText =
-        'sit amet saidunt ante. Nullam fringilla, justo nec ultrices euismod, velit ipsum congue arcu, vel gravida eros mauris sit amet lorem. Mauris tincidunt justo sed nunc pretium fermentum. Vivamus vel aliquam enim. Vivamus tincidunt nunc eu orci venenatis, ut bibendum lorem bibendum. Sed feugiat tincidunt ipsum non feugiat. Suspendisse nec bibendum arcu Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque est eu mauris venenatis volutpat. In hac habitasse platea dictumst. Nulla feugiat lectus velit, nec dapibus purus lobortis et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eu eros ut orci commodo consequat a quis neque. Sed non justo non quam ultrices tempus sit amet non nulla. Nam vel arcu Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget convallis tortor. Suspendisse potenti. Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque tellus maximus bibendum .';
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -603,12 +712,12 @@ class _DetailClinicState extends State<DetailClinic>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
-                  children: const [
+                  children:[
                     ExpandableText(
-                      longText,
+                      hospitalDetailPageProvider.hospitalDetail!.information,
                       trimType: TrimType.lines,
                       trim: 8,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
                         height: 1.4,
@@ -617,7 +726,7 @@ class _DetailClinicState extends State<DetailClinic>
                       readMoreText: 'Xem thêm',
                       readLessText: 'Thu gọn',
                       linkTextStyle:
-                          TextStyle(color: Colors.blue, fontSize: 15),
+                          const TextStyle(color: Colors.blue, fontSize: 15),
                     ),
                   ],
                 ),
@@ -630,6 +739,9 @@ class _DetailClinicState extends State<DetailClinic>
   }
 
   Widget certificationClinic() {
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

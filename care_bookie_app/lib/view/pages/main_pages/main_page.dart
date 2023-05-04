@@ -5,6 +5,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../../../providers/bottom_navbar_provider.dart';
 import '../../../../res/constants/colors.dart';
+import '../../../providers/home_page_provider.dart';
 import 'main_page_widget/AppbarCustom.dart';
 import 'clinic/clinic_widget/clinics_nearby.dart';
 import 'main_page_widget/doctor_widget/doctors.dart';
@@ -23,6 +24,24 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    var loadHospitalAndDoctor = Provider.of<HomePageProvider>(context, listen: false);
+
+    if (loadHospitalAndDoctor.doctors.isEmpty) {
+      loadHospitalAndDoctor.getAllDoctor();
+    }
+
+    if (loadHospitalAndDoctor.hospitals.isEmpty) {
+      loadHospitalAndDoctor.getAllHospital();
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -1,6 +1,10 @@
+import 'package:care_bookie_app/models/doctor.dart';
+import 'package:care_bookie_app/providers/hospital_detail_page_provider.dart';
+import 'package:care_bookie_app/view/pages/history_page/history_detail_invoice.dart';
 import 'package:care_bookie_app/view/pages/main_pages/main_page_widget/order_widget/share_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../schedule/schedule_detail_cancel.dart';
 import '../main_page_widget/order_widget/select_day_order.dart';
@@ -36,12 +40,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
     "Tối",
   ];
 
-  final List<String> _options = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-  ];
+  late List<Doctor> _options = [];
 
   final List<String> _serviceList = [
     "#Chăm sóc răng miệng",
@@ -75,6 +74,10 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
         });
       }
     });
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
+    _options = hospitalDetailPageProvider.doctors;
   }
 
   @override
@@ -319,8 +322,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
             children: <Widget>[
               RadioListTile<int>(
                 activeColor: ColorConstant.BLue02,
-                title: Text(
-                  option,
+                title: Text("Dr. ${option.lastName} ${option.firstName}",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: _selectedDoctor == index
@@ -346,6 +348,9 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget selectServices() {
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       sliver: SliverToBoxAdapter(
@@ -372,7 +377,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 physics: const NeverScrollableScrollPhysics(),
                 childAspectRatio: (1 / 0.4),
                 children: List.generate(
-                    _serviceList.length,
+                    hospitalDetailPageProvider.hospitalDetail!.services.length,
                     (index) => GestureDetector(
                       onTap: () {
                         setState(() {
@@ -400,7 +405,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      _serviceList[index],
+                                      hospitalDetailPageProvider.hospitalDetail!.services[index].serviceName,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -421,7 +426,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
-                                      _servicePriceList[index],
+                                      "${hospitalDetailPageProvider.hospitalDetail!.services[index].price}00đ",
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -643,7 +648,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const ScheduleDetailCancel()));
+                                  const HistoryDetailInvoice()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

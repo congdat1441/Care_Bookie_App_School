@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../res/constants/colors.dart';
+import '../../history_page/history_detail_invoice.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
 import '../../schedule/schedule_detail_cancel.dart';
 import '../main_page_widget/order_widget/select_day_order.dart';
@@ -802,7 +803,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const ScheduleDetailCancel()));
+                                  const HistoryDetailInvoice()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

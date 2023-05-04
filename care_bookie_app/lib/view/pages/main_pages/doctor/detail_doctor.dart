@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import '../../../../providers/doctor_detail_page_provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
 import 'order_detail_doctor.dart';
@@ -37,19 +39,22 @@ class _DetailDoctorState extends State<DetailDoctor>
           basicInfoDoctor(),
           detailInfoDoctor(),
           certification(),
-          bookingApointment(context)
+          bookingApointMent(context)
         ],
       ),
     );
   }
 
   Widget sliverAppBar() {
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
     return SliverAppBar(
-      title: const Padding(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      title: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Text(
-          "Dr. Nguyễn Văn A",
-          style: TextStyle(
+          "Dr. ${doctorDetailPageProvider.doctorDetail!.firstName} ${doctorDetailPageProvider.doctorDetail!.lastName}",
+          style: const TextStyle(
               overflow: TextOverflow.ellipsis,
               //letterSpacing: 2,
               fontSize: 20,
@@ -95,8 +100,8 @@ class _DetailDoctorState extends State<DetailDoctor>
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(34),
                   bottomRight: Radius.circular(34)),
-              child: Image.asset(
-                "assets/images/doctor03.jpg",
+              child: Image.network(
+                doctorDetailPageProvider.doctorDetail!.image,
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
@@ -120,8 +125,6 @@ class _DetailDoctorState extends State<DetailDoctor>
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20),
                   topLeft: Radius.circular(20),
-                  //bottomRight: Radius.circular(10),
-                  // bottomLeft: Radius.circular(10)
                 )),
             margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             //padding: const EdgeInsets.only(),
@@ -132,13 +135,13 @@ class _DetailDoctorState extends State<DetailDoctor>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 210,
                     child: Text(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      "Dr. Nguyễn Văn A",
-                      style: TextStyle(
+                      "Dr. ${doctorDetailPageProvider.doctorDetail!.firstName} ${doctorDetailPageProvider.doctorDetail!.lastName}",
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 21,
                         fontFamily: 'Poppins',
@@ -202,6 +205,9 @@ class _DetailDoctorState extends State<DetailDoctor>
   }
 
   Widget basicInfoDoctor() {
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -237,10 +243,10 @@ class _DetailDoctorState extends State<DetailDoctor>
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                         width: 320,
-                        child: const Text("The CIS Free Clinic",
+                        child:  Text(doctorDetailPageProvider.hospital!.hospitalName,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 height: 0.9,
                                 fontSize: 16,
@@ -262,10 +268,10 @@ class _DetailDoctorState extends State<DetailDoctor>
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: const Text("Chuyên khoa răng hàm mặt",
+                        child: Text(doctorDetailPageProvider.doctorDetail!.speciality,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 height: 1.9,
                                 fontSize: 16,
@@ -291,8 +297,8 @@ class _DetailDoctorState extends State<DetailDoctor>
                           const SizedBox(
                             width: 10,
                           ),
-                          const Text("4.5",
-                              style: TextStyle(
+                          Text("${doctorDetailPageProvider.doctorDetail!.star}",
+                              style: const TextStyle(
                                   height: 1.5,
                                   fontSize: 20,
                                   color: Colors.black87,
@@ -308,7 +314,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                                     builder: (context) =>
                                     const ReviewDoctor()));
                           },
-                          child: const Text("xem đánh giá",
+                          child: const Text("Xem đánh giá",
                               style: TextStyle(
                                   height: 1.5,
                                   fontSize: 16,
@@ -354,10 +360,10 @@ class _DetailDoctorState extends State<DetailDoctor>
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: const Text("0363755320",
+                        child: Text(doctorDetailPageProvider.doctorDetail!.phone,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 height: 1.9,
                                 fontSize: 16,
@@ -377,8 +383,9 @@ class _DetailDoctorState extends State<DetailDoctor>
   }
 
   Widget detailInfoDoctor() {
-    const String longText =
-        'sit amet saidunt ante. Nullam fringilla, justo nec ultrices euismod, velit ipsum congue arcu, vel gravida eros mauris sit amet lorem. Mauris tincidunt justo sed nunc pretium fermentum. Vivamus vel aliquam enim. Vivamus tincidunt nunc eu orci venenatis, ut bibendum lorem bibendum. Sed feugiat tincidunt ipsum non feugiat. Suspendisse nec bibendum arcu Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque est eu mauris venenatis volutpat. In hac habitasse platea dictumst. Nulla feugiat lectus velit, nec dapibus purus lobortis et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eu eros ut orci commodo consequat a quis neque. Sed non justo non quam ultrices tempus sit amet non nulla. Nam vel arcu Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget convallis tortor. Suspendisse potenti. Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque tellus maximus bibendum .';
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -397,8 +404,8 @@ class _DetailDoctorState extends State<DetailDoctor>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: Column(
-              children: const [
-                Align(
+              children: [
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Thông tin Bác Sỹ",
@@ -408,12 +415,12 @@ class _DetailDoctorState extends State<DetailDoctor>
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ExpandableText(
-                  longText,
+                  doctorDetailPageProvider.doctorDetail!.information,
                   trimType: TrimType.lines,
                   trim: 8,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
                     height: 1.5,
@@ -421,7 +428,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                   ),
                   readMoreText: 'Xem thêm',
                   readLessText: 'Thu gọn',
-                  linkTextStyle: TextStyle(color: Colors.blue, fontSize: 15),
+                  linkTextStyle: const TextStyle(color: Colors.blue, fontSize: 15),
                 ),
               ],
             ),
@@ -432,6 +439,9 @@ class _DetailDoctorState extends State<DetailDoctor>
   }
 
   Widget certification() {
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -464,54 +474,26 @@ class _DetailDoctorState extends State<DetailDoctor>
                   mainAxisAlignment: MainAxisAlignment.start,
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    ...doctorDetailPageProvider.doctorDetail!.knowledges.map((e) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           padding: const EdgeInsets.only(right: 10),
-                          child: const Text(
-                            "M.B.S.F.C.P.S. Cardio Specialist",
+                          child: Text(
+                            "$e",
                             maxLines: 2,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 overflow: TextOverflow.fade,
                                 height: 1.4,
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
-                        const Icon(Icons.ac_unit)
-                      ],
-                    ),
-                    Row(
-                      children: [
                         Container(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: const Text(
-                            "M.B.S.F.C.P.S. Cardio Specialist",
-                            maxLines: 2,
-                            style: TextStyle(
-                                overflow: TextOverflow.fade,
-                                height: 1.4,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        const Icon(Icons.ac_unit)
+                          margin: const EdgeInsets.only(right: 20),
+                          child: const Icon(Icons.ac_unit)
+                        )
                       ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: const Text(
-                            "M.B.S.F.C.P.S. Cardio Specialist",
-                            maxLines: 2,
-                            style: TextStyle(
-                                overflow: TextOverflow.fade,
-                                height: 1.4,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        const Icon(Icons.ac_unit)
-                      ],
-                    ),
+                    ))
                   ],
                 ),
               )
@@ -522,7 +504,7 @@ class _DetailDoctorState extends State<DetailDoctor>
     );
   }
 
-  Widget bookingApointment(BuildContext context) {
+  Widget bookingApointMent(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),

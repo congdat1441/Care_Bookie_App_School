@@ -1,4 +1,7 @@
 import 'package:care_bookie_app/providers/bottom_navbar_provider.dart';
+import 'package:care_bookie_app/providers/doctor_detail_page_provider.dart';
+import 'package:care_bookie_app/providers/home_page_provider.dart';
+import 'package:care_bookie_app/providers/hospital_detail_page_provider.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/log_in.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => BottomNavBarProvider())
+        ChangeNotifierProvider(create: (context) => BottomNavBarProvider()),
+        ChangeNotifierProvider(create: (context) => HomePageProvider(),),
+        ChangeNotifierProvider(create: (context) => DoctorDetailPageProvider(),),
+        ChangeNotifierProvider(create: (context) => HospitalDetailPageProvider(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
