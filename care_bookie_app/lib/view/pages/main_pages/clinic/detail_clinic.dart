@@ -351,7 +351,7 @@ class _DetailClinicState extends State<DetailClinic>
                                   ),
                                   Align(
                                     alignment: Alignment.topRight,
-                                    child: Text("${e.price},000đ",
+                                    child: Text("${e.price}00đ",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(

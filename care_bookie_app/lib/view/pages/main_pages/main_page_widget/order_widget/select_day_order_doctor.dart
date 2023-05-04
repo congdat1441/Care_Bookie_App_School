@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:provider/provider.dart';
 
+import '../../../../../providers/schedule_doctor_info_page_provider.dart';
 import '../../../../../res/constants/colors.dart';
 import '../../../../../utils/colors_util.dart';
 
-class SelectDay extends StatefulWidget {
+class SelectDayDoctor extends StatefulWidget {
 
-  const SelectDay({Key? key}) : super(key: key);
+  const SelectDayDoctor({Key? key}) : super(key: key);
 
   @override
-  _SelectDayState createState() => _SelectDayState();
+  _SelectDayDoctorState createState() => _SelectDayDoctorState();
 }
 
-class _SelectDayState extends State<SelectDay> {
+class _SelectDayDoctorState extends State<SelectDayDoctor> {
   double width = 0.0;
   double height = 0.0;
   late ScrollController scrollController;
@@ -86,7 +87,7 @@ class _SelectDayState extends State<SelectDay> {
 
   Widget capsuleView(int index) {
 
-    final scheduleInfoPageProvider = Provider.of<ScheduleInfoPageProvider>(context,listen: false);
+    final scheduleDoctorInfoPageProvider = Provider.of<ScheduleDoctorInfoPageProvider>(context,listen: false);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
@@ -95,7 +96,7 @@ class _SelectDayState extends State<SelectDay> {
             setState(() {
               currentDateTime = currentMonthList[index];
 
-              scheduleInfoPageProvider.setWeekday(currentDateTime.weekday);
+              scheduleDoctorInfoPageProvider.setWeekday(currentDateTime.weekday);
 
 
             });
@@ -107,15 +108,15 @@ class _SelectDayState extends State<SelectDay> {
               gradient: LinearGradient(
                   colors: (currentMonthList[index].day != currentDateTime.day)
                       ? [
-                          const Color(0xFFf6f6f6),
-                          const Color(0xFFf6f6f6),
-                          const Color(0xFFf6f6f6),
-                        ]
+                    const Color(0xFFf6f6f6),
+                    const Color(0xFFf6f6f6),
+                    const Color(0xFFf6f6f6),
+                  ]
                       : [
-                          HexColor("237be5"),
-                          HexColor("1e81e7"),
-                          HexColor("1885ea"),
-                        ],
+                    HexColor("237be5"),
+                    HexColor("1e81e7"),
+                    HexColor("1885ea"),
+                  ],
                   begin: const FractionalOffset(-20.0, 10.0),
                   end: const FractionalOffset(100.0, 20.0),
                   tileMode: TileMode.clamp),
@@ -131,9 +132,9 @@ class _SelectDayState extends State<SelectDay> {
                       fontSize: 23,
                       fontWeight: FontWeight.w400,
                       color:
-                          (currentMonthList[index].day != currentDateTime.day)
-                              ? Colors.black
-                              : Colors.white),
+                      (currentMonthList[index].day != currentDateTime.day)
+                          ? Colors.black
+                          : Colors.white),
                 ),
                 Text(
                   date_util
@@ -143,9 +144,9 @@ class _SelectDayState extends State<SelectDay> {
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
                       color:
-                          (currentMonthList[index].day != currentDateTime.day)
-                              ? Colors.black
-                              : Colors.white),
+                      (currentMonthList[index].day != currentDateTime.day)
+                          ? Colors.black
+                          : Colors.white),
                 )
               ],
             ),

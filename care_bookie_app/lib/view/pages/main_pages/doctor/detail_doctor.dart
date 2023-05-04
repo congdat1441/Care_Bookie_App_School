@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../../providers/doctor_detail_page_provider.dart';
@@ -286,14 +287,16 @@ class _DetailDoctorState extends State<DetailDoctor>
                     children: [
                       Row(
                         children: [
-                          ...[1].map((e) => Container(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: const Icon(
-                              IconlyBold.star,
-                              size: 25,
+                          RatingBarIndicator(
+                            rating: doctorDetailPageProvider.doctorDetail!.star.toDouble(),
+                            itemBuilder: (context, index) => const Icon(
+                              Icons.star,
                               color: Colors.amber,
                             ),
-                          )),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                            direction: Axis.horizontal,
+                          ),
                           const SizedBox(
                             width: 10,
                           ),

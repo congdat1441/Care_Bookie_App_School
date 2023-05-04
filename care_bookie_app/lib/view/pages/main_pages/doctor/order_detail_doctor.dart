@@ -1,6 +1,13 @@
+import 'package:care_bookie_app/providers/doctor_detail_page_provider.dart';
+import 'package:care_bookie_app/providers/schedule_doctor_info_page_provider.dart';
+import 'package:care_bookie_app/view/pages/main_pages/main_page_widget/order_widget/select_day_order_doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import '../../../../models/service.dart';
+import '../../../../models/working_day_detail.dart';
 import '../../../../res/constants/colors.dart';
 import '../../history_page/history_detail_invoice.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
@@ -62,6 +69,10 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
     "150,000đ",
   ];
 
+  bool check = false;
+
+  List<Service> listServiceCheck = [];
+
   @override
   void initState() {
     super.initState();
@@ -90,27 +101,32 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.BackGroundColor,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: <Widget>[
-          sliverAppbar(),
-          basicInfoDoctor(),
-          bookingForOtherPerson(),
-          selectServices(),
-          selectDay(),
-          selectTime(),
-          symptom(),
-          shareHistory(),
-        ],
+      body: Consumer<ScheduleDoctorInfoPageProvider>(
+        builder: (context, scheduleDoctorInfoPageProvider, child) => CustomScrollView(
+          controller: _scrollController,
+          slivers: <Widget>[
+            sliverAppbar(),
+            basicInfoDoctor(),
+            bookingForOtherPerson(),
+            selectServices(),
+            selectDay(),
+            selectTime(),
+            symptom(),
+            shareHistory(),
+          ],
+        ),
       ),
       bottomNavigationBar: bottomNavigationBar(),
     );
   }
 
   Widget sliverAppbar() {
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
     return SliverAppBar(
       title: Text(
-        'Dr. Nguyễn Văn A',
+        'Dr. ${doctorDetailPageProvider.doctorDetail!.lastName} ${doctorDetailPageProvider.doctorDetail!.firstName}',
         style: TextStyle(
             color: _isAppBarCollapsed ? Colors.black : Colors.white,
             overflow: TextOverflow.ellipsis,
@@ -147,8 +163,8 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(0),
                   bottomRight: Radius.circular(0)),
-              child: Image.asset(
-                "assets/images/doctor03.jpg",
+              child: Image.network(
+                doctorDetailPageProvider.doctorDetail!.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -183,14 +199,14 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
               padding: const EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   SizedBox(
                     width: 210,
                     child: Text(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      "Dr. Nguyễn Văn A",
-                      style: TextStyle(
+                      "Dr. ${doctorDetailPageProvider.doctorDetail!.lastName} ${doctorDetailPageProvider.doctorDetail!.firstName}",
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 21,
                         fontFamily: 'Poppins',
@@ -205,6 +221,9 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
   }
 
   Widget basicInfoDoctor() {
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -240,10 +259,10 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                         width: 320,
-                        child: const Text("The CIS Free Clinic",
+                        child: Text(doctorDetailPageProvider.hospital!.hospitalName,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 height: 0.9,
                                 fontSize: 16,
@@ -265,10 +284,10 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: const Text("Chuyên khoa răng hàm mặt",
+                        child: Text(doctorDetailPageProvider.doctorDetail!.speciality,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 height: 1.9,
                                 fontSize: 16,
@@ -283,19 +302,21 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                     children: [
                       Row(
                         children: [
-                          ...[1].map((e) => Container(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: const Icon(
-                                  IconlyBold.star,
-                                  size: 25,
-                                  color: Colors.amber,
-                                ),
-                              )),
+                          RatingBarIndicator(
+                            rating: doctorDetailPageProvider.doctorDetail!.star.toDouble(),
+                            itemBuilder: (context, index) => const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                            direction: Axis.horizontal,
+                          ),
                           const SizedBox(
                             width: 10,
                           ),
-                          const Text("4.5",
-                              style: TextStyle(
+                          Text("${doctorDetailPageProvider.doctorDetail!.star}",
+                              style: const TextStyle(
                                   height: 1.5,
                                   fontSize: 20,
                                   color: Colors.black87,
@@ -311,7 +332,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                     builder: (context) =>
                                         const ReviewDoctor()));
                           },
-                          child: const Text("xem đánh giá",
+                          child: const Text("Xem đánh giá",
                               style: TextStyle(
                                   height: 1.5,
                                   fontSize: 16,
@@ -357,10 +378,10 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: const Text("0363755320",
+                        child: Text(doctorDetailPageProvider.doctorDetail!.phone,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 height: 1.9,
                                 fontSize: 16,
@@ -508,6 +529,9 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
   }
 
   Widget selectServices() {
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       sliver: SliverToBoxAdapter(
@@ -534,72 +558,78 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                 physics: const NeverScrollableScrollPhysics(),
                 childAspectRatio: (1 / 0.4),
                 children: List.generate(
-                    _serviceList.length,
-                    (index) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedService = index;
-                            });
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            height: 100,
-                            decoration: BoxDecoration(
-                                color: _selectedService == index
-                                    ? ColorConstant.BLue02
-                                    : const Color(0x0fffffff),
-                                borderRadius: BorderRadius.circular(20.0),
-                                border: Border.all(
-                                    width: 1.0, color: ColorConstant.BLue02)),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      _serviceList[index],
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        overflow: TextOverflow.ellipsis,
-                                        color: _selectedService == index
-                                            ? Colors.white
-                                            : ColorConstant.BLue05,
-                                        height: 1,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Merriweather Sans',
-                                      ),
-                                    ),
+                    doctorDetailPageProvider.hospital!.services.length,
+                        (index) => GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          check = listServiceCheck.contains(doctorDetailPageProvider.hospital!.services[index]);
+                          if(check) {
+                            listServiceCheck.remove(doctorDetailPageProvider.hospital!.services[index]);
+                          } else {
+                            listServiceCheck.add(doctorDetailPageProvider.hospital!.services[index]);
+                          }
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 100,
+                        decoration: BoxDecoration(
+                            color: listServiceCheck.contains(doctorDetailPageProvider.hospital!.services[index])
+                                ? ColorConstant.BLue02
+                                : const Color(0x0fffffff),
+                            borderRadius: BorderRadius.circular(20.0),
+                            border: Border.all(width: 1.0,
+                                color: ColorConstant.BLue02)
+                        ),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  doctorDetailPageProvider.hospital!.services[index].serviceName,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: listServiceCheck.contains(doctorDetailPageProvider.hospital!.services[index])
+                                        ? Colors.white
+                                        : ColorConstant.BLue05,
+                                    height: 1,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Merriweather Sans',
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: Text(
-                                      _servicePriceList[index],
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        overflow: TextOverflow.ellipsis,
-                                        height: 1,
-                                        fontSize: 15,
-                                        color: Colors.orange,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Merriweather Sans',
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Text(
+                                  "${doctorDetailPageProvider.hospital!.services[index].price}00đ",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    height: 1,
+                                    fontSize: 15,
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Merriweather Sans',
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ))),
+                        ),
+                      ),
+                    ))),
           ],
         ),
       ),
@@ -616,90 +646,110 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
         decoration: const BoxDecoration(
             // color: Colors.amber
             ),
-        child: const SelectDay(),
+        child: const SelectDayDoctor(),
       ),
     ));
   }
 
   Widget selectTime() {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      sliver: SliverToBoxAdapter(
-        child: SizedBox(
-          height: 100,
-          child: Column(
-            children: [
-              Container(
-                  margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                  child: const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Thời gian ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  )),
-              GridView.count(
-                //padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                childAspectRatio: (1 / .4),
-                children: List.generate(
-                  _timeList.length,
-                  (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedTime = index;
-                        });
-                      },
-                      child: Container(
-                        //height: 100,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          color: _selectedTime == index
-                              ? ColorConstant.BLue02
-                              : const Color(0xFFf6f6f6),
-                          borderRadius: BorderRadius.circular(20.0),
+
+    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+
+    final scheduleDoctorInfoPageProvider = Provider.of<ScheduleDoctorInfoPageProvider>(context,listen: false);
+
+    List<WorkingDayDetail> workingDayDetailsCheck = [];
+
+    for (var element in doctorDetailPageProvider.hospital!.workingDayDetails) {
+      if(element.date.isNotEmpty) {
+        if(scheduleDoctorInfoPageProvider.weekday + 1 == int.parse(element.date)) {
+          workingDayDetailsCheck.add(element);
+        }
+      }
+    }
+
+    return Consumer<ScheduleDoctorInfoPageProvider>(
+      builder: (context, scheduleDoctorInfoPageProvider, child) => SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        sliver: SliverToBoxAdapter(
+          child: SizedBox(
+            height: 100,
+            child: Column(
+              children: [
+                Container(
+                    margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Thời gian ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.0,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                _timeDay[index],
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Poppins',
-                                  color: _selectedTime == index
-                                      ? Colors.white
-                                      : Colors.black,
+                      ),
+                    )),
+                workingDayDetailsCheck.isNotEmpty ?  GridView.count(
+                  //padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  childAspectRatio: (1 / .4),
+                  children: List.generate(
+                    workingDayDetailsCheck.length,
+                        (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedTime = index;
+                          });
+                        },
+                        child: Container(
+                          //height: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            color: _selectedTime == index
+                                ? ColorConstant.BLue02
+                                : const Color(0xFFf6f6f6),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  workingDayDetailsCheck[index].session == "MORNING" ? "Sáng" : "Chiều",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Poppins',
+                                    color: _selectedTime == index
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                _timeList[index],
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Poppins',
-                                  color: _selectedTime == index
-                                      ? Colors.white
-                                      : Colors.black,
+                                Text(
+                                  "${workingDayDetailsCheck[index].startHour} - ${workingDayDetailsCheck[index].endHour}",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Poppins',
+                                    color: _selectedTime == index
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
+                ) : Container(
+                    margin: const EdgeInsets.only(top: 15),
+                    child: const Text("Không Thuộc Ngày Làm Việc Của Bệnh Viện")
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -1,10 +1,13 @@
 import 'package:care_bookie_app/models/doctor.dart';
+import 'package:care_bookie_app/models/service.dart';
 import 'package:care_bookie_app/providers/hospital_detail_page_provider.dart';
+import 'package:care_bookie_app/providers/schedule_info_page_provider.dart';
 import 'package:care_bookie_app/view/pages/history_page/history_detail_invoice.dart';
 import 'package:care_bookie_app/view/pages/main_pages/main_page_widget/order_widget/share_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
+import '../../../../models/working_day_detail.dart';
 import '../../../../res/constants/colors.dart';
 import '../../schedule/schedule_detail_cancel.dart';
 import '../main_page_widget/order_widget/select_day_order.dart';
@@ -58,6 +61,10 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
     "150,000đ",
   ];
 
+  bool check = false;
+
+  List<Service> listServiceCheck = [];
+
   @override
   void initState() {
     super.initState();
@@ -90,20 +97,22 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.BackGroundColor,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: <Widget>[
-          sliverAppbar(),
-          bookingForOtherPerson(),
-          selectDoctorTitle(),
-          selectDoctor(),
-          selectServices(),
-          selectDay(),
-          selectTime(),
-          symptom(),
-          shareHistory(),
-          //const ShareHistory()
-        ],
+      body: Consumer<ScheduleInfoPageProvider>(
+        builder: (context, scheduleInfoPageProvider, child) => CustomScrollView(
+          controller: _scrollController,
+          slivers: <Widget>[
+            sliverAppbar(),
+            bookingForOtherPerson(),
+            selectDoctorTitle(),
+            selectDoctor(),
+            selectServices(),
+            selectDay(),
+            selectTime(),
+            symptom(),
+            shareHistory(),
+            //const ShareHistory()
+          ],
+        ),
       ),
       bottomNavigationBar: bottomNavigationBar(),
     );
@@ -237,9 +246,12 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget sliverAppbar() {
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
     return SliverAppBar(
       title: Text(
-        'The CIS Free Clinic',
+        hospitalDetailPageProvider.hospitalDetail!.hospitalName,
         style: TextStyle(
             color: _isAppBarCollapsed ? Colors.black : Colors.white,
             overflow: TextOverflow.ellipsis,
@@ -275,8 +287,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(0),
                   bottomRight: Radius.circular(0)),
-              child: Image.asset(
-                "assets/images/cisdemo.png",
+              child: Image.network(
+                hospitalDetailPageProvider.hospitalDetail!.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -381,7 +393,12 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                     (index) => GestureDetector(
                       onTap: () {
                         setState(() {
-                          _selectedService = index;
+                          check = listServiceCheck.contains(hospitalDetailPageProvider.hospitalDetail!.services[index]);
+                          if(check) {
+                            listServiceCheck.remove(hospitalDetailPageProvider.hospitalDetail!.services[index]);
+                          } else {
+                            listServiceCheck.add(hospitalDetailPageProvider.hospitalDetail!.services[index]);
+                          }
                         });
                       },
                       child: Container(
@@ -389,7 +406,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             height: 100,
                         decoration: BoxDecoration(
-                          color: _selectedService == index
+                          color: listServiceCheck.contains(hospitalDetailPageProvider.hospitalDetail!.services[index])
                               ? ColorConstant.BLue02
                               : const Color(0x0fffffff),
                           borderRadius: BorderRadius.circular(20.0),
@@ -410,7 +427,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         overflow: TextOverflow.ellipsis,
-                                        color: _selectedService == index
+                                        color: listServiceCheck.contains(hospitalDetailPageProvider.hospitalDetail!.services[index])
                                             ? Colors.white
                                             : ColorConstant.BLue05,
                                         height: 1,
@@ -467,84 +484,104 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget selectTime() {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      sliver: SliverToBoxAdapter(
-        child: SizedBox(
-          height: 100,
-          child: Column(
-            children: [
-              Container(
-                  margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                  child: const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Thời gian ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  )),
-              GridView.count(
-                //padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                childAspectRatio: (1 / .4),
-                children: List.generate(
-                  _timeList.length,
-                  (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedTime = index;
-                        });
-                      },
-                      child: Container(
-                        //height: 100,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          color: _selectedTime == index
-                              ? ColorConstant.BLue02
-                              : const Color(0xFFf6f6f6),
-                          borderRadius: BorderRadius.circular(20.0),
+
+    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+
+    final scheduleInfoPageProvider = Provider.of<ScheduleInfoPageProvider>(context,listen: false);
+
+    List<WorkingDayDetail> workingDayDetailsCheck = [];
+
+    for (var element in hospitalDetailPageProvider.hospitalDetail!.workingDayDetails) {
+      if(element.date.isNotEmpty) {
+        if(scheduleInfoPageProvider.weekday + 1 == int.parse(element.date)) {
+          workingDayDetailsCheck.add(element);
+        }
+      }
+    }
+
+    return Consumer<ScheduleInfoPageProvider>(
+      builder: (context, scheduleInfoPageProvider, child) => SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        sliver: SliverToBoxAdapter(
+          child: SizedBox(
+            height: 100,
+            child: Column(
+              children: [
+                Container(
+                    margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Thời gian ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.0,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                _timeDay[index],
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Poppins',
-                                  color: _selectedTime == index
-                                      ? Colors.white
-                                      : Colors.black,
+                      ),
+                    )),
+                workingDayDetailsCheck.isNotEmpty ?  GridView.count(
+                  //padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  childAspectRatio: (1 / .4),
+                  children: List.generate(
+                    workingDayDetailsCheck.length,
+                        (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedTime = index;
+                          });
+                        },
+                        child: Container(
+                          //height: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            color: _selectedTime == index
+                                ? ColorConstant.BLue02
+                                : const Color(0xFFf6f6f6),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  workingDayDetailsCheck[index].session == "MORNING" ? "Sáng" : "Chiều",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Poppins',
+                                    color: _selectedTime == index
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                _timeList[index],
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Poppins',
-                                  color: _selectedTime == index
-                                      ? Colors.white
-                                      : Colors.black,
+                                Text(
+                                  "${workingDayDetailsCheck[index].startHour} - ${workingDayDetailsCheck[index].endHour}",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Poppins',
+                                    color: _selectedTime == index
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
+                ) : Container(
+                  margin: const EdgeInsets.only(top: 15),
+                    child: const Text("Không Thuộc Ngày Làm Việc Của Bệnh Viện")
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
