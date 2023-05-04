@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:care_bookie_app/res/constants/colors.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/reset_password.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,7 @@ class _LoginState extends State<Login> {
       if (textFieldFocusNode.hasPrimaryFocus)
         return; // If focus is on text field, dont unfocus
       textFieldFocusNode.canRequestFocus =
-          false; // Prevents focus if tap on eye
+      false; // Prevents focus if tap on eye
     });
   }
 
@@ -68,7 +67,6 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
   Widget customTopScreen() {
     return Expanded(
       child: Stack(
@@ -113,7 +111,6 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
   Widget loginAndSignupTitle() {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
@@ -176,8 +173,8 @@ class _LoginState extends State<Login> {
           decoration: const InputDecoration(
             enabledBorder: UnderlineInputBorder(
                 borderRadius: BorderRadius.all(
-              Radius.circular(0),
-            )),
+                  Radius.circular(0),
+                )),
             label: Text("Phone number", style: TextStyle(color: Colors.black)),
             hintText: "Please add your phone number",
             hintStyle: TextStyle(
@@ -209,8 +206,8 @@ class _LoginState extends State<Login> {
         decoration: InputDecoration(
           enabledBorder: const UnderlineInputBorder(
               borderRadius: BorderRadius.all(
-            Radius.circular(0),
-          )),
+                Radius.circular(0),
+              )),
           label: const Text("Password", style: TextStyle(color: Colors.black)),
           hintText: "Password",
           hintStyle: const TextStyle(
@@ -254,81 +251,71 @@ class _LoginState extends State<Login> {
       child: TextButton(
         child: const Text(
           "Forgot password",
-          style: TextStyle(fontFamily: 'Poppins', color: Color(0xFF168AD8)),
+          style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Color(0xFF168AD8)),
         ),
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ResetPassword()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                  const ResetPassword()));
         },
       ),
     );
   }
 
-  Widget loginButton() {
-    return Container(
-      width: 330,
-      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
-      child: Column(
-        children: [
-          const Padding(padding: EdgeInsets.only(top: 20)),
-          Container(
-            width: 350,
-            height: 60,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Color(0xFF431BFC),
-                    Color(0xFF0675D6),
-                  ]),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0xFF0675D6),
-                  offset: Offset(0, 2),
-                  blurRadius: 10,
-                  spreadRadius: 0.1, // changes position of shadow
-                ),
-              ],
-            ),
-            child: ElevatedButton(
-              // onPressed: isLoading ? null : () => _handleLogin(context),
-              onPressed: () {Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const NavbarLayout(index: 0)));},
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                primary: const Color(0xff217ce5),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                textStyle: const TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold),
-                elevation: 5,
-                minimumSize: const Size(150, 0),
-                visualDensity: VisualDensity.adaptivePlatformDensity,
+  Widget loginButton(){
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const NavbarLayout(
+                  index: 0,
+                )));
+      },
+      child: Container(
+        width: 330,
+        padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
+        child: Column(
+          children: [
+            const Padding(padding: EdgeInsets.only(top: 20)),
+            Container(
+              height: 60,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF431BFC),
+                      Color(0xFF0675D6),
+                    ]),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0xFF0675D6),
+                    offset: Offset(0, 2),
+                    blurRadius: 10,
+                    spreadRadius:
+                    0.1, // changes position of shadow
+                  ),
+                ],
               ),
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text(
-                      'LOGIN',
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Exo'),
-                    ),
+              child: ElevatedButton(
+                onPressed: isLoading ? null : () => _handleLogin(context),
+                child: isLoading ? const CircularProgressIndicator() : const Text('Đăng nhập'),
+              ),
             ),
-          ),
-          // RecentlyViewed()
-        ],
+            // RecentlyViewed()
+          ],
+        ),
       ),
     );
   }
-
   Future<http.Response> login(String phone, String password) async {
-    const url =
-        'https://ccd8-210-245-110-144.ngrok-free.app/api/v1/care-bookie/common/login';
+    final url = 'https://example.com/login';
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -356,3 +343,4 @@ class _LoginState extends State<Login> {
     }
   }
 }
+
