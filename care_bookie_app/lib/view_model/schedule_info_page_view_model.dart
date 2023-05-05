@@ -1,7 +1,8 @@
 
 import 'package:flutter/foundation.dart';
 
-class ScheduleDoctorInfoPageProvider extends ChangeNotifier {
+
+class ScheduleInfoPageViewModel extends ChangeNotifier {
 
   int weekday = DateTime.now().weekday;
 

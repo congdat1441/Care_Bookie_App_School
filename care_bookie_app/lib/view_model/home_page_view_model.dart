@@ -7,7 +7,7 @@ import '../models/doctor.dart';
 
 
 
-class HomePageProvider extends ChangeNotifier {
+class HomePageViewModel extends ChangeNotifier {
 
 
   List<Doctor> doctors = [];

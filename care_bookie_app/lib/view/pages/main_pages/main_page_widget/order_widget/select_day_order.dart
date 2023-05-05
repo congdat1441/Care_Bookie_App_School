@@ -1,4 +1,5 @@
-import 'package:care_bookie_app/providers/schedule_info_page_provider.dart';
+
+import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:provider/provider.dart';
@@ -86,7 +87,7 @@ class _SelectDayState extends State<SelectDay> {
 
   Widget capsuleView(int index) {
 
-    final scheduleInfoPageProvider = Provider.of<ScheduleInfoPageProvider>(context,listen: false);
+    final scheduleInfoPageViewModel = Provider.of<ScheduleInfoPageViewModel>(context,listen: false);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
@@ -95,7 +96,9 @@ class _SelectDayState extends State<SelectDay> {
             setState(() {
               currentDateTime = currentMonthList[index];
 
-              scheduleInfoPageProvider.setWeekday(currentDateTime.weekday);
+              scheduleInfoPageViewModel.setWeekday(currentDateTime.weekday);
+
+              print("DATE ${date_util.DateUtils.weekdays[currentMonthList[index].weekday - 1]}");
 
 
             });

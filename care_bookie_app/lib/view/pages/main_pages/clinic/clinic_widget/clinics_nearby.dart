@@ -1,5 +1,5 @@
-import 'package:care_bookie_app/providers/home_page_provider.dart';
-import 'package:care_bookie_app/providers/hospital_detail_page_provider.dart';
+import 'package:care_bookie_app/view_model/home_page_view_model.dart';
+import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +16,12 @@ class ClinicsNearby extends StatefulWidget {
 class _ClinicsNearbyState extends State<ClinicsNearby> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomePageProvider>(
-      builder: (context, homePageProvider, child) => SizedBox(
+    return Consumer<HomePageViewModel>(
+      builder: (context, homePageViewModel, child) => SizedBox(
         width: MediaQuery.of(context).size.width,
         height: 500,
         child:
-        homePageProvider.hospitals.isEmpty
+        homePageViewModel.hospitals.isEmpty
             ? const Center(
           child: CircularProgressIndicator(),
         )
@@ -29,7 +29,7 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: homePageProvider.hospitals.length,
+                itemCount: homePageViewModel.hospitals.length,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: Container(
@@ -55,11 +55,11 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                           GestureDetector(
                             onTap: () async{
 
-                              final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+                              final hospitalDetailPageProvider = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
-                              hospitalDetailPageProvider.setHospitalDetail(homePageProvider.hospitals[index]);
+                              hospitalDetailPageProvider.setHospitalDetail(homePageViewModel.hospitals[index]);
 
-                              await hospitalDetailPageProvider.getAllDoctorByHospitalId(homePageProvider.hospitals[index].id);
+                              await hospitalDetailPageProvider.getAllDoctorByHospitalId(homePageViewModel.hospitals[index].id);
 
 
                               // ignore: use_build_context_synchronously
@@ -72,7 +72,7 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
                               child: Image.network(
-                                homePageProvider.hospitals[index].image,
+                                homePageViewModel.hospitals[index].image,
                                 fit: BoxFit.fill,
                                 width: 100,
                                 height: 100,
@@ -90,7 +90,7 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                       //height: 40,
                                       //color: Colors.grey,
                                       child: Text(
-                                          homePageProvider.hospitals[index]
+                                          homePageViewModel.hospitals[index]
                                               .hospitalName,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
@@ -109,7 +109,7 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                              homePageProvider
+                                              homePageViewModel
                                                   .hospitals[index]
                                                   .address,
                                               maxLines: 2,
@@ -146,7 +146,7 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                             width: 5,
                                           ),
                                           Text(
-                                              homePageProvider
+                                              homePageViewModel
                                                   .hospitals[index].star
                                                   .toString(),
                                               style: const TextStyle(

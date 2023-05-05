@@ -1,11 +1,13 @@
-import 'package:care_bookie_app/providers/bottom_navbar_provider.dart';
-import 'package:care_bookie_app/providers/doctor_detail_page_provider.dart';
-import 'package:care_bookie_app/providers/home_page_provider.dart';
-import 'package:care_bookie_app/providers/hospital_detail_page_provider.dart';
-import 'package:care_bookie_app/providers/schedule_doctor_info_page_provider.dart';
-import 'package:care_bookie_app/providers/schedule_info_page_provider.dart';
+
 import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/log_in.dart';
+import 'package:care_bookie_app/view_model/bottom_navbar_provider.dart';
+import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
+import 'package:care_bookie_app/view_model/home_page_view_model.dart';
+import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
+import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.dart';
+import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
+import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +24,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => BottomNavBarProvider()),
-        ChangeNotifierProvider(create: (context) => HomePageProvider(),),
-        ChangeNotifierProvider(create: (context) => DoctorDetailPageProvider(),),
-        ChangeNotifierProvider(create: (context) => HospitalDetailPageProvider(),),
-        ChangeNotifierProvider(create: (context) => ScheduleInfoPageProvider(),),
-        ChangeNotifierProvider(create: (context) => ScheduleDoctorInfoPageProvider(),)
+        ChangeNotifierProvider(create: (context) => HomePageViewModel(),),
+        ChangeNotifierProvider(create: (context) => DoctorDetailPageViewModel(),),
+        ChangeNotifierProvider(create: (context) => HospitalDetailPageViewModel(),),
+        ChangeNotifierProvider(create: (context) => ScheduleInfoPageViewModel(),),
+        ChangeNotifierProvider(create: (context) => ScheduleDoctorInfoPageViewModel(),),
+        ChangeNotifierProvider(create: (context) => UserLoginInfoViewModel(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

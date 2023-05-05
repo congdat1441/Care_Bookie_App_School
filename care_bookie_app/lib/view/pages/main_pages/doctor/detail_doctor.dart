@@ -1,10 +1,10 @@
+import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../../../../providers/doctor_detail_page_provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
 import 'order_detail_doctor.dart';
@@ -48,13 +48,13 @@ class _DetailDoctorState extends State<DetailDoctor>
 
   Widget sliverAppBar() {
 
-    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
     return SliverAppBar(
       title: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Text(
-          "Dr. ${doctorDetailPageProvider.doctorDetail!.firstName} ${doctorDetailPageProvider.doctorDetail!.lastName}",
+          "Dr. ${doctorDetailPageViewModel.doctorDetail!.firstName} ${doctorDetailPageViewModel.doctorDetail!.lastName}",
           style: const TextStyle(
               overflow: TextOverflow.ellipsis,
               //letterSpacing: 2,
@@ -102,7 +102,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                   bottomLeft: Radius.circular(34),
                   bottomRight: Radius.circular(34)),
               child: Image.network(
-                doctorDetailPageProvider.doctorDetail!.image,
+                doctorDetailPageViewModel.doctorDetail!.image,
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
@@ -141,7 +141,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                     child: Text(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      "Dr. ${doctorDetailPageProvider.doctorDetail!.firstName} ${doctorDetailPageProvider.doctorDetail!.lastName}",
+                      "Dr. ${doctorDetailPageViewModel.doctorDetail!.firstName} ${doctorDetailPageViewModel.doctorDetail!.lastName}",
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 21,
@@ -207,7 +207,7 @@ class _DetailDoctorState extends State<DetailDoctor>
 
   Widget basicInfoDoctor() {
 
-    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -244,7 +244,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                         width: 320,
-                        child:  Text(doctorDetailPageProvider.hospital!.hospitalName,
+                        child:  Text(doctorDetailPageViewModel.hospital!.hospitalName,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -269,7 +269,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: Text(doctorDetailPageProvider.doctorDetail!.speciality,
+                        child: Text(doctorDetailPageViewModel.doctorDetail!.speciality,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -288,7 +288,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                       Row(
                         children: [
                           RatingBarIndicator(
-                            rating: doctorDetailPageProvider.doctorDetail!.star.toDouble(),
+                            rating: doctorDetailPageViewModel.doctorDetail!.star.toDouble(),
                             itemBuilder: (context, index) => const Icon(
                               Icons.star,
                               color: Colors.amber,
@@ -300,7 +300,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                           const SizedBox(
                             width: 10,
                           ),
-                          Text("${doctorDetailPageProvider.doctorDetail!.star}",
+                          Text("${doctorDetailPageViewModel.doctorDetail!.star}",
                               style: const TextStyle(
                                   height: 1.5,
                                   fontSize: 20,
@@ -310,7 +310,12 @@ class _DetailDoctorState extends State<DetailDoctor>
                         ],
                       ),
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async{
+
+                            await doctorDetailPageViewModel.getAllCommentByDoctorId(doctorDetailPageViewModel.doctorDetail!.id);
+
+
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -363,7 +368,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: Text(doctorDetailPageProvider.doctorDetail!.phone,
+                        child: Text(doctorDetailPageViewModel.doctorDetail!.phone,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -387,7 +392,7 @@ class _DetailDoctorState extends State<DetailDoctor>
 
   Widget detailInfoDoctor() {
 
-    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -420,7 +425,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                 ),
                 const SizedBox(height: 10),
                 ExpandableText(
-                  doctorDetailPageProvider.doctorDetail!.information,
+                  doctorDetailPageViewModel.doctorDetail!.information,
                   trimType: TrimType.lines,
                   trim: 8,
                   style: const TextStyle(
@@ -443,7 +448,7 @@ class _DetailDoctorState extends State<DetailDoctor>
 
   Widget certification() {
 
-    final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -477,7 +482,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                   mainAxisAlignment: MainAxisAlignment.start,
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ...doctorDetailPageProvider.doctorDetail!.knowledges.map((e) => Row(
+                    ...doctorDetailPageViewModel.doctorDetail!.knowledges.map((e) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
