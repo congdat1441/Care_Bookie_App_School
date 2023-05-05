@@ -11,6 +11,10 @@ import '../models/working_day_detail.dart';
 
 class DoctorDetailPageViewModel extends ChangeNotifier {
 
+  DoctorApi doctorApi = DoctorApi();
+
+  HospitalApi hospitalApi = HospitalApi();
+
   Doctor? doctorDetail;
 
   Hospital? hospital;
@@ -28,12 +32,12 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
   }
 
   Future<void> getHospitalById(String id) async {
-    hospital = await getHospitalByIdApi(id);
+    hospital = await hospitalApi.getHospitalByIdApi(id);
   }
 
   Future<void> getAllCommentByDoctorId(String doctorId) async {
 
-    comments = await getAllCommentByDoctorIdApi(doctorId);
+    comments = await doctorApi.getAllCommentByDoctorIdApi(doctorId);
 
   }
 

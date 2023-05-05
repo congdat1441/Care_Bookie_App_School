@@ -5,62 +5,66 @@ import 'package:care_bookie_app/models/hospital.dart';
 
 import '../models/comment.dart';
 
-Future<List<Hospital>> getAllHospitalApi() async {
+class HospitalApi {
 
-  String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/getAll";
+  Future<List<Hospital>> getAllHospitalApi() async {
 
-  var response = await http.get(Uri.parse(url));
+    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/getAll";
 
-  if(response.statusCode == 200) {
+    var response = await http.get(Uri.parse(url));
 
-    List dataJson = jsonDecode(utf8.decode(response.bodyBytes)) as List;
+    if(response.statusCode == 200) {
 
-    List<Hospital> hospitals = dataJson.map((e) => Hospital.fromJson(e)).toList();
+      List dataJson = jsonDecode(utf8.decode(response.bodyBytes)) as List;
 
-    return hospitals;
+      List<Hospital> hospitals = dataJson.map((e) => Hospital.fromJson(e)).toList();
 
-  } else {
-    throw Exception("Failed Data");
+      return hospitals;
+
+    } else {
+      throw Exception("Failed Data");
+    }
+
   }
 
-}
+  Future<Hospital> getHospitalByIdApi(String id) async {
 
-Future<Hospital> getHospitalByIdApi(String id) async {
+    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/$id";
 
-  String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/$id";
+    var response = await http.get(Uri.parse(url));
 
-  var response = await http.get(Uri.parse(url));
+    if(response.statusCode == 200) {
 
-  if(response.statusCode == 200) {
+      var dataJson = jsonDecode(utf8.decode(response.bodyBytes));
 
-    var dataJson = jsonDecode(utf8.decode(response.bodyBytes));
+      Hospital hospital = Hospital.fromJson(dataJson);
 
-    Hospital hospital = Hospital.fromJson(dataJson);
+      return hospital;
 
-    return hospital;
+    } else {
+      throw Exception("Failed Data");
+    }
 
-  } else {
-    throw Exception("Failed Data");
   }
 
-}
+  Future<List<Comment>> getAllCommentByHospitalIdApi(String hospitalId) async {
 
-Future<List<Comment>> getAllCommentByHospitalIdApi(String hospitalId) async {
+    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/comment/$hospitalId";
 
-  String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/comment/$hospitalId";
+    var response = await http.get(Uri.parse(url));
 
-  var response = await http.get(Uri.parse(url));
+    if(response.statusCode == 200) {
 
-  if(response.statusCode == 200) {
+      List dataJson = jsonDecode(utf8.decode(response.bodyBytes)) as List;
 
-    List dataJson = jsonDecode(utf8.decode(response.bodyBytes)) as List;
+      List<Comment> comments = dataJson.map((e) => Comment.fromJson(e)).toList();
 
-    List<Comment> comments = dataJson.map((e) => Comment.fromJson(e)).toList();
+      return comments;
 
-    return comments;
+    } else {
+      throw Exception("Failed Data");
+    }
 
-  } else {
-    throw Exception("Failed Data");
   }
 
 }

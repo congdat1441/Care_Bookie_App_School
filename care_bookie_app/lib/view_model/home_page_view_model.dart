@@ -9,6 +9,9 @@ import '../models/doctor.dart';
 
 class HomePageViewModel extends ChangeNotifier {
 
+  DoctorApi doctorApi = DoctorApi();
+
+  HospitalApi hospitalApi = HospitalApi();
 
   List<Doctor> doctors = [];
 
@@ -16,12 +19,12 @@ class HomePageViewModel extends ChangeNotifier {
 
 
   Future<void> getAllDoctor() async {
-    doctors = await getAllDoctorApi();
+    doctors = await doctorApi.getAllDoctorApi();
     notifyListeners();
   }
 
   Future<void> getAllHospital() async {
-    hospitals = await getAllHospitalApi();
+    hospitals = await hospitalApi.getAllHospitalApi();
     notifyListeners();
   }
 
