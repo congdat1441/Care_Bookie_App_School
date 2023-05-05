@@ -1,15 +1,13 @@
 import 'package:care_bookie_app/models/doctor.dart';
 import 'package:care_bookie_app/models/service.dart';
-import 'package:care_bookie_app/providers/hospital_detail_page_provider.dart';
-import 'package:care_bookie_app/providers/schedule_info_page_provider.dart';
 import 'package:care_bookie_app/view/pages/history_page/history_detail_invoice.dart';
-import 'package:care_bookie_app/view/pages/main_pages/main_page_widget/order_widget/share_history.dart';
+import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
+import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../../../models/working_day_detail.dart';
 import '../../../../res/constants/colors.dart';
-import '../../schedule/schedule_detail_cancel.dart';
 import '../main_page_widget/order_widget/select_day_order.dart';
 import '../order_sumary.dart';
 
@@ -82,9 +80,9 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
       }
     });
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
-    _options = hospitalDetailPageProvider.doctors;
+    _options = hospitalDetailPageViewModel.doctors;
   }
 
   @override
@@ -97,8 +95,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.BackGroundColor,
-      body: Consumer<ScheduleInfoPageProvider>(
-        builder: (context, scheduleInfoPageProvider, child) => CustomScrollView(
+      body: Consumer<ScheduleInfoPageViewModel>(
+        builder: (context, scheduleInfoPageViewModel, child) => CustomScrollView(
           controller: _scrollController,
           slivers: <Widget>[
             sliverAppbar(),
@@ -247,11 +245,11 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
 
   Widget sliverAppbar() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverAppBar(
       title: Text(
-        hospitalDetailPageProvider.hospitalDetail!.hospitalName,
+        hospitalDetailPageViewModel.hospitalDetail!.hospitalName,
         style: TextStyle(
             color: _isAppBarCollapsed ? Colors.black : Colors.white,
             overflow: TextOverflow.ellipsis,
@@ -288,7 +286,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                   bottomLeft: Radius.circular(0),
                   bottomRight: Radius.circular(0)),
               child: Image.network(
-                hospitalDetailPageProvider.hospitalDetail!.image,
+                hospitalDetailPageViewModel.hospitalDetail!.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -348,6 +346,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 onChanged: (int? value) {
                   setState(() {
                     _selectedDoctor = value!;
+                    print("DOCTOR ----> ${option.lastName}");
                   });
                 },
               ),
@@ -361,7 +360,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
 
   Widget selectServices() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -389,15 +388,15 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 physics: const NeverScrollableScrollPhysics(),
                 childAspectRatio: (1 / 0.4),
                 children: List.generate(
-                    hospitalDetailPageProvider.hospitalDetail!.services.length,
+                    hospitalDetailPageViewModel.hospitalDetail!.services.length,
                     (index) => GestureDetector(
                       onTap: () {
                         setState(() {
-                          check = listServiceCheck.contains(hospitalDetailPageProvider.hospitalDetail!.services[index]);
+                          check = listServiceCheck.contains(hospitalDetailPageViewModel.hospitalDetail!.services[index]);
                           if(check) {
-                            listServiceCheck.remove(hospitalDetailPageProvider.hospitalDetail!.services[index]);
+                            listServiceCheck.remove(hospitalDetailPageViewModel.hospitalDetail!.services[index]);
                           } else {
-                            listServiceCheck.add(hospitalDetailPageProvider.hospitalDetail!.services[index]);
+                            listServiceCheck.add(hospitalDetailPageViewModel.hospitalDetail!.services[index]);
                           }
                         });
                       },
@@ -406,7 +405,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             height: 100,
                         decoration: BoxDecoration(
-                          color: listServiceCheck.contains(hospitalDetailPageProvider.hospitalDetail!.services[index])
+                          color: listServiceCheck.contains(hospitalDetailPageViewModel.hospitalDetail!.services[index])
                               ? ColorConstant.BLue02
                               : const Color(0x0fffffff),
                           borderRadius: BorderRadius.circular(20.0),
@@ -422,12 +421,12 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      hospitalDetailPageProvider.hospitalDetail!.services[index].serviceName,
+                                      hospitalDetailPageViewModel.hospitalDetail!.services[index].serviceName,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         overflow: TextOverflow.ellipsis,
-                                        color: listServiceCheck.contains(hospitalDetailPageProvider.hospitalDetail!.services[index])
+                                        color: listServiceCheck.contains(hospitalDetailPageViewModel.hospitalDetail!.services[index])
                                             ? Colors.white
                                             : ColorConstant.BLue05,
                                         height: 1,
@@ -443,7 +442,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
-                                      "${hospitalDetailPageProvider.hospitalDetail!.services[index].price}00đ",
+                                      "${hospitalDetailPageViewModel.hospitalDetail!.services[index].price}00đ",
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -485,21 +484,13 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
 
   Widget selectTime() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
-    final scheduleInfoPageProvider = Provider.of<ScheduleInfoPageProvider>(context,listen: false);
+    final scheduleInfoPageViewModel = Provider.of<ScheduleInfoPageViewModel>(context,listen: false);
 
-    List<WorkingDayDetail> workingDayDetailsCheck = [];
+    hospitalDetailPageViewModel.setWorkingDayDetailsCheck(hospitalDetailPageViewModel.hospitalDetail!.workingDayDetails, scheduleInfoPageViewModel.weekday);
 
-    for (var element in hospitalDetailPageProvider.hospitalDetail!.workingDayDetails) {
-      if(element.date.isNotEmpty) {
-        if(scheduleInfoPageProvider.weekday + 1 == int.parse(element.date)) {
-          workingDayDetailsCheck.add(element);
-        }
-      }
-    }
-
-    return Consumer<ScheduleInfoPageProvider>(
+    return Consumer<ScheduleInfoPageViewModel>(
       builder: (context, scheduleInfoPageProvider, child) => SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         sliver: SliverToBoxAdapter(
@@ -519,19 +510,21 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                         ),
                       ),
                     )),
-                workingDayDetailsCheck.isNotEmpty ?  GridView.count(
+                hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty ?  GridView.count(
                   //padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   crossAxisCount: 3,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   childAspectRatio: (1 / .4),
                   children: List.generate(
-                    workingDayDetailsCheck.length,
+                    hospitalDetailPageViewModel.workingDayDetailsCheck.length,
                         (index) {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
                             _selectedTime = index;
+
+                            print("TIME --------> ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
                           });
                         },
                         child: Container(
@@ -548,7 +541,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                             child: Column(
                               children: [
                                 Text(
-                                  workingDayDetailsCheck[index].session == "MORNING" ? "Sáng" : "Chiều",
+                                  hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "MORNING" ? "Sáng" : "Chiều",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w400,
@@ -559,7 +552,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                   ),
                                 ),
                                 Text(
-                                  "${workingDayDetailsCheck[index].startHour} - ${workingDayDetailsCheck[index].endHour}",
+                                  "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w400,

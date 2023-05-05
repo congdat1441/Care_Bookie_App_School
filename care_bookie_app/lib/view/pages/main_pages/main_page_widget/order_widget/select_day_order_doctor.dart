@@ -1,9 +1,8 @@
-import 'package:care_bookie_app/providers/schedule_info_page_provider.dart';
+
+import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:provider/provider.dart';
-
-import '../../../../../providers/schedule_doctor_info_page_provider.dart';
 import '../../../../../res/constants/colors.dart';
 import '../../../../../utils/colors_util.dart';
 
@@ -87,7 +86,7 @@ class _SelectDayDoctorState extends State<SelectDayDoctor> {
 
   Widget capsuleView(int index) {
 
-    final scheduleDoctorInfoPageProvider = Provider.of<ScheduleDoctorInfoPageProvider>(context,listen: false);
+    final scheduleDoctorInfoPageViewModel = Provider.of<ScheduleDoctorInfoPageViewModel>(context,listen: false);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
@@ -96,7 +95,7 @@ class _SelectDayDoctorState extends State<SelectDayDoctor> {
             setState(() {
               currentDateTime = currentMonthList[index];
 
-              scheduleDoctorInfoPageProvider.setWeekday(currentDateTime.weekday);
+              scheduleDoctorInfoPageViewModel.setWeekday(currentDateTime.weekday);
 
 
             });

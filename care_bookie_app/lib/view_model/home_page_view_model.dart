@@ -5,19 +5,25 @@ import 'package:flutter/foundation.dart';
 
 import '../models/doctor.dart';
 
-class HomePageProvider extends ChangeNotifier {
+
+class HomePageViewModel extends ChangeNotifier {
+
+  DoctorApi doctorApi = DoctorApi();
+
+  HospitalApi hospitalApi = HospitalApi();
+
   List<Doctor> doctors = [];
 
   List<Hospital> hospitals = [];
 
 
   Future<void> getAllDoctor() async {
-    doctors = await getAllDoctorApi();
+    doctors = await doctorApi.getAllDoctorApi();
     notifyListeners();
   }
 
   Future<void> getAllHospital() async {
-    hospitals = await getAllHospitalApi();
+    hospitals = await hospitalApi.getAllHospitalApi();
     notifyListeners();
   }
 

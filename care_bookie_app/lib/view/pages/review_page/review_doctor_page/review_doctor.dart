@@ -1,5 +1,9 @@
+
+import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../res/constants/colors.dart';
 
@@ -62,6 +66,9 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
   }
 
   Widget starAndVoted() {
+
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
+
     return Column(
       children: [
         IntrinsicHeight(
@@ -70,9 +77,9 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "4.5",
-                    style: TextStyle(
+                  Text(
+                    "${doctorDetailPageViewModel.doctorDetail!.star}",
+                    style: const TextStyle(
                         fontSize: 45,
                         height: 1.2,
                         fontWeight: FontWeight.w600,
@@ -81,11 +88,16 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
                   ),
                   Row(
                     children: [
-                      ...[1, 2, 3, 4, 5].map((e) => const Icon(
-                            IconlyBold.star,
-                            size: 30,
-                            color: Colors.amber,
-                          )),
+                      RatingBarIndicator(
+                        rating: doctorDetailPageViewModel.doctorDetail!.star.toDouble(),
+                        itemBuilder: (context, index) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        itemCount: 5,
+                        itemSize: 20.0,
+                        direction: Axis.horizontal,
+                      )
                     ],
                   )
                 ],
@@ -101,16 +113,16 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    "2K",
-                    style: TextStyle(
+                    "${doctorDetailPageViewModel.comments.length}",
+                    style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Poppins',
                         color: ColorConstant.BLue03),
                   ),
-                  Text(
+                  const Text(
                     "VOTED",
                     style: TextStyle(
                         fontSize: 25,
@@ -157,7 +169,8 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(60),
-                          child: Image.asset('assets/images/doctor03.jpg',
+                          child: Image.network(
+                              doctorDetailPageViewModel.doctorDetail!.image,
                               width: 60, height: 60, fit: BoxFit.cover),
                         ),
                       ),
@@ -180,9 +193,13 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
   }
 
   Widget commentsDoctor() {
+
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
+
+
     return Column(
       children: [
-        ...[1, 2, 3, 4, 5, 6].map((e) => Container(
+        ...doctorDetailPageViewModel.comments.map((comment) => Container(
               margin: const EdgeInsets.fromLTRB(0, 15, 5, 10),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(20)),
@@ -229,8 +246,8 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(60),
-                                      child: Image.asset(
-                                          'assets/images/ava.PNG',
+                                      child: Image.network(
+                                          comment.image,
                                           width: 60,
                                           height: 60,
                                           fit: BoxFit.cover),
@@ -245,25 +262,25 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Jonh Wick",
-                                  style: TextStyle(
-                                      fontSize: 22,
+                                Text(
+                                  comment.fullName,
+                                  style: const TextStyle(
+                                      fontSize: 15,
                                       height: 0.8,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Row(
                                   children: [
-                                    ...[1, 2, 3, 4].map((e) => const Icon(
-                                          IconlyBold.star,
-                                          size: 25,
-                                          color: Colors.amber,
-                                        )),
-                                    const Icon(
-                                      IconlyBold.star,
-                                      size: 25,
-                                      color: ColorConstant.Grey00,
+                                    RatingBarIndicator(
+                                      rating: comment.star.toDouble(),
+                                      itemBuilder: (context, index) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      itemCount: 5,
+                                      itemSize: 20.0,
+                                      direction: Axis.horizontal,
                                     )
                                   ],
                                 )
@@ -272,9 +289,10 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
                           ),
                         ],
                       ),
-                      const Text(
-                        "15 Apr, 2023",
-                        style: TextStyle(
+                      Text(
+                        comment.
+                        dateTime.substring(0,10),
+                        style: const TextStyle(
                             color: ColorConstant.Grey01,
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
@@ -285,9 +303,9 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
                   Container(
                     margin: const EdgeInsets.only(left: 70, top: 20),
                     width: 280,
-                    child: const Text(
-                      "sit amet saidunt ante. Nullam fringilla, justo nec ultrices euismod, velit ipsum congue arcu, vel gravida eros mauris sit amet lorem. Mauris tincidunt justo sed nunc pretium fermentum. Vivamus vel aliquam enim. Vivamus tincidunt nunc eu orci venenatis,",
-                      style: TextStyle(
+                    child: Text(
+                      comment.content,
+                      style: const TextStyle(
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.w500,
                         color: Colors.black,

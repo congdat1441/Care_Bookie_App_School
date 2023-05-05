@@ -1,11 +1,11 @@
-import 'package:care_bookie_app/providers/doctor_detail_page_provider.dart';
-import 'package:care_bookie_app/providers/home_page_provider.dart';
+import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
+import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../../res/constants/colors.dart';
 import '../../doctor/detail_doctor.dart';
+
+
 
 class Doctors extends StatefulWidget {
   const Doctors({Key? key}) : super(key: key);
@@ -17,35 +17,35 @@ class Doctors extends StatefulWidget {
 class _DoctorsState extends State<Doctors> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomePageProvider>(
-      builder: (context, homePageProvider, child) => Padding(
-        padding: const EdgeInsets.only(top: 10.0),
+    return Consumer<HomePageViewModel>(
+      builder: (context, homePageViewModel, child) => Padding(
+        padding: const EdgeInsets.only(top: 0.0),
         child: SizedBox(
-          height: 210,
+          height: 225,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: homePageProvider.doctors.length,
+            itemCount: homePageViewModel.doctors.length,
             itemBuilder: (context, index) => Container(
               margin: const EdgeInsets.only(right: 15),
-              //height: 220,
+              height: 200,
               width: 155,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(27),
                 color: Colors.white,
-                // boxShadow: [
-                //   BoxShadow(
-                //       color: Colors.grey.withOpacity(0.15),
-                //       spreadRadius: 0,
-                //       blurRadius: 10,
-                //       offset: const Offset(0, 0))
-                // ],
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.15),
+                      spreadRadius: 0,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3))
+                ],
               ),
               child: Column(
                 children: [
                   Stack(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 7),
                         height: 135,
                         width: 140,
                         decoration: BoxDecoration(
@@ -63,28 +63,24 @@ class _DoctorsState extends State<Doctors> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: InkWell(
-                            onTap: () async {
-                              final doctorDetailPageProvider =
-                                  Provider.of<DoctorDetailPageProvider>(context,
-                                      listen: false);
+                            onTap: () async{
 
-                              doctorDetailPageProvider.setDoctorDetail(
-                                  homePageProvider.doctors[index]);
+                              final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
-                              await doctorDetailPageProvider.getHospitalById(
-                                  homePageProvider.doctors[index].hospitalId);
+                              doctorDetailPageViewModel.setDoctorDetail(homePageViewModel.doctors[index]);
+
+                              await doctorDetailPageViewModel.getHospitalById(homePageViewModel.doctors[index].hospitalId);
 
                               // ignore: use_build_context_synchronously
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const DetailDoctor()));
+                                      builder: (context) => const DetailDoctor()));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                homePageProvider.doctors[index].image,
+                                homePageViewModel.doctors[index].image,
                                 fit: BoxFit.fill,
                                 width: 100,
                                 height: 100,
@@ -105,7 +101,7 @@ class _DoctorsState extends State<Doctors> {
                             height: 20,
                             //color: Colors.grey,
                             child: Text(
-                                "Dr. ${homePageProvider.doctors[index].firstName} ${homePageProvider.doctors[index].lastName}",
+                                "Dr. ${homePageViewModel.doctors[index].firstName} ${homePageViewModel.doctors[index].lastName}",
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     fontSize: 14,
@@ -116,8 +112,7 @@ class _DoctorsState extends State<Doctors> {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(
-                                  homePageProvider.doctors[index].speciality,
+                              child: Text(homePageViewModel.doctors[index].speciality,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,

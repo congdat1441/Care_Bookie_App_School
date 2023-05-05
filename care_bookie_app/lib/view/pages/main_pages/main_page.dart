@@ -1,11 +1,10 @@
+import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import '../../../../providers/bottom_navbar_provider.dart';
 import '../../../../res/constants/colors.dart';
-import '../../../providers/home_page_provider.dart';
+import '../../../view_model/bottom_navbar_provider.dart';
 import 'main_page_widget/AppbarCustom.dart';
 import 'clinic/clinic_widget/clinics_nearby.dart';
 import 'main_page_widget/doctor_widget/doctors.dart';
@@ -30,7 +29,7 @@ class _MainPageState extends State<MainPage> {
     // TODO: implement initState
     super.initState();
 
-    var loadHospitalAndDoctor = Provider.of<HomePageProvider>(context, listen: false);
+    var loadHospitalAndDoctor = Provider.of<HomePageViewModel>(context, listen: false);
 
     if (loadHospitalAndDoctor.doctors.isEmpty) {
       loadHospitalAndDoctor.getAllDoctor();

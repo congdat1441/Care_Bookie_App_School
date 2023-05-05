@@ -1,11 +1,11 @@
+import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
+import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../../../providers/doctor_detail_page_provider.dart';
-import '../../../../providers/hospital_detail_page_provider.dart';
 import '../../review_page/review_clinic_page/review_clinic.dart';
 import '../doctor/detail_doctor.dart';
 import 'order_detail_clinic.dart';
@@ -37,11 +37,11 @@ class _DetailClinicState extends State<DetailClinic>
     // TODO: implement initState
     super.initState();
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     numbers = [];
 
-    for (var element in hospitalDetailPageProvider.hospitalDetail!.workingDayDetails) {
+    for (var element in hospitalDetailPageViewModel.hospitalDetail!.workingDayDetails) {
       if(element.date.isNotEmpty) {
         numbers.add(num.parse(element.date));
       }
@@ -72,13 +72,13 @@ class _DetailClinicState extends State<DetailClinic>
 
   Widget sliverAppBar() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverAppBar(
       title: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Text(
-          hospitalDetailPageProvider.hospitalDetail!.hospitalName,
+          hospitalDetailPageViewModel.hospitalDetail!.hospitalName,
           style: const TextStyle(
               overflow: TextOverflow.ellipsis,
               //letterSpacing: 2,
@@ -126,7 +126,7 @@ class _DetailClinicState extends State<DetailClinic>
                   bottomLeft: Radius.circular(34),
                   bottomRight: Radius.circular(34)),
               child: Image.network(
-                hospitalDetailPageProvider.hospitalDetail!.image,
+                hospitalDetailPageViewModel.hospitalDetail!.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -167,14 +167,14 @@ class _DetailClinicState extends State<DetailClinic>
                     child: Text(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      hospitalDetailPageProvider.hospitalDetail!.hospitalName,
+                      hospitalDetailPageViewModel.hospitalDetail!.hospitalName,
                       style:
                           const TextStyle(fontWeight: FontWeight.w500, fontSize: 21),
                     ),
                   ),
                   Expanded(
                     child: SizedBox(
-                      child: Text("${hospitalDetailPageProvider.hospitalDetail!.priceFrom}00đ - ${hospitalDetailPageProvider.hospitalDetail!.priceTo}00đ",
+                      child: Text("${hospitalDetailPageViewModel.hospitalDetail!.priceFrom}00đ - ${hospitalDetailPageViewModel.hospitalDetail!.priceTo}00đ",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -194,7 +194,7 @@ class _DetailClinicState extends State<DetailClinic>
 
   Widget addressAndReview() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -224,7 +224,7 @@ class _DetailClinicState extends State<DetailClinic>
                     Container(
                       width: 215,
                       padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
-                      child: Text(hospitalDetailPageProvider.hospitalDetail!.address,
+                      child: Text(hospitalDetailPageViewModel.hospitalDetail!.address,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -258,7 +258,7 @@ class _DetailClinicState extends State<DetailClinic>
                       Row(
                         children: [
                           RatingBarIndicator(
-                            rating: hospitalDetailPageProvider.hospitalDetail!.star.toDouble(),
+                            rating: hospitalDetailPageViewModel.hospitalDetail!.star.toDouble(),
                             itemBuilder: (context, index) => const Icon(
                               Icons.star,
                               color: Colors.amber,
@@ -270,7 +270,7 @@ class _DetailClinicState extends State<DetailClinic>
                           const SizedBox(
                             width: 5,
                           ),
-                          Text("${hospitalDetailPageProvider.hospitalDetail!.star}",
+                          Text("${hospitalDetailPageViewModel.hospitalDetail!.star}",
                               style: const TextStyle(
                                   height: 1.5,
                                   fontSize: 20,
@@ -280,14 +280,20 @@ class _DetailClinicState extends State<DetailClinic>
                         ],
                       ),
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async{
+
+                            await hospitalDetailPageViewModel.getAllCommentByHospitalId(hospitalDetailPageViewModel.hospitalDetail!.id);
+
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         const ReviewClinic()));
+
+
                           },
-                          child: const Text("Đánh giá",
+                          child: const Text("Xem đánh giá",
                               style: TextStyle(
                                   height: 1.5,
                                   fontSize: 20,
@@ -319,7 +325,7 @@ class _DetailClinicState extends State<DetailClinic>
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      ...hospitalDetailPageProvider.hospitalDetail!.services.map((e) => Container(
+                      ...hospitalDetailPageViewModel.hospitalDetail!.services.map((e) => Container(
                             margin: const EdgeInsets.symmetric(horizontal: 5),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             height: 50,
@@ -377,7 +383,7 @@ class _DetailClinicState extends State<DetailClinic>
 
   Widget doctorClinic() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
         child: Padding(
@@ -388,7 +394,7 @@ class _DetailClinicState extends State<DetailClinic>
           height: 225,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: hospitalDetailPageProvider.doctors.length,
+            itemCount: hospitalDetailPageViewModel.doctors.length,
             itemBuilder: (context, index) => Container(
               margin: const EdgeInsets.only(right: 15),
               height: 200,
@@ -429,11 +435,11 @@ class _DetailClinicState extends State<DetailClinic>
                           child: InkWell(
                             onTap: () async{
 
-                              final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+                              final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
-                              doctorDetailPageProvider.setDoctorDetail(hospitalDetailPageProvider.doctors[index]);
+                              doctorDetailPageViewModel.setDoctorDetail(hospitalDetailPageViewModel.doctors[index]);
 
-                              await doctorDetailPageProvider.getHospitalById(hospitalDetailPageProvider.doctors[index].hospitalId);
+                              await doctorDetailPageViewModel.getHospitalById(hospitalDetailPageViewModel.doctors[index].hospitalId);
 
                               // ignore: use_build_context_synchronously
                               Navigator.push(
@@ -444,7 +450,7 @@ class _DetailClinicState extends State<DetailClinic>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                hospitalDetailPageProvider.doctors[index].image,
+                                hospitalDetailPageViewModel.doctors[index].image,
                                 fit: BoxFit.fill,
                                 width: 100,
                                 height: 100,
@@ -465,7 +471,7 @@ class _DetailClinicState extends State<DetailClinic>
                             height: 20,
                             //color: Colors.grey,
                             child: Text(
-                                "Dr. ${hospitalDetailPageProvider.doctors[index].firstName} ${hospitalDetailPageProvider.doctors[index].lastName}",
+                                "Dr. ${hospitalDetailPageViewModel.doctors[index].firstName} ${hospitalDetailPageViewModel.doctors[index].lastName}",
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     fontSize: 14,
@@ -476,7 +482,7 @@ class _DetailClinicState extends State<DetailClinic>
                         Row(
                           children: [
                             Expanded(
-                              child: Text(hospitalDetailPageProvider.doctors[index].speciality,
+                              child: Text(hospitalDetailPageViewModel.doctors[index].speciality,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,
@@ -501,7 +507,7 @@ class _DetailClinicState extends State<DetailClinic>
 
   Widget timeWorking() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -567,7 +573,7 @@ class _DetailClinicState extends State<DetailClinic>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
 
-                            ...hospitalDetailPageProvider.hospitalDetail!.workingDayDetails.map((day) {
+                            ...hospitalDetailPageViewModel.hospitalDetail!.workingDayDetails.map((day) {
 
                               if(day.date.isNotEmpty) {
                                 if(e == num.parse(day.date)) {
@@ -679,7 +685,7 @@ class _DetailClinicState extends State<DetailClinic>
 
   Widget infoClinic() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -712,7 +718,7 @@ class _DetailClinicState extends State<DetailClinic>
                 child: Column(
                   children:[
                     ExpandableText(
-                      hospitalDetailPageProvider.hospitalDetail!.information,
+                      hospitalDetailPageViewModel.hospitalDetail!.information,
                       trimType: TrimType.lines,
                       trim: 8,
                       style: const TextStyle(
@@ -738,7 +744,7 @@ class _DetailClinicState extends State<DetailClinic>
 
   Widget certificationClinic() {
 
-    final hospitalDetailPageProvider = Provider.of<HospitalDetailPageProvider>(context,listen: false);
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
