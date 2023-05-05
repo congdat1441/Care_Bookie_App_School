@@ -50,14 +50,15 @@ class _FavoriteInfosState extends State<FavoriteInfos> {
           ),
         ),
         Container(
-          width: 160,
-          height: 100,
-          margin: const EdgeInsets.fromLTRB(190, 80, 0, 0),
+          width: 200,
+          height: 140,
+          // color: Colors.orange,
+          margin: const EdgeInsets.fromLTRB(170, 60, 0, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               Text(
-                'Covid 19',
+                'Phòng tránh Covid 19',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 19,
@@ -65,10 +66,10 @@ class _FavoriteInfosState extends State<FavoriteInfos> {
                     fontFamily: 'Poppins'),
               ),
               Text(
-                'Protect your self and your family from covid 19',
+                'Bảo vệ sức khỏe chính bạn và người thân khỏi Covid 19',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 15,
+                    fontSize: 14,
                     color: ColorConstant.White00,
                     fontFamily: 'Poppins'),
               ),

@@ -18,7 +18,8 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
         ...[1, 2, 3, 4, 5, 6].map((e) => Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
           child: containerhistoryFinish(),
-        ))
+        )),
+        const SizedBox(height: 100)
       ],
     );
   }
@@ -118,7 +119,7 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
                       width: 190,
                       //height: 40,
                       //color: Colors.grey,
-                      child: Text("Restore Medical Clinic CIS",
+                      child: Text("15A/21 Nguyen Van Duong",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

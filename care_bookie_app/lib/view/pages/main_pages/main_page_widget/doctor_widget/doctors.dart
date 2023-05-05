@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
 import '../../doctor/detail_doctor.dart';
 
-
-
 class Doctors extends StatefulWidget {
   const Doctors({Key? key}) : super(key: key);
 
@@ -21,33 +19,33 @@ class _DoctorsState extends State<Doctors> {
   Widget build(BuildContext context) {
     return Consumer<HomePageProvider>(
       builder: (context, homePageProvider, child) => Padding(
-        padding: const EdgeInsets.only(top: 0.0),
+        padding: const EdgeInsets.only(top: 10.0),
         child: SizedBox(
-          height: 225,
+          height: 210,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: homePageProvider.doctors.length,
             itemBuilder: (context, index) => Container(
               margin: const EdgeInsets.only(right: 15),
-              height: 200,
+              //height: 220,
               width: 155,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(27),
                 color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.15),
-                      spreadRadius: 0,
-                      blurRadius: 10,
-                      offset: const Offset(0, 3))
-                ],
+                // boxShadow: [
+                //   BoxShadow(
+                //       color: Colors.grey.withOpacity(0.15),
+                //       spreadRadius: 0,
+                //       blurRadius: 10,
+                //       offset: const Offset(0, 0))
+                // ],
               ),
               child: Column(
                 children: [
                   Stack(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(top: 7),
+                        padding: const EdgeInsets.only(top: 5),
                         height: 135,
                         width: 140,
                         decoration: BoxDecoration(
@@ -65,19 +63,23 @@ class _DoctorsState extends State<Doctors> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: InkWell(
-                            onTap: () async{
+                            onTap: () async {
+                              final doctorDetailPageProvider =
+                                  Provider.of<DoctorDetailPageProvider>(context,
+                                      listen: false);
 
-                              final doctorDetailPageProvider = Provider.of<DoctorDetailPageProvider>(context,listen: false);
+                              doctorDetailPageProvider.setDoctorDetail(
+                                  homePageProvider.doctors[index]);
 
-                              doctorDetailPageProvider.setDoctorDetail(homePageProvider.doctors[index]);
-
-                              await doctorDetailPageProvider.getHospitalById(homePageProvider.doctors[index].hospitalId);
+                              await doctorDetailPageProvider.getHospitalById(
+                                  homePageProvider.doctors[index].hospitalId);
 
                               // ignore: use_build_context_synchronously
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const DetailDoctor()));
+                                      builder: (context) =>
+                                          const DetailDoctor()));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
@@ -114,7 +116,8 @@ class _DoctorsState extends State<Doctors> {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(homePageProvider.doctors[index].speciality,
+                              child: Text(
+                                  homePageProvider.doctors[index].speciality,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,

@@ -5,11 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../models/doctor.dart';
 
-
-
 class HomePageProvider extends ChangeNotifier {
-
-
   List<Doctor> doctors = [];
 
   List<Hospital> hospitals = [];

@@ -4,12 +4,10 @@ import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 import '../../../../providers/doctor_detail_page_provider.dart';
 import '../../../../providers/hospital_detail_page_provider.dart';
 import '../../review_page/review_clinic_page/review_clinic.dart';
 import '../doctor/detail_doctor.dart';
-import '../main_page_widget/doctor_widget/doctors.dart';
 import 'order_detail_clinic.dart';
 
 class DetailClinic extends StatefulWidget {
@@ -884,3 +882,4 @@ class _DetailClinicState extends State<DetailClinic>
     );
   }
 }
+

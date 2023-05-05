@@ -12,7 +12,7 @@ class AccountPage extends StatelessWidget {
       backgroundColor: ColorConstant.BackGroundColor,
       body: CustomScrollView(
         slivers: <Widget>[
-          sliverappbar(),
+          sliverAppbar(),
           sliverToBoxAdapter(),
           const SliverToBoxAdapterContent()
         ],
@@ -20,12 +20,12 @@ class AccountPage extends StatelessWidget {
     );
   }
 
-  Widget sliverappbar() {
+  Widget sliverAppbar() {
     return SliverAppBar(
       title: const Align(
         alignment: Alignment.center,
         child: Text(
-          'Account',
+          'Tài khoản cá nhân',
           style: TextStyle(
               color: Colors.white,
               overflow: TextOverflow.ellipsis,
@@ -158,5 +158,4 @@ class AccountPage extends StatelessWidget {
       ),
     );
   }
-
 }
