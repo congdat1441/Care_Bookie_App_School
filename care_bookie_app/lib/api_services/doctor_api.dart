@@ -68,4 +68,20 @@ class DoctorApi {
 
   }
 
+  Future<bool> createFavoriteDoctorApi(String doctorId,String userId) async {
+
+    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/user/doctor/favourite/$userId?doctorId=$doctorId";
+
+    Map<String,String> headers = { 'content-type' : 'application/json' };
+
+    var response = await http.post(Uri.parse(url),headers: headers);
+
+    if(response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+
+  }
+
 }
