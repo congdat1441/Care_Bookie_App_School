@@ -6,6 +6,7 @@ import '../api_services/doctor_api.dart';
 import '../models/comment.dart';
 import '../models/doctor.dart';
 import '../models/hospital.dart';
+import '../models/service.dart';
 import '../models/working_day_detail.dart';
 
 class HospitalDetailPageViewModel extends ChangeNotifier {
@@ -21,6 +22,10 @@ class HospitalDetailPageViewModel extends ChangeNotifier {
   List<Comment> comments = [];
 
   List<WorkingDayDetail> workingDayDetailsCheck = [];
+
+  List<Service> listServiceCheck = [];
+
+  bool check = false;
 
   void setHospitalDetail(Hospital hospital) {
     hospitalDetail = hospital;
@@ -46,6 +51,18 @@ class HospitalDetailPageViewModel extends ChangeNotifier {
           workingDayDetailsCheck.add(element);
         }
       }
+    }
+  }
+
+  void setCheck(bool value) {
+    check = value;
+  }
+
+  void setListServiceCheck(Service service) {
+    if(check) {
+      listServiceCheck.remove(service);
+    } else {
+      listServiceCheck.add(service);
     }
   }
 

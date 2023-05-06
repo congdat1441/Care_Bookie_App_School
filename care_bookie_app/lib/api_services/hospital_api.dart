@@ -9,7 +9,7 @@ class HospitalApi {
 
   Future<List<Hospital>> getAllHospitalApi() async {
 
-    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/getAll";
+    String url = "https://84c1-210-245-110-144.ngrok-free.app/api/v1/care-bookie/common/hospital/getAll";
 
     var response = await http.get(Uri.parse(url));
 
@@ -29,7 +29,7 @@ class HospitalApi {
 
   Future<Hospital> getHospitalByIdApi(String id) async {
 
-    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/$id";
+    String url = "https://84c1-210-245-110-144.ngrok-free.app/api/v1/care-bookie/common/hospital/$id";
 
     var response = await http.get(Uri.parse(url));
 
@@ -49,7 +49,7 @@ class HospitalApi {
 
   Future<List<Comment>> getAllCommentByHospitalIdApi(String hospitalId) async {
 
-    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/comment/$hospitalId";
+    String url = "https://10da-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/comment/$hospitalId";
 
     var response = await http.get(Uri.parse(url));
 

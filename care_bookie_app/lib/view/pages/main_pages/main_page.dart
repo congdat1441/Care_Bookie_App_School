@@ -1,4 +1,6 @@
+import 'package:care_bookie_app/view_model/history_page_view_model.dart';
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
+import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,6 +40,13 @@ class _MainPageState extends State<MainPage> {
     if (loadHospitalAndDoctor.hospitals.isEmpty) {
       loadHospitalAndDoctor.getAllHospital();
     }
+
+    final historyPageViewModel = Provider.of<HistoryPageViewModel>(context,listen: false);
+
+    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+
+    historyPageViewModel.setHistories(userLoginInfoViewModel.userLogin.id);
+
 
   }
 

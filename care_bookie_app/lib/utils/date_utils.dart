@@ -182,4 +182,108 @@ class DateUtils {
   static DateTime nextWeek(DateTime w) {
     return w.add(const Duration(days: 7));
   }
+
+  static String convertDateTime(String dateTimeStr) {
+    // Chuyển đổi chuỗi thành đối tượng DateTime
+    DateTime dateTime = DateTime.parse(dateTimeStr);
+
+    // Tạo danh sách các tháng trong tiếng Việt
+    List<String> months = [
+      '',
+      'Tháng 01',
+      'Tháng 02',
+      'Tháng 03',
+      'Tháng 04',
+      'Tháng 05',
+      'Tháng 06',
+      'Tháng 07',
+      'Tháng 08',
+      'Tháng 09',
+      'Tháng 10',
+      'Tháng 11',
+      'Tháng 12',
+    ];
+
+    // Chuyển đổi ngày
+    String day = dateTime.day.toString().padLeft(2, '0');
+
+    // Chuyển đổi tháng
+    String month = months[dateTime.month];
+
+    // Chuyển đổi năm
+    String year = dateTime.year.toString();
+
+    // Chuyển đổi giờ
+    String hour = dateTime.hour.toString().padLeft(2, '0');
+
+    // Chuyển đổi phút
+    String minute = dateTime.minute.toString().padLeft(2, '0');
+
+    // Xác định buổi trong ngày
+    String period = '';
+    if (dateTime.hour >= 0 && dateTime.hour < 12) {
+      period = 'Sáng';
+    } else if (dateTime.hour >= 12 && dateTime.hour < 18) {
+      period = 'Chiều';
+    } else {
+      period = 'Tối';
+    }
+
+    // Tạo chuỗi kết quả
+    String result = '$day $month, $year || $period $hour:$minute';
+
+    return result;
+  }
+
+  static String convertDateString(String input) {
+    DateTime dateTime = DateTime.parse(input);
+    String formattedDate = "${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year.toString()}";
+    return formattedDate;
+  }
+
+  static bool isDateBeforeNow(String inputDate) {
+    // Lấy ngày hiện tại
+    DateTime now = DateTime.now();
+
+    // Tạo đối tượng DateTime từ chuỗi nhập vào
+    List<String> parts = inputDate.split('-');
+    int day = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int year = int.parse(parts[2]);
+    DateTime inputDateTime = DateTime(year, month, day);
+
+    // Kiểm tra xem chuỗi nhập vào có nhỏ hơn hoặc bằng ngày hiện tại không
+    if (inputDateTime.isBefore(now) || inputDateTime.isAtSameMomentAs(now)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static int calculateAge(String dateString) {
+    // Tách chuỗi ngày tháng năm thành ba phần: ngày, tháng, năm
+    List<String> parts = dateString.split("-");
+    int day = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int year = int.parse(parts[2]);
+
+    // Lấy ngày hiện tại
+    DateTime now = DateTime.now();
+
+    // Lấy ngày tháng năm hiện tại
+    int currentDay = now.day;
+    int currentMonth = now.month;
+    int currentYear = now.year;
+
+    // Tính tuổi
+    int age = currentYear - year;
+
+    // Kiểm tra xem đã qua sinh nhật chưa
+    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
+      age--;
+    }
+
+    return age;
+  }
+
 }

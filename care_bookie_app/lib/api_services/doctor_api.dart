@@ -10,7 +10,7 @@ class DoctorApi {
 
   Future<List<Doctor>> getAllDoctorApi() async {
 
-    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/doctor/getAll";
+    String url = "https://84c1-210-245-110-144.ngrok-free.app/api/v1/care-bookie/common/doctor/getAll";
 
     var response = await http.get(Uri.parse(url));
 
@@ -30,7 +30,7 @@ class DoctorApi {
 
   Future<List<Doctor>> getAllDoctorByHospitalIdApi(String hospitalId) async {
 
-    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/doctor/$hospitalId";
+    String url = "https://84c1-210-245-110-144.ngrok-free.app/api/v1/care-bookie/common/doctor/$hospitalId";
 
     var response = await http.get(Uri.parse(url));
 
@@ -50,7 +50,7 @@ class DoctorApi {
 
   Future<List<Comment>> getAllCommentByDoctorIdApi(String doctorId) async {
 
-    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/doctor/comment/$doctorId";
+    String url = "https://84c1-210-245-110-144.ngrok-free.app/api/v1/care-bookie/common/doctor/comment/$doctorId";
 
     var response = await http.get(Uri.parse(url));
 
@@ -70,7 +70,7 @@ class DoctorApi {
 
   Future<bool> createFavoriteDoctorApi(String doctorId,String userId) async {
 
-    String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/user/doctor/favourite/$userId?doctorId=$doctorId";
+    String url = "https://84c1-210-245-110-144.ngrok-free.app/api/v1/care-bookie/user/doctor/favourite/$userId?doctorId=$doctorId";
 
     Map<String,String> headers = { 'content-type' : 'application/json' };
 

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
+import 'package:provider/provider.dart';
+import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import '../../../res/constants/colors.dart';
+import '../../../view_model/history_detail_page_view_model.dart';
 import '../review_page/review_clinic_page/add_review_clinic.dart';
 import '../review_page/review_doctor_page/add_review_doctor.dart';
 
@@ -27,7 +29,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           backgroundColor: Colors.grey,
           title: const Center(
             child: Text(
-              "Thông tin đặt lịch",
+              "Lịch sử khám bệnh",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -65,27 +67,30 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget infoOrderDetail() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Trung tâm khám bệnh",
+            children: [
+              const Text("Trung tâm khám bệnh",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 18,
+                      fontSize: 15,
                       overflow: TextOverflow.visible)),
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("The CIS Free Clinic",
+                  child: Text(historyDetailPageViewModel.historyDetail!.hospitalName,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
-                          fontSize: 17,
+                          fontSize: 15,
                           overflow: TextOverflow.ellipsis)),
                 ),
               ),
@@ -98,22 +103,22 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Bác sỹ điều trị",
+            children: [
+              const Text("Bác sỹ điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 18,
+                      fontSize: 15,
                       overflow: TextOverflow.visible)),
               SizedBox(
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nguyễn Văn A",
+                  child: Text(historyDetailPageViewModel.historyDetail!.doctorName,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
-                          fontSize: 17,
+                          fontSize: 15,
                           overflow: TextOverflow.ellipsis)),
                 ),
               ),
@@ -126,8 +131,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Thời gian",
+            children:[
+              const Text("Thời gian",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -136,12 +141,12 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 140,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("15 Tháng 5, 2023 || Sáng 8:00 - 12:00 AM",
+                  child: Text(date_util.DateUtils.convertDateTime(historyDetailPageViewModel.historyDetail!.invoiceInformation.dateTimeInvoice),
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
-                          fontSize: 17,
+                          fontSize: 15,
                           overflow: TextOverflow.ellipsis)),
                 ),
               ),
@@ -270,6 +275,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget symptom() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return Column(
       children: [
         Row(
@@ -292,13 +300,13 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               borderRadius: BorderRadius.circular(25),
               border:
               Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
-          child: const Align(
+          child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend risus a ex ultricies blandit. Mauris venenatis nunc ut est dapibus, ac suscipit eros bibendum. Integer sagittis, enim vel convallis hendrerit, mauris sapien tristique mi, sed bibendum massa metus eu dolor. Sed vestibulum tellus quis ex eleifend auctor. Sed sed velit eget enim tristique ultricies at at massa. In lacinia magna nec arcu dignissim, eu laoreet leo tincidunt. Nulla lobortis nunc at est facilisis faucibus. Sed eget semper enim. Vestibulum id urna nec nulla porttitor accumsan vel quis nisi. Quisque congue ligula at mauris suscipit, ut pellentesque ex iaculis. Maecenas vestibulum, magna vel tempor varius, tortor ex dapibus ipsum, nec bibendum sapien diam auctor metus. In eget mi ex. Nulla varius, massa ac feugiat blandit, dolor libero feugiat magna, ac scelerisque sapien turpis eu felis. Donec pulvinar, arcu eu rutrum malesuada, sapien lectus cursus eros, eget placerat nisl arcu vitae lectus.",
-                  style: TextStyle(
+                  historyDetailPageViewModel.historyDetail!.invoiceInformation.symptomDetail,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
                     height: 1.4,
@@ -317,6 +325,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget price() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return Column(
       children: [
         Row(
@@ -332,13 +343,13 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
             ),
           ],
         ),
-        Row(
+        ...historyDetailPageViewModel.historyDetail!.services.map((e) => Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Text("Khám lợi",
-                  style: TextStyle(
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+              child: Text(e.serviceName,
+                  style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
@@ -347,9 +358,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               width: 200,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text("150,000đ",
+                child: Text("${e.price}00đ",
                     maxLines: 2,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.amber,
                         fontSize: 17,
@@ -357,57 +368,25 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               ),
             ),
           ],
-        ),
+        )),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Text("Trám răng",
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 8.0,top: 10),
+              child: Text("Tổng tiền",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
             ),
-            SizedBox(
-              width: 200,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text("150,000đ",
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.amber,
-                        fontSize: 17,
-                        overflow: TextOverflow.ellipsis)),
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: Text("Chi phí dự kiến",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-            ),
-            SizedBox(
-              width: 200,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text("300,000đ",
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.amber,
-                        fontSize: 17,
-                        overflow: TextOverflow.ellipsis)),
-              ),
-            ),
+            Text("${historyDetailPageViewModel.historyDetail!.totalPrice}00đ",
+                maxLines: 2,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.amber,
+                    fontSize: 17,
+                    overflow: TextOverflow.ellipsis))
           ],
         ),
         const Divider(
@@ -420,6 +399,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget noteFromDoctor() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return Column(
       children: [
         const Divider(
@@ -447,13 +429,13 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               borderRadius: BorderRadius.circular(25),
               border:
               Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
-          child: const Align(
+          child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend risus a ex ultricies blandit. Mauris venenatis nunc ut est dapibus, ac suscipit eros bibendum. Integer sagittis, enim vel convallis hendrerit, mauris sapien tristique mi, sed bibendum massa metus eu dolor. Sed vestibulum tellus quis ex eleifend auctor. Sed sed velit eget enim tristique ultricies at at massa. In lacinia magna nec arcu dignissim, eu laoreet leo tincidunt. Nulla lobortis nunc at est facilisis faucibus. Sed eget semper enim. Vestibulum id urna nec nulla porttitor accumsan vel quis nisi. Quisque congue ligula at mauris suscipit, ut pellentesque ex iaculis. Maecenas vestibulum, magna vel tempor varius, tortor ex dapibus ipsum, nec bibendum sapien diam auctor metus. In eget mi ex. Nulla varius, massa ac feugiat blandit, dolor libero feugiat magna, ac scelerisque sapien turpis eu felis. Donec pulvinar, arcu eu rutrum malesuada, sapien lectus cursus eros, eget placerat nisl arcu vitae lectus.",
-                  style: TextStyle(
+                  historyDetailPageViewModel.historyDetail!.invoiceInformation.advices,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
                     height: 1.4,
@@ -472,6 +454,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget contentNoteDrug() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -487,166 +472,38 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                   fontWeight: FontWeight.w500,
                   fontSize: 20,
                   overflow: TextOverflow.visible)),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Thuốc A",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("10 viên",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
+          ...historyDetailPageViewModel.historyDetail!.medicines.map((e) => Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(e.medicineName,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        overflow: TextOverflow.visible)),
+                SizedBox(
+                  width: 180,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text( "${e.medicinePrice.toInt()} ${e.medicineUnit}",
+                        maxLines: 2,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                            fontSize: 17,
+                            overflow: TextOverflow.ellipsis)),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Thuốc A",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-              SizedBox(
-                width: 180,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("20 viên",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Thuốc C",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("10 viên",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Thuốc A",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-              SizedBox(
-                width: 180,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("20 viên",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
+              ],
+            ),
+          ))
+
         ],
       ),
     );
   }
 
-  Widget cancelBook(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 10, 10, 15),
-          height: 50,
-          width: 120,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 1, color: Colors.grey)),
-          child: TextButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Lý do hủy lịch'),
-                    content: const TextField(
-                      decoration:
-                      InputDecoration(hintText: 'Nhập lý do hủy lịch'),
-                    ),
-                    actions: <Widget>[
-                      ElevatedButton(
-                        child: const Text('Hủy'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      ElevatedButton(
-                        child: const Text('Gửi'),
-                        onPressed: () {
-                          // Xử lý lưu thông tin lý do hủy lịch tại đây
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Text("Hủy Lịch",
-                    style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold)),
-                Icon(
-                  Icons.delete,
-                  color: Colors.grey,
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget bottomNavigatorBar() {
     return Container(

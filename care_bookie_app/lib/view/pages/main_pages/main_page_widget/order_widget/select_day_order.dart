@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../res/constants/colors.dart';
 import '../../../../../utils/colors_util.dart';
+import '../../../../../view_model/order_hospital_data_view_model.dart';
 
 class SelectDay extends StatefulWidget {
 
@@ -89,6 +90,8 @@ class _SelectDayState extends State<SelectDay> {
 
     final scheduleInfoPageViewModel = Provider.of<ScheduleInfoPageViewModel>(context,listen: false);
 
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
         child: GestureDetector(
@@ -96,9 +99,13 @@ class _SelectDayState extends State<SelectDay> {
             setState(() {
               currentDateTime = currentMonthList[index];
 
-              scheduleInfoPageViewModel.setWeekday(currentDateTime.weekday);
+              scheduleInfoPageViewModel.setWeekday(currentDateTime.weekday + 1);
 
-              print("DATE ${date_util.DateUtils.weekdays[currentMonthList[index].weekday - 1]}");
+              orderHospitalDataViewModel.setWeekdaySelected(currentDateTime.weekday + 1);
+
+              orderHospitalDataViewModel.setDateTimeSelected(date_util.DateUtils.convertDateString(currentDateTime.toString()));
+
+              print("DATEEEEEEEEEEE ${orderHospitalDataViewModel.dateTimeSelected}");
 
 
             });
