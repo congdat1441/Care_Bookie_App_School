@@ -44,7 +44,7 @@ class _SearchButtonState extends State<SearchButton> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         const Text(
-          "Search for poly",
+          "Tìm kiếm trên Carebookie",
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 17,

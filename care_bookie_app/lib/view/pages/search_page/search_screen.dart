@@ -57,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: TextField(
               decoration: InputDecoration(
                 fillColor: Colors.white,
-                hintText: 'Search for poly...',
+                hintText: 'Tìm kiếm trên Carebookie...',
                 hintStyle: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 17,

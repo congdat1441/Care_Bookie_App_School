@@ -27,7 +27,8 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
         ...[1, 2, 3, 4, 5, 6].map((e) => Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
               child: containerScheduleCancel(),
-            ))
+            )),
+        const SizedBox(height: 100,)
       ],
     );
   }

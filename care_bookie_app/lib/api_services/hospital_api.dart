@@ -5,7 +5,10 @@ import 'package:care_bookie_app/models/hospital.dart';
 
 import '../models/comment.dart';
 
+  String url = "https://3c1e-117-2-6-32.ngrok-free.app/api/v1/care-bookie/common/hospital/getAll";
+
 class HospitalApi {
+
 
   Future<List<Hospital>> getAllHospitalApi() async {
 
@@ -28,8 +31,8 @@ class HospitalApi {
   }
 
   Future<Hospital> getHospitalByIdApi(String id) async {
-
     String url = "https://84c1-210-245-110-144.ngrok-free.app/api/v1/care-bookie/common/hospital/$id";
+
 
     var response = await http.get(Uri.parse(url));
 

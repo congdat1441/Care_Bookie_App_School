@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import '../models/doctor.dart';
 
 
-
 class HomePageViewModel extends ChangeNotifier {
 
   DoctorApi doctorApi = DoctorApi();

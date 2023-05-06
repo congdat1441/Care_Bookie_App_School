@@ -183,7 +183,7 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily:
                                                   'Merriweather Sans')),
-                                          const Text("See Detail",
+                                          const Text("Chi tiết",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   letterSpacing: 0.1,
@@ -207,6 +207,9 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                 ),
               ),
             ),
+            //  Container(height: 110,
+            //    color: Colors.transparent,
+            // )
           ],
         ),
       ),

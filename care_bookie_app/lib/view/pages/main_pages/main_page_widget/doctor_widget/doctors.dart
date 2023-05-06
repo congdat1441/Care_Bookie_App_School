@@ -1,10 +1,7 @@
-
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../../res/constants/colors.dart';
 import '../../doctor/detail_doctor.dart';
 

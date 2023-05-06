@@ -888,3 +888,4 @@ class _DetailClinicState extends State<DetailClinic>
     );
   }
 }
+
