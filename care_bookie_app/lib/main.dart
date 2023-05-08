@@ -3,6 +3,7 @@ import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/log_in.dart';
 import 'package:care_bookie_app/view_model/bottom_navbar_provider.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
+import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
 import 'package:care_bookie_app/view_model/history_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/history_page_view_model.dart';
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OrderHospitalDataViewModel(),),
         ChangeNotifierProvider(create: (context) => SchedulePageViewModel(),),
         ChangeNotifierProvider(create: (context) => ScheduleDetailPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel(),)
+        ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel(),),
+        ChangeNotifierProvider(create: (context) => FavoritePageViewModel(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

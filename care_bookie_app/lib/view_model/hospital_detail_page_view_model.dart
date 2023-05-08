@@ -30,6 +30,10 @@ class HospitalDetailPageViewModel extends ChangeNotifier {
 
   Schedule? scheduleWithHospital;
 
+  void resetScheduleWithHospital() {
+    scheduleWithHospital = null;
+  }
+
   void setHospitalDetail(Hospital hospital) {
     hospitalDetail = hospital;
   }

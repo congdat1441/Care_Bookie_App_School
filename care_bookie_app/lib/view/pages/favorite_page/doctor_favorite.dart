@@ -1,6 +1,8 @@
+import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 import '../../../res/constants/colors.dart';
 import '../main_pages/doctor/detail_doctor.dart';
@@ -15,6 +17,9 @@ class DoctorFavorite extends StatefulWidget {
 class _DoctorFavoriteState extends State<DoctorFavorite> {
   @override
   Widget build(BuildContext context) {
+
+    final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
     return  Padding(
       padding: const EdgeInsets.only(top: 0.0),
       child: SizedBox(
@@ -25,7 +30,7 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
             const SizedBox(
               width: 35,
             ),
-            ...[1, 2, 3, 4, 5, 6, 7].map((e) => Container(
+            ...favoritePageViewModel.listDoctorFavorite.map((favorite) => Container(
               margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               alignment: Alignment.topCenter,
               child: Container(
@@ -75,8 +80,8 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
-                                child: Image.asset(
-                                  'assets/images/doctor03.jpg',
+                                child: Image.network(
+                                  favorite.doctor.image,
                                   fit: BoxFit.fitWidth,
 
                                   //scale: 30,
@@ -89,14 +94,13 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                           margin: const EdgeInsets.fromLTRB(105, 10, 0, 0),
                           height: 28,
                           width: 28,
-                          child: FloatingActionButton(
-                              backgroundColor: Colors.white,
-                              child: const Icon(
-                                IconlyBold.heart,
-                                color: Color(0xffee5353),
-                                size: 20,
-                              ),
-                              onPressed: () {}),
+                          child: GestureDetector(
+                            child: const Icon(
+                              IconlyBold.closeSquare,
+                              color: Color(0xffee5353),
+                              size: 20,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -104,27 +108,30 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                       padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
                       child: Column(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                               width: 130,
                               height: 20,
                               //color: Colors.grey,
-                              child: Text("Dr. Nguyễn Văn A aaaaaaaaaaa",
+                              child: Text("Dr. ${favorite.doctor.lastName} ${favorite.doctor.lastName}",
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       //overflow: TextOverflow.ellipsis,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'Merriweather Sans'))),
                           Row(
-                            children: const [
-                              Text("Răng hàm mặt",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      //overflow: TextOverflow.ellipsis,
-                                      color: ColorConstant.Grey01,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Merriweather Sans')),
+                            children: [
+                              Expanded(
+                                child: Text(favorite.doctor.speciality,
+                                    style: const TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 14,
+                                        //overflow: TextOverflow.ellipsis,
+                                        color: ColorConstant.Grey01,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Merriweather Sans')),
+                              ),
                             ],
                           )
                         ],

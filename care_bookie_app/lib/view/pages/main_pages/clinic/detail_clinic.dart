@@ -96,6 +96,8 @@ class _DetailClinicState extends State<DetailClinic>
       backgroundColor: Colors.transparent,
       leading: IconButton(
         onPressed: () {
+          hospitalDetailPageViewModel.resetScheduleWithHospital();
+
           Navigator.pop(context);
         },
         icon: const Icon(
