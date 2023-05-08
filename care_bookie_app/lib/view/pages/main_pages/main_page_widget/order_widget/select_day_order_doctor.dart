@@ -5,6 +5,7 @@ import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
 import '../../../../../utils/colors_util.dart';
+import '../../../../../view_model/order_hospital_data_view_model.dart';
 
 class SelectDayDoctor extends StatefulWidget {
 
@@ -88,6 +89,8 @@ class _SelectDayDoctorState extends State<SelectDayDoctor> {
 
     final scheduleDoctorInfoPageViewModel = Provider.of<ScheduleDoctorInfoPageViewModel>(context,listen: false);
 
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
         child: GestureDetector(
@@ -97,6 +100,9 @@ class _SelectDayDoctorState extends State<SelectDayDoctor> {
 
               scheduleDoctorInfoPageViewModel.setWeekday(currentDateTime.weekday);
 
+              orderHospitalDataViewModel.setWeekdaySelected(currentDateTime.weekday + 1);
+
+              orderHospitalDataViewModel.setDateTimeSelected(date_util.DateUtils.convertDateString(currentDateTime.toString()));
 
             });
           },

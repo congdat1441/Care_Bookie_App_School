@@ -82,9 +82,6 @@ class _OrderSummaryState extends State<OrderSummary> {
 
     final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
 
-    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
-
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
       child: Column(
@@ -100,7 +97,7 @@ class _OrderSummaryState extends State<OrderSummary> {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(hospitalDetailPageViewModel.hospitalDetail!.hospitalName,
+                  child: Text(orderHospitalDataViewModel.hospital!.hospitalName,
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,

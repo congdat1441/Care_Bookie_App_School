@@ -3,6 +3,7 @@ import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
+import '../../../../../view_model/schedule_page_view_model.dart';
 import '../../doctor/detail_doctor.dart';
 
 
@@ -67,7 +68,11 @@ class _DoctorsState extends State<Doctors> {
 
                               final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
+                              final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
                               doctorDetailPageViewModel.setDoctorDetail(homePageViewModel.doctors[index]);
+
+                              doctorDetailPageViewModel.setScheduleWithDoctor(schedulePageViewModel.schedules);
 
                               await doctorDetailPageViewModel.getHospitalById(homePageViewModel.doctors[index].hospitalId);
 

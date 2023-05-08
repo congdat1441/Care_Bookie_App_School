@@ -6,7 +6,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
+import '../../../../view_model/schedule_detail_page_view_model.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
+import '../../schedule/schedule_detail_accept.dart';
+import '../../schedule/schedule_detail_pending.dart';
 import 'order_detail_doctor.dart';
 
 class DetailDoctor extends StatefulWidget {
@@ -69,6 +72,7 @@ class _DetailDoctorState extends State<DetailDoctor>
       backgroundColor: Colors.transparent,
       leading: IconButton(
         onPressed: () {
+          doctorDetailPageViewModel.resetScheduleWithDoctor();
           Navigator.pop(context);
         },
         icon: const Icon(
@@ -149,55 +153,6 @@ class _DetailDoctorState extends State<DetailDoctor>
                       ),
                     ),
                   ),
-                  Container(
-                    width: 120,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: ColorConstant.BLue05,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: ColorConstant.BLue05,
-                        elevation: 1,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          isDismissible: true,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                          builder: (context) {
-                            return const FractionallySizedBox(
-                              heightFactor: 0.93,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30),
-                                  ),
-                                  child: OrderDetailDoctor()),
-                            );
-                          },
-                        );
-                      },
-                      child: const Text(
-                        "Đặt lịch",
-                        style: TextStyle(
-                            fontFamily: 'Merriweather Sans',
-                            fontSize: 17,
-                            letterSpacing: 1.2,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      ),
-                    ),
-                  )
                 ],
               ),
             )),
@@ -513,13 +468,20 @@ class _DetailDoctorState extends State<DetailDoctor>
   }
 
   Widget bookingApointMent(BuildContext context) {
+
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: Container(
             height: 70,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child: ElevatedButton(
+            child:
+            doctorDetailPageViewModel.scheduleWithDoctor == null ?
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 5,
                   shape: RoundedRectangleBorder(
@@ -559,7 +521,40 @@ class _DetailDoctorState extends State<DetailDoctor>
                     "Đặt lịch khám",
                     style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                   ),
-                )),
+                )) :
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
+                onPressed: () {
+
+                  scheduleDetailPageViewModel.setScheduleDetail(doctorDetailPageViewModel.scheduleWithDoctor!);
+
+                  doctorDetailPageViewModel.scheduleWithDoctor!.bookInformation.status == "PENDING" ?
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScheduleDetailPending())) :
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScheduleDetailAccept()));
+
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                  ),
+                  child: Text(
+                    "Xem lịch khám",
+                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                  ),
+                ))
+            ,
           )),
     );
   }

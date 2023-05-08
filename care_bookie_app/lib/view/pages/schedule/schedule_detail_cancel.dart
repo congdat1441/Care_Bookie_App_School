@@ -450,11 +450,14 @@ class _ScheduleDetailCancelState extends State<ScheduleDetailCancel> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.message,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
+              SizedBox(
+                width: 350,
+                child: Text(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.message,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        overflow: TextOverflow.visible)),
+              ),
             ],
           ), // address hospital
         ],

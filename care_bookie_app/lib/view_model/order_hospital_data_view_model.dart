@@ -50,6 +50,12 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
 
   num totalFee = 0;
 
+  bool orderWithDoctor = false;
+
+  void setOrderWithDoctor(bool value) {
+    orderWithDoctor = value;
+  }
+
   void setUserLogin(UserLogin user) {
     userLogin = user;
   }
@@ -58,6 +64,26 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
     age = null;
     name = null;
     gender = null;
+  }
+
+  void resetAllData() {
+    doctorSelected = null;
+    services = [];
+    dateTimeSelected = null;
+    timeSelected = null;
+    weekdaySelected = null;
+    symptom = null;
+    hospital = null;
+    age = null;
+    name = null;
+    shareHistoryList = [];
+    listHistoryCheckBox = [];
+    workingDayDetailsCheck = [];
+    session = null;
+    gender = null;
+    userLogin = null;
+    totalFee = 0;
+    orderWithDoctor = false;
   }
 
 

@@ -1,6 +1,4 @@
 import 'package:care_bookie_app/models/doctor.dart';
-import 'package:care_bookie_app/models/service.dart';
-import 'package:care_bookie_app/view/pages/history_page/history_detail_invoice.dart';
 import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:care_bookie_app/view_model/history_page_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
@@ -10,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import '../../../../models/working_day_detail.dart';
 import '../../../../res/constants/colors.dart';
-import '../../../../view_model/order_hospital_data_view_model.dart';
 import '../../../../view_model/order_hospital_data_view_model.dart';
 import '../main_page_widget/order_widget/select_day_order.dart';
 import '../order_sumary.dart';

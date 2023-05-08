@@ -1,5 +1,6 @@
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
+import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +58,11 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
 
                               final hospitalDetailPageProvider = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
+                              final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
                               hospitalDetailPageProvider.setHospitalDetail(homePageViewModel.hospitals[index]);
+
+                              hospitalDetailPageProvider.setScheduleWithHospital(schedulePageViewModel.schedules);
 
                               await hospitalDetailPageProvider.getAllDoctorByHospitalId(homePageViewModel.hospitals[index].id);
 

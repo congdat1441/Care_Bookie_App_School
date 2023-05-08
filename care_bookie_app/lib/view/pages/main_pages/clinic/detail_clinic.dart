@@ -1,3 +1,4 @@
+import 'package:care_bookie_app/view/pages/schedule/schedule_detail_accept.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,9 @@ import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../../../view_model/schedule_detail_page_view_model.dart';
 import '../../review_page/review_clinic_page/review_clinic.dart';
+import '../../schedule/schedule_detail_pending.dart';
 import '../doctor/detail_doctor.dart';
 import 'order_detail_clinic.dart';
 
@@ -439,7 +442,19 @@ class _DetailClinicState extends State<DetailClinic>
 
                               doctorDetailPageViewModel.setDoctorDetail(hospitalDetailPageViewModel.doctors[index]);
 
+                              hospitalDetailPageViewModel.scheduleWithHospital != null ?
+                              {
+                                doctorDetailPageViewModel.doctorDetail!.id ==
+                                    hospitalDetailPageViewModel
+                                        .scheduleWithHospital!.bookInformation
+                                        .doctorId ? doctorDetailPageViewModel.setSchedule(hospitalDetailPageViewModel.scheduleWithHospital!) : ""
+                              } : {
+
+                              };
+
                               await doctorDetailPageViewModel.getHospitalById(hospitalDetailPageViewModel.doctors[index].hospitalId);
+
+
 
                               // ignore: use_build_context_synchronously
                               Navigator.push(
@@ -837,13 +852,20 @@ class _DetailClinicState extends State<DetailClinic>
   }
 
   Widget bookingClinic(BuildContext context) {
+
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
+
     return SliverToBoxAdapter(
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: Container(
             height: 70,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child: ElevatedButton(
+            child: hospitalDetailPageViewModel.scheduleWithHospital == null
+                ? ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 5,
                   shape: RoundedRectangleBorder(
@@ -883,7 +905,40 @@ class _DetailClinicState extends State<DetailClinic>
                     "Đặt lịch khám",
                     style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                   ),
-                )),
+                ))
+                : ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
+                onPressed: () {
+
+                  scheduleDetailPageViewModel.setScheduleDetail(hospitalDetailPageViewModel.scheduleWithHospital!);
+
+                  hospitalDetailPageViewModel.scheduleWithHospital!.bookInformation.status == "PENDING" ?
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScheduleDetailPending())) :
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScheduleDetailAccept()));
+
+                  },
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                  ),
+                  child: Text(
+                    "Xem lịch khám",
+                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                  ),
+                ))
+            ,
           )),
     );
   }

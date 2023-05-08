@@ -6,6 +6,7 @@ import 'package:care_bookie_app/models/service.dart';
 import 'package:flutter/material.dart';
 import '../api_services/hospital_api.dart';
 import '../models/comment.dart';
+import '../models/schedule.dart';
 import '../models/working_day_detail.dart';
 
 
@@ -27,9 +28,12 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
 
   bool check = false;
 
+  Schedule? scheduleWithDoctor;
+
   void setDoctorDetail(Doctor doctor) {
     doctorDetail = doctor;
   }
+
 
   Future<void> getHospitalById(String id) async {
     hospital = await hospitalApi.getHospitalByIdApi(id);
@@ -62,6 +66,22 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
     } else {
       listServiceCheck.add(service);
     }
+  }
+
+  void setScheduleWithDoctor(List<Schedule> schedules) {
+    for (var element in schedules) {
+      if(element.bookInformation.doctorId == doctorDetail!.id && element.bookInformation.status != "CANCEL") {
+        scheduleWithDoctor = element;
+      }
+    }
+  }
+
+  void setSchedule(Schedule schedule) {
+    scheduleWithDoctor = schedule;
+  }
+
+  void resetScheduleWithDoctor() {
+    scheduleWithDoctor = null;
   }
 
 }

@@ -9,7 +9,7 @@ class ScheduleApi {
 
   Future<List<Schedule>> getAllScheduleByUserIdApi(String userId) async {
 
-    String url = "${HostUtil.host}api/v1/care-bookie/user/books/DLpoanh1007";
+    String url = "${HostUtil.host}api/v1/care-bookie/user/books/$userId";
 
     var response = await http.get(Uri.parse(url));
 
