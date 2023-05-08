@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../../view_model/bottom_navbar_provider.dart';
+import '../../../view_model/schedule_page_view_model.dart';
 import 'main_page_widget/AppbarCustom.dart';
 import 'clinic/clinic_widget/clinics_nearby.dart';
 import 'main_page_widget/doctor_widget/doctors.dart';
@@ -46,6 +47,10 @@ class _MainPageState extends State<MainPage> {
     final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
 
     historyPageViewModel.setHistories(userLoginInfoViewModel.userLogin.id);
+
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
+    schedulePageViewModel.loadSchedules(userLoginInfoViewModel.userLogin.id);
 
 
   }

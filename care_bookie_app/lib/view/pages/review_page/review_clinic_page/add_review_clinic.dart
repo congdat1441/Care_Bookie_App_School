@@ -1,7 +1,15 @@
+import 'package:care_bookie_app/view/pages/review_page/review_clinic_page/review_clinic_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import '../../../../models/comment_data.dart';
 import '../../../../res/constants/colors.dart';
+import '../../../../view_model/history_detail_page_view_model.dart';
+import '../../layouts_page/navbar_layout.dart';
+
+
 
 class AddReviewClinic extends StatefulWidget {
   const AddReviewClinic({Key? key}) : super(key: key);
@@ -52,6 +60,9 @@ class _AddReviewClinicState extends State<AddReviewClinic> {
   }
 
   Widget addYourComment() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Padding(
@@ -71,15 +82,20 @@ class _AddReviewClinicState extends State<AddReviewClinic> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ...[1, 2, 3, 4, 5].map((e) => const Icon(
-                          IconlyBold.star,
-                          size: 50,
-                          color: Colors.amber,
-                        )),
-                  ],
+                child: RatingBar.builder(
+                  initialRating: historyDetailPageViewModel.starDefaultHospital.toDouble(),
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: false,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    historyDetailPageViewModel.starDefaultHospital = rating.toInt();
+                  },
                 ),
               ),
             ),
@@ -127,12 +143,15 @@ class _AddReviewClinicState extends State<AddReviewClinic> {
       height: 80,
       color: Colors.white,
       child: Column(
-        children: [gui()],
+        children: [submit()],
       ),
     );
   }
 
-  Widget gui() {
+  Widget submit() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Container(
@@ -149,7 +168,52 @@ class _AddReviewClinicState extends State<AddReviewClinic> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async{
+
+                CommentData commentHospital = CommentData(
+                    comment:  _controllerTextWord.text,
+                    id: historyDetailPageViewModel.historyDetail!.invoiceInformation.hospitalId,
+                    star: historyDetailPageViewModel.starDefaultHospital,
+                    userId: historyDetailPageViewModel.historyDetail!.invoiceInformation.userId
+                );
+
+                bool isSuccess = await historyDetailPageViewModel.createCommentHospitalByUserId(commentHospital);
+
+                if(isSuccess) {
+
+                  Fluttertoast.showToast(
+                      msg: "Đánh giá thành công",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  );
+
+                  await historyDetailPageViewModel.getAllCommentByHospitalId(historyDetailPageViewModel.historyDetail!.invoiceInformation.hospitalId);
+
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ReviewClinicSuccess(),
+                      )
+                  );
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Đánh giá không thành công",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  );
+                }
+
+
+              },
               child: const Padding(
                 padding: EdgeInsets.only(
                   top: 10,

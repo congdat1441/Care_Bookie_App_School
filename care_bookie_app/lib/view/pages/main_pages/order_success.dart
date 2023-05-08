@@ -1,5 +1,6 @@
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/order_hospital_data_view_model.dart';
+import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -421,6 +422,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget bottomNavigatorBar() {
+
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
     return Container(
       height: 80,
       color: Colors.white,
@@ -441,6 +445,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                       ),
                     ),
                     onPressed: () {
+
+                      schedulePageViewModel.resetSchedules();
+
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => const  NavbarLayout(index: 0)));
                     },

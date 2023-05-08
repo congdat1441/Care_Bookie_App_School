@@ -1,8 +1,12 @@
 import 'package:care_bookie_app/view/pages/schedule/schedule_detail_accept.dart';
 import 'package:care_bookie_app/view/pages/schedule/schedule_detail_cancel.dart';
 import 'package:care_bookie_app/view/pages/schedule/schedule_detail_pending.dart';
+import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../models/schedule.dart';
 import '../../../res/constants/colors.dart';
+import '../../../view_model/schedule_detail_page_view_model.dart';
 
 class ScheduleClinics extends StatefulWidget {
   const ScheduleClinics({Key? key}) : super(key: key);
@@ -12,30 +16,32 @@ class ScheduleClinics extends StatefulWidget {
 }
 
 class _ScheduleClinicsState extends State<ScheduleClinics> {
+
   @override
   Widget build(BuildContext context) {
+
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
     return Column(
       children: [
-        ...[1, 2, 3, 4, 5, 6].map((e) => Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
-              child: containerSchedulePending(),
-            )),
-        ...[1, 2, 3, 4, 5, 6].map((e) => Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
-              child: containerScheduleAccept(),
-            )),
-        ...[1, 2, 3, 4, 5, 6].map((e) => Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
-              child: containerScheduleCancel(),
-            )),
+
+        ...schedulePageViewModel.schedules.map((schedule) {
+
+          return schedule.bookInformation.status == "PENDING" ? containerSchedulePending(schedule)
+              : (schedule.bookInformation.status == "CANCEL" ? containerScheduleCancel(schedule) : containerScheduleAccept(schedule));
+
+        }),
         const SizedBox(height: 100,)
       ],
     );
   }
 
-  Widget containerSchedulePending() {
+  Widget containerSchedulePending(Schedule schedule) {
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
     return Container(
-        margin: const EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 10,bottom: 10),
         height: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(27),
@@ -57,6 +63,9 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
             ),
           ),
           onPressed: () {
+
+            scheduleDetailPageViewModel.setScheduleDetail(schedule);
+
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -64,16 +73,19 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
           },
           child: Stack(
             children: [
-              contentSchedule(),
+              contentSchedule(schedule),
               tagStatusPending(),
             ],
           ),
         ));
   }
 
-  Widget containerScheduleAccept() {
+  Widget containerScheduleAccept(Schedule schedule) {
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
     return Container(
-        margin: const EdgeInsets.only(right: 5),
+        margin: const EdgeInsets.only(right: 5,bottom: 10),
         height: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(27),
@@ -95,20 +107,26 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
             ),
           ),
           onPressed: () {
+
+            scheduleDetailPageViewModel.setScheduleDetail(schedule);
+
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const ScheduleDetailAccept()));
           },
           child: Stack(
-            children: [contentSchedule(), tagStatusAccept()],
+            children: [contentSchedule(schedule), tagStatusAccept()],
           ),
         ));
   }
 
-  Widget containerScheduleCancel() {
+  Widget containerScheduleCancel(Schedule schedule) {
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
     return Container(
-        margin: const EdgeInsets.only(right: 15),
+        margin: const EdgeInsets.only(right: 15,bottom: 10),
         height: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(27),
@@ -130,6 +148,9 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
             ),
           ),
           onPressed: () {
+
+            scheduleDetailPageViewModel.setScheduleDetail(schedule);
+
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -137,7 +158,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
           },
           child: Stack(
             children: [
-              contentSchedule(),
+              contentSchedule(schedule),
               tagStatusCancel(),
             ],
           ),
@@ -198,7 +219,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
         ));
   }
 
-  Widget contentSchedule() {
+  Widget contentSchedule(Schedule schedule) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
       child: Row(
@@ -207,23 +228,26 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: Image.asset("assets/images/cisdemo.png",
+            child: Image.network(
+              schedule.imageHospital,
             scale: 2,
               fit: BoxFit.cover,
+              width: 130,
+              height: 130,
             )
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 5, 0, 0),
             child: Column(
               children: [
-                const SizedBox(
+                SizedBox(
                     width: 180,
                     //height: 40,
                     //color: Colors.grey,
-                    child: Text("Supporting the CIS",
+                    child: Text(schedule.hospitalName,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18,
                             color: Color(0xff1c335b),
                             fontWeight: FontWeight.w600,
@@ -231,21 +255,29 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                 const SizedBox(
                   height: 3,
                 ),
-                const Expanded(
+                Expanded(
                   flex: 1,
                   child: SizedBox(
                       width: 180,
                       //height: 40,
                       //color: Colors.grey,
-                      child: Text("Restore Medical Clinic CIS",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              height: 1,
-                              fontSize: 15,
-                              color: ColorConstant.Grey01,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Merriweather Sans'))),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Ngày Hẹn"
+                          ),
+                          Text("${int.parse(schedule.bookInformation.date) == 8 ? "CN" : "Thứ ${schedule.bookInformation.date}"} ${schedule.bookInformation.dateExamination}",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  height: 1,
+                                  fontSize: 15,
+                                  color: ColorConstant.Grey01,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Merriweather Sans'))
+                        ],
+                      )
+                  ),
                 ),
                 Expanded(
                   flex: 2,
@@ -265,27 +297,13 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text("4.5",
-                            style: TextStyle(
+                        Text("${schedule.starHospital}",
+                            style: const TextStyle(
                                 height: 0.9,
                                 fontSize: 15,
                                 color: ColorConstant.Grey01,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Merriweather Sans')),
-                        RichText(
-                            text: const TextSpan(children: [
-                          WidgetSpan(
-                              child: Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: Text("10.00 AM ",
-                                style: TextStyle(
-                                    letterSpacing: 0.2,
-                                    fontSize: 15,
-                                    color: ColorConstant.Grey01,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Merriweather Sans')),
-                          )),
-                        ])),
                         const Text("| ",
                             style: TextStyle(
                                 height: 0.8,

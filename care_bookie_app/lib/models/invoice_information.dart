@@ -6,13 +6,19 @@ class InvoiceInformation {
   final String advices;
   final String diagnose;
   final String dateTimeInvoice;
+  final String doctorId;
+  final String hospitalId;
+  final String userId;
 
   InvoiceInformation({
     required this.id,
     required this.symptomDetail,
     required this.advices,
     required this.diagnose,
-    required this.dateTimeInvoice
+    required this.dateTimeInvoice,
+    required this.userId,
+    required this.doctorId,
+    required this.hospitalId
   });
 
   factory InvoiceInformation.fromJson(Map<String,dynamic> json) {
@@ -22,7 +28,10 @@ class InvoiceInformation {
         symptomDetail: json['symptomDetail'] ?? "",
         advices: json['advices'] ?? "",
         diagnose: json['diagnose'] ?? "",
-        dateTimeInvoice: json['dateTimeInvoice']
+        dateTimeInvoice: json['dateTimeInvoice'],
+        doctorId: json['doctorId'],
+        hospitalId: json['hospitalId'],
+        userId: json['userId']
     );
 
   }

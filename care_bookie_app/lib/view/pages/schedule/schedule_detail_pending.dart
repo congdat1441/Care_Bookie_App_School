@@ -1,7 +1,13 @@
+import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
+import '../../../view_model/schedule_cancel_view_model.dart';
+import '../../../view_model/schedule_detail_page_view_model.dart';
+import '../layouts_page/navbar_layout.dart';
 
 class ScheduleDetailPending extends StatefulWidget {
   const ScheduleDetailPending({Key? key}) : super(key: key);
@@ -58,14 +64,17 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
   }
 
   Widget infoOrderDetail() {
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Trung tâm khám bệnh",
+            children: [
+              const Text("Trung tâm khám bệnh",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -73,9 +82,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("The CIS Free Clinic",
+                  child: Text(scheduleDetailPageViewModel.scheduleDetail!.hospitalName,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -91,8 +100,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Bác sỹ điều trị",
+            children: [
+              const Text("Bác sỹ điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -101,9 +110,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nguyễn Văn A",
+                  child: Text(scheduleDetailPageViewModel.scheduleDetail!.doctorName,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -119,8 +128,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Thời gian",
+            children: [
+              const Text("Thời gian",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -129,9 +138,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                 width: 140,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("15 Tháng 5, 2023 || Sáng 8:00 - 12:00 AM",
+                  child: Text("${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.session} ${int.parse(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.date) == 8 ? "CN" : "Thứ ${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.date}"} ${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.dateExamination}",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -147,8 +156,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Bệnh nhân điều trị",
+            children: [
+              const Text("Bệnh nhân điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -157,9 +166,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nguyễn Văn B",
+                  child: Text(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.name,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -175,8 +184,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Tuổi",
+            children: [
+              const Text("Tuổi",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -185,9 +194,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("10",
+                  child: Text("${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.age}",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -203,8 +212,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Giới tính",
+            children: [
+              const Text("Giới tính",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -213,9 +222,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nam",
+                  child: Text( scheduleDetailPageViewModel.scheduleDetail!.bookInformation.gender,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -231,8 +240,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Chia sẻ lịch sử",
+            children:[
+              const Text("Chia sẻ lịch sử",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -241,9 +250,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Có",
+                  child: Text(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.shareInvoice ? "Có" : "Không",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -263,6 +272,9 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
   }
 
   Widget symptom() {
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
     return Column(
       children: [
         Row(
@@ -285,13 +297,13 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
               borderRadius: BorderRadius.circular(25),
               border:
                   Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
-          child: const Align(
+          child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend risus a ex ultricies blandit. Mauris venenatis nunc ut est dapibus, ac suscipit eros bibendum. Integer sagittis, enim vel convallis hendrerit, mauris sapien tristique mi, sed bibendum massa metus eu dolor. Sed vestibulum tellus quis ex eleifend auctor. Sed sed velit eget enim tristique ultricies at at massa. In lacinia magna nec arcu dignissim, eu laoreet leo tincidunt. Nulla lobortis nunc at est facilisis faucibus. Sed eget semper enim. Vestibulum id urna nec nulla porttitor accumsan vel quis nisi. Quisque congue ligula at mauris suscipit, ut pellentesque ex iaculis. Maecenas vestibulum, magna vel tempor varius, tortor ex dapibus ipsum, nec bibendum sapien diam auctor metus. In eget mi ex. Nulla varius, massa ac feugiat blandit, dolor libero feugiat magna, ac scelerisque sapien turpis eu felis. Donec pulvinar, arcu eu rutrum malesuada, sapien lectus cursus eros, eget placerat nisl arcu vitae lectus.",
-                  style: TextStyle(
+                  scheduleDetailPageViewModel.scheduleDetail!.bookInformation.symptom,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
                     height: 1.4,
@@ -310,6 +322,11 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
   }
 
   Widget price() {
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
+    num totalFee = 0;
+
     return Column(
       children: [
         Row(
@@ -325,80 +342,62 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Text("Khám lợi",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-            ),
-            SizedBox(
-              width: 200,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text("150,000đ",
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.amber,
-                        fontSize: 17,
-                        overflow: TextOverflow.ellipsis)),
+        ...scheduleDetailPageViewModel.scheduleDetail!.services.map((service) {
+
+          totalFee += service.price;
+
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: Text(service.serviceName,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        overflow: TextOverflow.visible)),
               ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Text("Trám răng",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-            ),
-            SizedBox(
-              width: 200,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text("150,000đ",
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.amber,
-                        fontSize: 17,
-                        overflow: TextOverflow.ellipsis)),
+              SizedBox(
+                width: 200,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text("${service.price}00đ",
+                      maxLines: 2,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.amber,
+                          fontSize: 17,
+                          overflow: TextOverflow.ellipsis)),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+
+        }),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Padding(
+          children: [
+            const Padding(
               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text("Chi phí dự kiến",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      overflow: TextOverflow.visible)),
+                      overflow: TextOverflow.ellipsis)),
             ),
-            SizedBox(
-              width: 200,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text("300,000đ",
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.amber,
-                        fontSize: 17,
-                        overflow: TextOverflow.ellipsis)),
+            Expanded(
+              child: SizedBox(
+                width: 200,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text("${totalFee}00đ",
+                      maxLines: 2,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.amber,
+                          fontSize: 17,
+                          overflow: TextOverflow.ellipsis)),
+                ),
               ),
             ),
           ],
@@ -413,6 +412,15 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
   }
 
   Widget cancelBook() {
+
+    String message = "";
+
+    final scheduleCancelViewModel = Provider.of<ScheduleCancelViewModel>(context,listen: false);
+
+    final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
+
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -430,9 +438,15 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Lý do hủy lịch'),
-                    content: const TextField(
+                    content: TextField(
                       decoration:
-                          InputDecoration(hintText: 'Nhập lý do hủy lịch'),
+                          const InputDecoration(
+                            hintText: 'Nhập lý do hủy lịch',
+
+                          ),
+                      onChanged: (value) {
+                        message = value;
+                      },
                     ),
                     actions: <Widget>[
                       ElevatedButton(
@@ -443,9 +457,44 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                       ),
                       ElevatedButton(
                         child: const Text('Gửi'),
-                        onPressed: () {
-                          // Xử lý lưu thông tin lý do hủy lịch tại đây
-                          Navigator.of(context).pop();
+                        onPressed: () async{
+
+                          bool isSuccess = await scheduleCancelViewModel.cancelSchedule(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.id.toString(), message);
+
+                          print("Success ----------> $isSuccess");
+
+                          if (isSuccess) {
+
+                            Fluttertoast.showToast(
+                              msg: "Hủy lịch khám thành công",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                            );
+
+                            schedulePageViewModel.resetSchedules();
+
+                          // ignore: use_build_context_synchronously
+                            Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => const  NavbarLayout(index: 0))
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Hủy lịch khám không thành",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0
+                            );
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context).pop();
+                          }
+
                         },
                       ),
                     ],

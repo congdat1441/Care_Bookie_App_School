@@ -1,7 +1,14 @@
+
+import 'package:care_bookie_app/models/comment_data.dart';
+import 'package:care_bookie_app/view/pages/review_page/review_doctor_page/review_doctor_success.dart';
+import 'package:care_bookie_app/view_model/history_detail_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
+import '../../layouts_page/navbar_layout.dart';
 
 class AddReviewDoctor extends StatefulWidget {
   const AddReviewDoctor({Key? key}) : super(key: key);
@@ -12,6 +19,7 @@ class AddReviewDoctor extends StatefulWidget {
 
 class _AddReviewDoctorState extends State<AddReviewDoctor> {
   final TextEditingController _controllerTextWord = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +59,9 @@ class _AddReviewDoctorState extends State<AddReviewDoctor> {
   }
 
   Widget addYourComment() {
+
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Padding(
@@ -70,15 +81,20 @@ class _AddReviewDoctorState extends State<AddReviewDoctor> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ...[1, 2, 3, 4, 5].map((e) => const Icon(
-                      IconlyBold.star,
-                      size: 50,
-                      color: Colors.amber,
-                    )),
-                  ],
+                child: RatingBar.builder(
+                  initialRating: historyDetailPageViewModel.starDefaultDoctor.toDouble(),
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: false,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    historyDetailPageViewModel.setStarDefaultDoctor(rating.toInt());
+                  },
                 ),
               ),
             ),
@@ -106,6 +122,7 @@ class _AddReviewDoctorState extends State<AddReviewDoctor> {
               child: TextFormField(
                 controller: _controllerTextWord,
                 maxLines: 100,
+                //inputFormatters: [WhitelistingTextInputFormatter(RegExp("[a-zA-ZÀ-ỹ ]"))],
                 //maxLength: 350,
                 decoration: InputDecoration(
                     hintText: 'Thêm nhận xét của bạn...',
@@ -126,12 +143,15 @@ class _AddReviewDoctorState extends State<AddReviewDoctor> {
       height: 80,
       color: Colors.white,
       child: Column(
-        children: [gui()],
+        children: [submit()],
       ),
     );
   }
 
-  Widget gui() {
+  Widget submit() {
+    
+    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Container(
@@ -148,7 +168,52 @@ class _AddReviewDoctorState extends State<AddReviewDoctor> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async{
+
+                CommentData commentDoctor = CommentData(
+                    comment:  _controllerTextWord.text,
+                    id: historyDetailPageViewModel.historyDetail!.invoiceInformation.doctorId,
+                    star: historyDetailPageViewModel.starDefaultDoctor,
+                    userId: historyDetailPageViewModel.historyDetail!.invoiceInformation.userId
+                );
+                
+                 bool isSuccess = await historyDetailPageViewModel.createCommentDoctorByUserId(commentDoctor);
+
+                 if(isSuccess) {
+
+                   Fluttertoast.showToast(
+                       msg: "Đánh giá thành công",
+                       toastLength: Toast.LENGTH_SHORT,
+                       gravity: ToastGravity.CENTER,
+                       timeInSecForIosWeb: 1,
+                       backgroundColor: Colors.red,
+                       textColor: Colors.white,
+                       fontSize: 16.0
+                   );
+
+                   await historyDetailPageViewModel.getAllCommentByDoctorId(historyDetailPageViewModel.historyDetail!.invoiceInformation.doctorId);
+
+                   // ignore: use_build_context_synchronously
+                   Navigator.push(
+                       context,
+                       MaterialPageRoute(
+                         builder: (context) => const ReviewDoctorSuccess(),
+                       )
+                   );
+                 } else {
+                   Fluttertoast.showToast(
+                       msg: "Đánh giá không thành công",
+                       toastLength: Toast.LENGTH_SHORT,
+                       gravity: ToastGravity.CENTER,
+                       timeInSecForIosWeb: 1,
+                       backgroundColor: Colors.red,
+                       textColor: Colors.white,
+                       fontSize: 16.0
+                   );
+                 }
+
+
+              },
               child: const Padding(
                 padding: EdgeInsets.only(
                   top: 10,
