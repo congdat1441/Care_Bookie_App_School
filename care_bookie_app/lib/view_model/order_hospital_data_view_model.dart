@@ -1,3 +1,5 @@
+import 'package:care_bookie_app/api_services/invoice_api.dart';
+import 'package:care_bookie_app/models/invoice_data.dart';
 import 'package:care_bookie_app/models/user_login.dart';
 import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:care_bookie_app/models/doctor.dart';
@@ -13,6 +15,8 @@ import '../models/service.dart';
 import '../models/working_day_detail.dart';
 
 class OrderHospitalDataViewModel extends ChangeNotifier {
+
+  InvoiceApi invoiceApi = InvoiceApi();
 
   Doctor? doctorSelected;
 
@@ -41,6 +45,21 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
   String? session;
 
   int? gender;
+
+  UserLogin? userLogin;
+
+  num totalFee = 0;
+
+  void setUserLogin(UserLogin user) {
+    userLogin = user;
+  }
+
+  void resetData() {
+    age = null;
+    name = null;
+    gender = null;
+  }
+
 
   void setDoctorSelected(Doctor doctor) {
     doctorSelected = doctor;
@@ -196,8 +215,31 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> createInvoice() async{
 
+    List<int> servicesData = services.map((e) => e.id).toList();
 
+    InvoiceData invoiceData = InvoiceData(
+        hospitalId: hospital!.id,
+        age: age!,
+        gender: gender! == 1 ? "Nam" : "Nữ",
+        services: servicesData,
+        symptom: symptom!,
+        name: name!,
+        session: session!,
+        userId: userLogin!.id,
+        invoices: shareHistoryList,
+        shareInvoice: shareHistoryList.isNotEmpty ? true : false,
+        doctorId: doctorSelected == null ? "" : doctorSelected!.id,
+        dateExamination: dateTimeSelected!,
+        date: weekdaySelected!.toString()
+    );
+
+    bool isSuccess = await invoiceApi.createInvoiceApi(invoiceData);
+
+    return isSuccess;
+
+  }
 
 
 }

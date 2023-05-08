@@ -159,8 +159,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Bệnh nhân điều trị",
+            children:[
+              const Text("Bệnh nhân điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -169,9 +169,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nguyễn Văn B",
+                  child: Text(historyDetailPageViewModel.historyDetail!.fullNameBook,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -187,8 +187,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Tuổi",
+            children: [
+              const Text("Tuổi",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -197,9 +197,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("10",
+                  child: Text("${historyDetailPageViewModel.historyDetail!.ageBook}",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -215,8 +215,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Giới tính",
+            children:[
+              const Text("Giới tính",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -225,9 +225,9 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nam",
+                  child: Text(historyDetailPageViewModel.historyDetail!.gender,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,

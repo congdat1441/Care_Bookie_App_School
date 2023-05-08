@@ -19,9 +19,9 @@ class InvoiceInformation {
 
     return InvoiceInformation(
         id: json['id'],
-        symptomDetail: json['symptomDetail'],
-        advices: json['advices'],
-        diagnose: json['diagnose'],
+        symptomDetail: json['symptomDetail'] ?? "",
+        advices: json['advices'] ?? "",
+        diagnose: json['diagnose'] ?? "",
         dateTimeInvoice: json['dateTimeInvoice']
     );
 

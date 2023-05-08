@@ -5,6 +5,9 @@ import 'package:care_bookie_app/models/service.dart';
 
 class History {
 
+  final String fullNameBook;
+  final int ageBook;
+  final String gender;
   final String hospitalName;
   final String address;
   final num star;
@@ -16,6 +19,9 @@ class History {
   final InvoiceInformation invoiceInformation;
 
   History({
+    required this.fullNameBook,
+    required this.ageBook,
+    required this.gender,
     required this.hospitalName,
     required this.address,
     required this.star,
@@ -41,8 +47,21 @@ class History {
 
     InvoiceInformation invoiceInformation = InvoiceInformation.fromJson(invoiceInformationJson);
 
+    var fullNameBook = json['user']['fullNameBook'];
+    var ageBook = json['user']['ageBook'];
+    var genderBook = json['user']['genderBook'];
+
+    if(fullNameBook == null) {
+      fullNameBook = json['user']['fullName'];
+      ageBook = json['user']['age'];
+      genderBook = json['user']['gender'];
+
+    }
 
     return History(
+        fullNameBook: fullNameBook,
+        ageBook: ageBook,
+        gender: genderBook,
         hospitalName: json['hospitalName'],
         address: json['address'],
         star: json['star'],

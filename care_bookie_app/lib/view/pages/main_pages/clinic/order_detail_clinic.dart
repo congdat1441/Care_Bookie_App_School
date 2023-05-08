@@ -5,6 +5,7 @@ import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:care_bookie_app/view_model/history_page_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
+import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -818,6 +819,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
 
     final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
+    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
         child: Container(
@@ -837,6 +840,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 orderHospitalDataViewModel.setAge(_controllerTextWordAge.text);
                 orderHospitalDataViewModel.setServices(hospitalDetailPageViewModel.listServiceCheck);
                 orderHospitalDataViewModel.setSymptom(_controllerTextWord.text);
+                orderHospitalDataViewModel.setUserLogin(userLoginInfoViewModel.userLogin);
+                orderHospitalDataViewModel.setHospital(hospitalDetailPageViewModel.hospitalDetail!);
 
                 orderHospitalDataViewModel.validateDataOrder().isNotEmpty ? Fluttertoast.showToast(
                     msg: orderHospitalDataViewModel.validateDataOrder(),

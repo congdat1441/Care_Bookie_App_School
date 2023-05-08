@@ -1,5 +1,8 @@
+import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
+import 'package:care_bookie_app/view_model/order_hospital_data_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
 import '../layouts_page/navbar_layout.dart';
 import 'main_page_widget/order_widget/info_order_detail.dart';
@@ -72,14 +75,17 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget infoOrderDetail() {
+
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Trung tâm khám bệnh",
+            children: [
+              const Text("Trung tâm khám bệnh",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -87,9 +93,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("The CIS Free Clinic",
+                  child: Text(orderHospitalDataViewModel.hospital!.hospitalName,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -105,8 +111,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Bác sỹ điều trị",
+            children: [
+              const Text("Bác sỹ điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -115,9 +121,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nguyễn Văn A",
+                  child: Text(orderHospitalDataViewModel.doctorSelected != null ? "${orderHospitalDataViewModel.doctorSelected!.lastName} ${orderHospitalDataViewModel.doctorSelected!.firstName}" : "Không lựa chọn",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -133,8 +139,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Thời gian",
+            children: [
+              const Text("Thời gian",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -143,9 +149,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 140,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("15 Tháng 5, 2023 || Sáng 8:00 - 12:00 AM",
+                  child: Text("${orderHospitalDataViewModel.dateTimeSelected} || ${orderHospitalDataViewModel.session} ${orderHospitalDataViewModel.timeSelected}",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -161,8 +167,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Bệnh nhân điều trị",
+            children: [
+              const Text("Bệnh nhân điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -171,9 +177,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nguyễn Văn B",
+                  child: Text(orderHospitalDataViewModel.name!,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -189,8 +195,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Tuổi",
+            children: [
+              const Text("Tuổi",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -199,9 +205,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("10",
+                  child: Text("${orderHospitalDataViewModel.age!}",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -217,8 +223,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Giới tính",
+            children: [
+              const Text("Giới tính",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -227,9 +233,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Nam",
+                  child: Text(orderHospitalDataViewModel.gender! == 1 ?  "Nam" : "Nữ",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -245,8 +251,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Chia sẻ lịch sử",
+            children: [
+              const Text("Chia sẻ lịch sử",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -255,9 +261,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Có",
+                  child: Text(orderHospitalDataViewModel.shareHistoryList.isEmpty ? "Không" : "Có",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                           fontSize: 17,
@@ -277,6 +283,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget symptom() {
+
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
     return Column(
       children: [
         Row(
@@ -299,13 +308,13 @@ class _OrderSuccessState extends State<OrderSuccess> {
               borderRadius: BorderRadius.circular(25),
               border:
               Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
-          child: const Align(
+          child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend risus a ex ultricies blandit. Mauris venenatis nunc ut est dapibus, ac suscipit eros bibendum. Integer sagittis, enim vel convallis hendrerit, mauris sapien tristique mi, sed bibendum massa metus eu dolor. Sed vestibulum tellus quis ex eleifend auctor. Sed sed velit eget enim tristique ultricies at at massa. In lacinia magna nec arcu dignissim, eu laoreet leo tincidunt. Nulla lobortis nunc at est facilisis faucibus. Sed eget semper enim. Vestibulum id urna nec nulla porttitor accumsan vel quis nisi. Quisque congue ligula at mauris suscipit, ut pellentesque ex iaculis. Maecenas vestibulum, magna vel tempor varius, tortor ex dapibus ipsum, nec bibendum sapien diam auctor metus. In eget mi ex. Nulla varius, massa ac feugiat blandit, dolor libero feugiat magna, ac scelerisque sapien turpis eu felis. Donec pulvinar, arcu eu rutrum malesuada, sapien lectus cursus eros, eget placerat nisl arcu vitae lectus.",
-                  style: TextStyle(
+                  orderHospitalDataViewModel.symptom!,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
                     height: 1.4,
@@ -324,8 +333,11 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget price() {
+
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
       ),
       child: Column(
         children: [
@@ -342,62 +354,40 @@ class _OrderSuccessState extends State<OrderSuccess> {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20,10,0,0),
-                child: Text("Khám lợi",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
-              ),
-              SizedBox(
-                width: 200,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("150,000đ",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.amber,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
+          ...orderHospitalDataViewModel.services.map((service) {
+            orderHospitalDataViewModel.totalFee += service.price;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                  child: Text(service.serviceName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          overflow: TextOverflow.visible)),
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: 200,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text("${service.price}00đ",
+                        maxLines: 2,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.amber,
+                            fontSize: 17,
+                            overflow: TextOverflow.ellipsis)),
+                  ),
+                ),
+              ],
+            );
+          }
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20,10,0,0),
-                child: Text("Trám răng",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
-              ),
-              SizedBox(
-                width: 200,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("150,000đ",
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.amber,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Padding(
+            children: [
+              const Padding(
                 padding: EdgeInsets.fromLTRB(0,20,0,0),
                 child: Text("Chi phí dự kiến",
                     style: TextStyle(
@@ -409,9 +399,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("300,000đ",
+                  child: Text("${orderHospitalDataViewModel.totalFee}00đ",
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.amber,
                           fontSize: 17,

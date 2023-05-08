@@ -4,6 +4,7 @@ import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
@@ -59,6 +60,7 @@ class _OrderSummaryState extends State<OrderSummary> {
               size: 30,
             ),
             onPressed: () {
+              orderHospitalDataViewModel.resetData();
               Navigator.pop(context);
             },
           ),
@@ -462,6 +464,9 @@ class _OrderSummaryState extends State<OrderSummary> {
   }
 
   Widget confirmBooking(){
+
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
         child: Container(
@@ -479,11 +484,41 @@ class _OrderSummaryState extends State<OrderSummary> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async{
+                bool isSuccess = false;
+                check ? {
+                  isSuccess =  await orderHospitalDataViewModel.createInvoice()
+                } : {
+                  Fluttertoast.showToast(
+                      msg: "Vui lòng đồng ý với điều khoản dịch vụ",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  )
+                };
+
+                isSuccess ? {
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const OrderSuccess()));
+                    builder: (context) => const OrderSuccess())
+                  )
+                } : {
+                  Fluttertoast.showToast(
+                    msg: "Đặt lịch khám không thành công",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                  )
+                };
+
               },
               child: const Padding(
                 padding: EdgeInsets.only(
