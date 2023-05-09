@@ -5,6 +5,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../../../res/constants/colors.dart';
+import '../../../view_model/doctor_detail_view_model.dart';
+import '../../../view_model/schedule_page_view_model.dart';
 import '../main_pages/doctor/detail_doctor.dart';
 
 class DoctorFavorite extends StatefulWidget {
@@ -71,12 +73,25 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: InkWell(
-                              onTap: () {
+                              onTap: () async{
+
+                                final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
+
+                                final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
+                                doctorDetailPageViewModel.setDoctorDetail(favorite.doctor);
+
+                                doctorDetailPageViewModel.setScheduleWithDoctor(schedulePageViewModel.schedules);
+
+                                doctorDetailPageViewModel.setIsFavoritePage(true);
+
+                                await doctorDetailPageViewModel.getHospitalById(favorite.doctor.hospitalId);
+
+                                // ignore: use_build_context_synchronously
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                        const DetailDoctor()));
+                                        builder: (context) => const DetailDoctor()));
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
@@ -95,6 +110,13 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                           height: 28,
                           width: 28,
                           child: GestureDetector(
+                            onTap: () async{
+
+                              await favoritePageViewModel.deleteDoctorFavorite(favorite.doctorFavouriteId.toString(), favorite);
+                              setState(() {
+
+                              });
+                            },
                             child: const Icon(
                               IconlyBold.closeSquare,
                               color: Color(0xffee5353),
@@ -112,7 +134,7 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                               width: 130,
                               height: 20,
                               //color: Colors.grey,
-                              child: Text("Dr. ${favorite.doctor.lastName} ${favorite.doctor.lastName}",
+                              child: Text("Dr. ${favorite.doctor.lastName} ${favorite.doctor.firstName}",
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,

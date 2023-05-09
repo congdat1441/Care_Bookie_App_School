@@ -18,10 +18,39 @@ class FavoritePageViewModel extends ChangeNotifier {
     }
   }
 
+  void resetListDoctorFavorite() {
+    listDoctorFavorite = [];
+  }
+
+  void resetListHospitalFavorite() {
+    listHospitalFavorite = [];
+  }
+
   Future<void> getAllHospitalFavoriteByUserId(String userId) async {
     if(listHospitalFavorite.isEmpty) {
       listHospitalFavorite = await favoriteApi.getAllHospitalFavoriteByUserIdApi(userId);
     }
   }
+
+  Future<void> deleteDoctorFavorite(String doctorFavoriteId,DoctorFavorite doctorFavorite) async{
+
+    bool isSuccess = await favoriteApi.deleteDoctorFavoriteApi(doctorFavoriteId);
+
+    if(isSuccess) {
+      listDoctorFavorite.remove(doctorFavorite);
+    }
+
+  }
+
+  Future<void> deleteHospitalFavorite(String hospitalFavoriteId,HospitalFavorite hospitalFavorite) async{
+
+    bool isSuccess = await favoriteApi.deleteHospitalFavoriteApi(hospitalFavoriteId);
+
+    if(isSuccess) {
+      listHospitalFavorite.remove(hospitalFavorite);
+    }
+
+  }
+
 
 }

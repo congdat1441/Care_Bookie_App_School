@@ -1,4 +1,5 @@
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
+import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,9 +71,15 @@ class _DoctorsState extends State<Doctors> {
 
                               final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
 
+                              final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
                               doctorDetailPageViewModel.setDoctorDetail(homePageViewModel.doctors[index]);
 
                               doctorDetailPageViewModel.setScheduleWithDoctor(schedulePageViewModel.schedules);
+
+                              doctorDetailPageViewModel.setDoctorFavorite(favoritePageViewModel.listDoctorFavorite);
+
+                              doctorDetailPageViewModel.checkFavorite();
 
                               await doctorDetailPageViewModel.getHospitalById(homePageViewModel.doctors[index].hospitalId);
 

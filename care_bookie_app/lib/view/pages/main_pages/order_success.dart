@@ -427,6 +427,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
 
     final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
 
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+
     return Container(
       height: 80,
       color: Colors.white,
@@ -450,6 +452,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
 
                       schedulePageViewModel.resetSchedules();
                       orderHospitalDataViewModel.resetAllData();
+                      hospitalDetailPageViewModel.resetListServiceCheck();
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => const  NavbarLayout(index: 0)));

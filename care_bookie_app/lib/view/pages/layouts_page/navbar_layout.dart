@@ -105,10 +105,10 @@ class _NavbarLayoutState extends State<NavbarLayout> {
                           text: 'Home',
                         ),
                         GButton(
-                            icon: FontAwesomeIcons.wandMagicSparkles,
+                            icon: FontAwesomeIcons.calendarCheck,
                             text: 'Schedule'),
                         GButton(
-                          icon: FontAwesomeIcons.fileMedical,
+                          icon: FontAwesomeIcons.solidFolder,
                           text: 'History',
                         ),
                         GButton(

@@ -1,3 +1,4 @@
+import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -349,13 +350,15 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                child: Text(service.serviceName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                  child: Text(service.serviceName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          overflow: TextOverflow.visible)),
+                ),
               ),
               SizedBox(
                 width: 200,
@@ -459,6 +462,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                         child: const Text('Gửi'),
                         onPressed: () async{
 
+                          final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+
                           bool isSuccess = await scheduleCancelViewModel.cancelSchedule(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.id.toString(), message);
 
                           print("Success ----------> $isSuccess");
@@ -475,7 +480,11 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                               fontSize: 16.0
                             );
 
+
+
                             schedulePageViewModel.resetSchedules();
+
+                            hospitalDetailPageViewModel.resetScheduleWithHospital();
 
                           // ignore: use_build_context_synchronously
                             Navigator.push(context,

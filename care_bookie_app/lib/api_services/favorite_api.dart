@@ -46,4 +46,91 @@ class FavoriteApi {
 
   }
 
+  Future<int> createFavoriteDoctorApi(String doctorId, String userId) async {
+
+    int favoriteId = -1;
+
+    String url = "${HostUtil.host}api/v1/care-bookie/user/doctor/favourite/$userId?doctorId=$doctorId";
+
+    Map<String, String> headers = {'content-type': 'application/json'};
+
+
+    var response = await http.post(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+
+      var dataResponse = jsonDecode(response.body);
+
+      favoriteId = dataResponse['id'];
+
+    }
+
+    return favoriteId;
+
+  }
+
+  Future<bool> deleteDoctorFavoriteApi(String doctorFavoriteId) async {
+
+    String url = "${HostUtil.host}api/v1/care-bookie/user/doctor/favourite?id=$doctorFavoriteId";
+
+    Map<String, String> headers = {'content-type': 'application/json'};
+
+    var response = await http.delete(Uri.parse(url), headers: headers);
+
+    if(response.statusCode == 200) {
+
+      return true;
+
+    } else {
+
+      return false;
+
+    }
+
+  }
+
+  Future<int> createFavoriteHospitalApi(String hospitalId, String userId) async {
+
+    int favoriteId = -1;
+
+    String url = "${HostUtil.host}api/v1/care-bookie/user/hospital/favourite/$userId?hospitalId=$hospitalId";
+
+    Map<String, String> headers = {'content-type': 'application/json'};
+
+
+    var response = await http.post(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+
+      var dataResponse = jsonDecode(response.body);
+
+      favoriteId = dataResponse['id'];
+
+    }
+
+    return favoriteId;
+
+  }
+
+  Future<bool> deleteHospitalFavoriteApi(String hospitalFavoriteId) async {
+
+    String url = "${HostUtil.host}api/v1/care-bookie/user/hospital/favourite?id=$hospitalFavoriteId";
+
+    Map<String, String> headers = {'content-type': 'application/json'};
+
+    var response = await http.delete(Uri.parse(url), headers: headers);
+
+    if(response.statusCode == 200) {
+
+      return true;
+
+    } else {
+
+      return false;
+
+    }
+
+  }
+
+
 }

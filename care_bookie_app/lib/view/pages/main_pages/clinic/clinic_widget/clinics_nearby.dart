@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../res/constants/colors.dart';
+import '../../../../../view_model/favorite_page_view_model.dart';
 import '../detail_clinic.dart';
 
 class ClinicsNearby extends StatefulWidget {
@@ -60,9 +61,15 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
 
                               final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
 
+                              final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
                               hospitalDetailPageProvider.setHospitalDetail(homePageViewModel.hospitals[index]);
 
                               hospitalDetailPageProvider.setScheduleWithHospital(schedulePageViewModel.schedules);
+
+                              hospitalDetailPageProvider.setHospitalFavorite(favoritePageViewModel.listHospitalFavorite);
+
+                              hospitalDetailPageProvider.checkFavorite();
 
                               await hospitalDetailPageProvider.getAllDoctorByHospitalId(homePageViewModel.hospitals[index].id);
 
