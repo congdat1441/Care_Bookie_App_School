@@ -1,6 +1,4 @@
-
 class UserLogin {
-
   final String id;
   final String firstName;
   final String lastName;
@@ -11,16 +9,27 @@ class UserLogin {
   final String address;
   final String image;
 
-  UserLogin({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.birthDay,
-    required this.email,
-    required this.gender,
-    required this.phone,
-    required this.address,
-    required this.image
-  });
+  UserLogin(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.birthDay,
+      required this.email,
+      required this.gender,
+      required this.phone,
+      required this.address,
+      required this.image});
 
+  factory UserLogin.fromJson(Map<String, dynamic> json) {
+    return UserLogin(
+        id: json['userId'],
+        firstName: json['firstname'],
+        lastName: json['lastName'],
+        birthDay: json['birthDay'],
+        email: json['email'],
+        gender: json['gender'],
+        phone: json['phone'],
+        address: json['address'],
+        image: json['image']);
+  }
 }

@@ -24,8 +24,6 @@ class CommentApi {
     } else {
       return false;
     }
-
-
   }
 
   Future<bool> createCommentHospitalByUserIdApi(CommentData commentHospital) async {

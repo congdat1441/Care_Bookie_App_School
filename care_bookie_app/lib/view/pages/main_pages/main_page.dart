@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage> {
                     const Doctors(),
                     clinicsNearbyTitles(),
                     const ClinicsNearby(),
-                    // const SizedBox(height: 100)
+                    const SizedBox(height: 100)
                   ],
                 ),
               ),
