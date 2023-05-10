@@ -36,7 +36,7 @@ class Schedule {
         imageHospital: json['imageUrlH'],
         hospitalName: json['hospitalNameH'],
         addressHospital: json['addressH'],
-        starHospital: json['starH'],
+        starHospital: json['starH'] ?? 0,
         bookInformation: bookInformation,
         services: services,
         doctorName: json['doctorName']

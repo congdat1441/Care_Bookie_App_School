@@ -104,14 +104,17 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget hiPatient() {
+
+    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(35, 45, 35, 0),
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            "Chào Cong Dat",
-            style: TextStyle(
+          Text(
+            "Chào ${userLoginInfoViewModel.userLogin.firstName}",
+            style: const TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 30,
                 color: Colors.black87,
