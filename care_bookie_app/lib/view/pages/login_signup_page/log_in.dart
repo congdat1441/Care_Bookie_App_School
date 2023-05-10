@@ -5,6 +5,8 @@ import 'package:care_bookie_app/view/pages/login_signup_page/reset_password.dart
 import 'package:care_bookie_app/view/pages/login_signup_page/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
+import '../../../view_model/login_page_view_model.dart';
 import '../layouts_page/navbar_layout.dart';
 import 'package:http/http.dart' as http;
 
@@ -265,6 +267,9 @@ class _LoginState extends State<Login> {
   }
 
   Widget loginButton() {
+
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
+
     return Container(
       width: 330,
       padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
@@ -294,8 +299,18 @@ class _LoginState extends State<Login> {
             ),
             child: ElevatedButton(
               // onPressed: isLoading ? null : () => _handleLogin(context),
-              onPressed: () {Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const NavbarLayout(index: 0)));},
+              onPressed: () async{
+
+                await loginPageViewModel.signIn(phoneController.text, passwordController.text);
+
+
+                loginPageViewModel.userLogin!.id == "Login Failed" ? "" :
+
+                // ignore: use_build_context_synchronously
+                Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const NavbarLayout(index: 0)));
+
+                },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),

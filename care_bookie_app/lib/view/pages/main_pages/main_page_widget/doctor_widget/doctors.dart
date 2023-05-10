@@ -1,4 +1,5 @@
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
+import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -77,6 +78,9 @@ class _DoctorsState extends State<Doctors> {
                                 doctorDetailPageViewModel.setDoctorDetail(
                                     homePageViewModel.doctors[index]);
 
+                              final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
+                              doctorDetailPageViewModel.setDoctorDetail(homePageViewModel.doctors[index]);
                                 doctorDetailPageViewModel.setScheduleWithDoctor(
                                     schedulePageViewModel.schedules);
 
@@ -84,13 +88,19 @@ class _DoctorsState extends State<Doctors> {
                                     homePageViewModel
                                         .doctors[index].hospitalId);
 
-                                // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DetailDoctor()));
-                              },
+                              doctorDetailPageViewModel.setDoctorFavorite(favoritePageViewModel.listDoctorFavorite);
+
+                              doctorDetailPageViewModel.checkFavorite();
+
+                              await doctorDetailPageViewModel.getHospitalById(homePageViewModel.doctors[index].hospitalId);
+
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const DetailDoctor()));
+                            },
+
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.network(

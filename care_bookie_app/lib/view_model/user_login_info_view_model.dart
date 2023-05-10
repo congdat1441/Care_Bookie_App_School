@@ -16,4 +16,8 @@ class UserLoginInfoViewModel extends ChangeNotifier {
       image: "https://toigingiuvedep.vn/wp-content/uploads/2022/11/avatar-dep-nu-cho-con-gai.jpg"
   );
 
+  void setUserLogin(UserLogin user) {
+    userLogin = user;
+  }
+
 }

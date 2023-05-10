@@ -1,3 +1,5 @@
+import 'package:care_bookie_app/view_model/login_page_view_model.dart';
+import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/rendering.dart';
@@ -41,6 +43,13 @@ class _NavbarLayoutState extends State<NavbarLayout> {
     super.initState();
     _bottomNavBarProvider = context.read<BottomNavBarProvider>();
     _currentIndex = widget.index;
+
+    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
+
+    userLoginInfoViewModel.setUserLogin(loginPageViewModel.userLogin!);
+
   }
 
   @override
@@ -105,10 +114,10 @@ class _NavbarLayoutState extends State<NavbarLayout> {
                           text: 'Home',
                         ),
                         GButton(
-                            icon: FontAwesomeIcons.wandMagicSparkles,
+                            icon: FontAwesomeIcons.calendarCheck,
                             text: 'Schedule'),
                         GButton(
-                          icon: FontAwesomeIcons.fileMedical,
+                          icon: FontAwesomeIcons.solidFolder,
                           text: 'History',
                         ),
                         GButton(

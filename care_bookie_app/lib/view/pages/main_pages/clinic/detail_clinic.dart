@@ -7,7 +7,10 @@ import 'package:provider/provider.dart';
 import '../../../../../res/constants/colors.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../../../view_model/favorite_page_view_model.dart';
+import '../../../../view_model/order_hospital_data_view_model.dart';
 import '../../../../view_model/schedule_detail_page_view_model.dart';
+import '../../../../view_model/user_login_info_view_model.dart';
 import '../../review_page/review_clinic_page/review_clinic.dart';
 import '../../schedule/schedule_detail_pending.dart';
 import '../doctor/detail_doctor.dart';
@@ -77,6 +80,10 @@ class _DetailClinicState extends State<DetailClinic>
 
     final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
+    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+
+    final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
     return SliverAppBar(
       title: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -96,6 +103,12 @@ class _DetailClinicState extends State<DetailClinic>
       backgroundColor: Colors.transparent,
       leading: IconButton(
         onPressed: () {
+          hospitalDetailPageViewModel.resetScheduleWithHospital();
+
+          hospitalDetailPageViewModel.setIsFavorite(false);
+          hospitalDetailPageViewModel.resetHospitalFavorite();
+          hospitalDetailPageViewModel.resetIsFavoritePage();
+
           Navigator.pop(context);
         },
         icon: const Icon(
@@ -104,9 +117,26 @@ class _DetailClinicState extends State<DetailClinic>
         ),
       ),
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
+        hospitalDetailPageViewModel.isFavoritePage ? const SizedBox() : IconButton(
+          onPressed: () async{
+            setState(() {
+
+            });
+
+            hospitalDetailPageViewModel.setIsFavorite(!hospitalDetailPageViewModel.isFavorite);
+
+            await hospitalDetailPageViewModel.changeFavoriteHospital(hospitalDetailPageViewModel.hospitalDetail!.id, userLoginInfoViewModel.userLogin.id);
+
+            favoritePageViewModel.resetListHospitalFavorite();
+
+            await favoritePageViewModel.getAllHospitalFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
+
+          },
+          icon: hospitalDetailPageViewModel.isFavorite  ?  const Icon(
+            IconlyBold.heart,
+            size: 30,
+            color: Colors.redAccent,
+          ) : const Icon(
             IconlyLight.heart,
             size: 30,
           ),
@@ -440,7 +470,15 @@ class _DetailClinicState extends State<DetailClinic>
 
                               final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
+                              final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
                               doctorDetailPageViewModel.setDoctorDetail(hospitalDetailPageViewModel.doctors[index]);
+
+                              doctorDetailPageViewModel.setDoctorFavorite(favoritePageViewModel.listDoctorFavorite);
+
+                              doctorDetailPageViewModel.checkFavorite();
+
+                              doctorDetailPageViewModel.setIsFavoritePage(true);
 
                               hospitalDetailPageViewModel.scheduleWithHospital != null ?
                               {

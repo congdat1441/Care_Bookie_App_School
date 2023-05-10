@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../../view_model/bottom_navbar_provider.dart';
+import '../../../view_model/favorite_page_view_model.dart';
 import '../../../view_model/schedule_page_view_model.dart';
 import 'main_page_widget/AppbarCustom.dart';
 import 'clinic/clinic_widget/clinics_nearby.dart';
@@ -14,9 +15,7 @@ import 'main_page_widget/doctor_widget/doctors.dart';
 import 'main_page_widget/favorite_infos.dart';
 import '../search_page/search_button.dart';
 
-
 class MainPage extends StatefulWidget {
-
   const MainPage({
     Key? key,
   }) : super(key: key);
@@ -26,13 +25,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    var loadHospitalAndDoctor = Provider.of<HomePageViewModel>(context, listen: false);
+    var loadHospitalAndDoctor =
+        Provider.of<HomePageViewModel>(context, listen: false);
 
     if (loadHospitalAndDoctor.doctors.isEmpty) {
       loadHospitalAndDoctor.getAllDoctor();
@@ -42,17 +41,27 @@ class _MainPageState extends State<MainPage> {
       loadHospitalAndDoctor.getAllHospital();
     }
 
-    final historyPageViewModel = Provider.of<HistoryPageViewModel>(context,listen: false);
+    final historyPageViewModel =
+        Provider.of<HistoryPageViewModel>(context, listen: false);
 
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+    final userLoginInfoViewModel =
+        Provider.of<UserLoginInfoViewModel>(context, listen: false);
 
     historyPageViewModel.setHistories(userLoginInfoViewModel.userLogin.id);
 
-    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+    final schedulePageViewModel =
+        Provider.of<SchedulePageViewModel>(context, listen: false);
 
     schedulePageViewModel.loadSchedules(userLoginInfoViewModel.userLogin.id);
 
+    final favoritePageViewModel =
+        Provider.of<FavoritePageViewModel>(context, listen: false);
 
+    favoritePageViewModel
+        .getAllDoctorFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
+
+    favoritePageViewModel
+        .getAllHospitalFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
   }
 
   @override
@@ -67,7 +76,6 @@ class _MainPageState extends State<MainPage> {
           return Scaffold(
             backgroundColor: ColorConstant.BackGroundColor,
             body: SizedBox(
-              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
@@ -82,7 +90,9 @@ class _MainPageState extends State<MainPage> {
                     const Doctors(),
                     clinicsNearbyTitles(),
                     const ClinicsNearby(),
-                    const SizedBox(height: 100)
+                    const SizedBox(
+                      height: 100,
+                    )
                   ],
                 ),
               ),
@@ -94,14 +104,17 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget hiPatient() {
+
+    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(35, 45, 35, 0),
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            "Chào Cong Dat",
-            style: TextStyle(
+          Text(
+            "Chào ${userLoginInfoViewModel.userLogin.firstName}",
+            style: const TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 30,
                 color: Colors.black87,
@@ -202,5 +215,4 @@ class _MainPageState extends State<MainPage> {
           ],
         ));
   }
-
 }

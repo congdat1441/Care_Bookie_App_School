@@ -1,6 +1,8 @@
 import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
+import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 import '../../account_page/account_page.dart';
 
@@ -14,6 +16,8 @@ class AppbarCustom extends StatefulWidget {
 class _AppbarCustomState extends State<AppbarCustom> {
   @override
   Widget build(BuildContext context) {
+    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(35, 10, 35, 0),
       child: Row(
@@ -71,7 +75,8 @@ class _AppbarCustomState extends State<AppbarCustom> {
                                       builder: (context) =>
                                           const NavbarLayout(index: 4)));
                             },
-                            child: Image.asset('assets/images/ava.PNG',
+                            child: Image.network(
+                                userLoginInfoViewModel.userLogin.image,
                                 width: 40, height: 40, fit: BoxFit.cover),
                           ),
                         ),

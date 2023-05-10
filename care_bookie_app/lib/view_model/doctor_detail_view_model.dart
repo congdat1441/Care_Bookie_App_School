@@ -1,6 +1,8 @@
 
 import 'package:care_bookie_app/api_services/doctor_api.dart';
+import 'package:care_bookie_app/api_services/favorite_api.dart';
 import 'package:care_bookie_app/models/doctor.dart';
+import 'package:care_bookie_app/models/favorite.dart';
 import 'package:care_bookie_app/models/hospital.dart';
 import 'package:care_bookie_app/models/service.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ import '../models/working_day_detail.dart';
 class DoctorDetailPageViewModel extends ChangeNotifier {
 
   DoctorApi doctorApi = DoctorApi();
+
+  FavoriteApi favoriteApi = FavoriteApi();
 
   HospitalApi hospitalApi = HospitalApi();
 
@@ -30,8 +34,36 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
 
   Schedule? scheduleWithDoctor;
 
+  bool isFavorite = false;
+
+  int? favoriteId;
+
+  bool isFavoritePage = false;
+  
+  DoctorFavorite? doctorFavorite;
+
+  void setIsFavoritePage(bool value){
+    isFavoritePage = value;
+  }
+
+  void resetIsFavoritePage() {
+    isFavoritePage = false;
+  }
+
   void setDoctorDetail(Doctor doctor) {
     doctorDetail = doctor;
+  }
+
+  void setIsFavorite(bool value) {
+    isFavorite = value;
+  }
+
+  void setFavoriteId(int id) {
+    favoriteId = id;
+  }
+
+  Future<void> getDoctorById(String doctorId) async {
+    doctorDetail = await doctorApi.getDoctorByIdApi(doctorId);
   }
 
 
@@ -82,6 +114,51 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
 
   void resetScheduleWithDoctor() {
     scheduleWithDoctor = null;
+  }
+  
+  void setDoctorFavorite(List<DoctorFavorite> favorites) {
+    if(favorites.isNotEmpty) {
+      for(var favorite in favorites) {
+        if(favorite.doctor.id == doctorDetail!.id) {
+          doctorFavorite = favorite;
+          setFavoriteId(favorite.doctorFavouriteId);
+        }
+      }
+    }
+  }
+
+  Future<int> createFavoriteDoctor(String doctorId, String userId) async {
+    return await favoriteApi.createFavoriteDoctorApi(doctorId, userId);
+  }
+
+  Future<bool> deleteDoctorFavorite(String doctorFavoriteId) async {
+    return await favoriteApi.deleteDoctorFavoriteApi(doctorFavoriteId);
+  }
+
+  changeFavoriteDoctor(String doctorId, String userId) async{
+
+    if(isFavorite) {
+
+      int responseId = await createFavoriteDoctor(doctorId, userId);
+
+      setFavoriteId(responseId);
+
+    } else {
+      await deleteDoctorFavorite(favoriteId.toString());
+    }
+
+  }
+  
+  void checkFavorite() {
+    
+    if(doctorFavorite != null) {
+      setIsFavorite(true);
+    }
+    
+  }
+
+  void resetDoctorFavorite() {
+    doctorFavorite = null;
   }
 
 }

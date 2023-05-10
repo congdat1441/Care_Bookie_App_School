@@ -3,16 +3,19 @@ import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/log_in.dart';
 import 'package:care_bookie_app/view_model/bottom_navbar_provider.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
+import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
 import 'package:care_bookie_app/view_model/history_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/history_page_view_model.dart';
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
+import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:care_bookie_app/view_model/order_hospital_data_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_cancel_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
+import 'package:care_bookie_app/view_model/search_page_view_model.dart';
 import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +44,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OrderHospitalDataViewModel(),),
         ChangeNotifierProvider(create: (context) => SchedulePageViewModel(),),
         ChangeNotifierProvider(create: (context) => ScheduleDetailPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel(),)
+        ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel(),),
+        ChangeNotifierProvider(create: (context) => FavoritePageViewModel(),),
+        ChangeNotifierProvider(create: (context) => SearchPageViewModel(),),
+        ChangeNotifierProvider(create: (context) => LoginPageViewModel(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

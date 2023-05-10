@@ -23,13 +23,13 @@ class UserLogin {
   factory UserLogin.fromJson(Map<String, dynamic> json) {
     return UserLogin(
         id: json['userId'],
-        firstName: json['firstname'],
+        firstName: json['firstName'],
         lastName: json['lastName'],
         birthDay: json['birthDay'],
         email: json['email'],
         gender: json['gender'],
         phone: json['phone'],
         address: json['address'],
-        image: json['image']);
+        image: json['imageUrl']);
   }
 }
