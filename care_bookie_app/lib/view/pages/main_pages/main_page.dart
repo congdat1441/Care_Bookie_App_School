@@ -15,9 +15,7 @@ import 'main_page_widget/doctor_widget/doctors.dart';
 import 'main_page_widget/favorite_infos.dart';
 import '../search_page/search_button.dart';
 
-
 class MainPage extends StatefulWidget {
-
   const MainPage({
     Key? key,
   }) : super(key: key);
@@ -27,13 +25,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    var loadHospitalAndDoctor = Provider.of<HomePageViewModel>(context, listen: false);
+    var loadHospitalAndDoctor =
+        Provider.of<HomePageViewModel>(context, listen: false);
 
     if (loadHospitalAndDoctor.doctors.isEmpty) {
       loadHospitalAndDoctor.getAllDoctor();
@@ -43,23 +41,27 @@ class _MainPageState extends State<MainPage> {
       loadHospitalAndDoctor.getAllHospital();
     }
 
-    final historyPageViewModel = Provider.of<HistoryPageViewModel>(context,listen: false);
+    final historyPageViewModel =
+        Provider.of<HistoryPageViewModel>(context, listen: false);
 
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+    final userLoginInfoViewModel =
+        Provider.of<UserLoginInfoViewModel>(context, listen: false);
 
     historyPageViewModel.setHistories(userLoginInfoViewModel.userLogin.id);
 
-    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+    final schedulePageViewModel =
+        Provider.of<SchedulePageViewModel>(context, listen: false);
 
     schedulePageViewModel.loadSchedules(userLoginInfoViewModel.userLogin.id);
 
-    final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+    final favoritePageViewModel =
+        Provider.of<FavoritePageViewModel>(context, listen: false);
 
-    favoritePageViewModel.getAllDoctorFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
+    favoritePageViewModel
+        .getAllDoctorFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
 
-    favoritePageViewModel.getAllHospitalFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
-
-
+    favoritePageViewModel
+        .getAllHospitalFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
   }
 
   @override
@@ -91,7 +93,6 @@ class _MainPageState extends State<MainPage> {
                     const SizedBox(
                       height: 100,
                     )
-                    // const SizedBox(height: 100)
                   ],
                 ),
               ),
@@ -211,5 +212,4 @@ class _MainPageState extends State<MainPage> {
           ],
         ));
   }
-
 }
