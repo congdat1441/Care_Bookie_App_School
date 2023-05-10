@@ -62,6 +62,10 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
     favoriteId = id;
   }
 
+  Future<void> getDoctorById(String doctorId) async {
+    doctorDetail = await doctorApi.getDoctorByIdApi(doctorId);
+  }
+
 
   Future<void> getHospitalById(String id) async {
     hospital = await hospitalApi.getHospitalByIdApi(id);

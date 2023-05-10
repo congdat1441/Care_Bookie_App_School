@@ -337,32 +337,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ), //experience doctor
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(5, 10, 0, 0.0),
-                        child: Icon(
-                          FontAwesomeIcons.phone,
-                          size: 20,
-                          color: Colors.amber,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: Text(doctorDetailPageViewModel.doctorDetail!.phone,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                height: 1.9,
-                                fontSize: 16,
-                                color: ColorConstant.Grey01,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Merriweather Sans')),
-                      ),
-                    ],
-                  ), // number phone doctor
+                  ),
                 ],
               ),
             ),

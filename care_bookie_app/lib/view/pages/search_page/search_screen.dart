@@ -4,7 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../res/constants/colors.dart';
+import '../../../view_model/doctor_detail_view_model.dart';
+import '../../../view_model/favorite_page_view_model.dart';
+import '../../../view_model/hospital_detail_page_view_model.dart';
+import '../../../view_model/schedule_page_view_model.dart';
 import '../../../view_model/search_page_view_model.dart';
+import '../main_pages/clinic/detail_clinic.dart';
+import '../main_pages/doctor/detail_doctor.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -92,7 +98,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
                     });
 
-                    print("SEARCH");
                   },
                 ),
                 filled: true,
@@ -240,6 +245,29 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                                 child: InkWell(
                                   onTap: () async{
+
+                                    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
+
+                                    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
+                                    final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
+                                    await doctorDetailPageViewModel.getDoctorById(searchPageViewModel.dataSearch.doctors[index].doctorId);
+
+                                    doctorDetailPageViewModel.setScheduleWithDoctor(schedulePageViewModel.schedules);
+
+                                    doctorDetailPageViewModel.setDoctorFavorite(favoritePageViewModel.listDoctorFavorite);
+
+                                    doctorDetailPageViewModel.checkFavorite();
+
+                                    await doctorDetailPageViewModel.getHospitalById(doctorDetailPageViewModel.doctorDetail!.hospitalId);
+
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => const DetailDoctor()));
+
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
@@ -250,21 +278,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       //scale: 30,
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(105, 10, 0, 0),
-                              height: 28,
-                              width: 28,
-                              child: GestureDetector(
-                                onTap: () async{
-
-                                },
-                                child: const Icon(
-                                  IconlyBold.closeSquare,
-                                  color: Color(0xffee5353),
-                                  size: 20,
                                 ),
                               ),
                             ),
@@ -410,7 +423,29 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     GestureDetector(
                       onTap: () async{
+                        final hospitalDetailPageProvider = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
+                        final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
+                        final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
+                        await hospitalDetailPageProvider.getHospitalById(hospital.hospitalId);
+
+                        hospitalDetailPageProvider.setScheduleWithHospital(schedulePageViewModel.schedules);
+
+                        hospitalDetailPageProvider.setHospitalFavorite(favoritePageViewModel.listHospitalFavorite);
+
+                        hospitalDetailPageProvider.checkFavorite();
+
+                        await hospitalDetailPageProvider.getAllDoctorByHospitalId(hospital.hospitalId);
+
+
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                const DetailClinic()));
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
@@ -535,24 +570,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                     ),
                                   ),
                                 )
-
                               ],
                             ),
                           ),
-                          Positioned(
-                            top: 10,
-                            right: 10,
-                            child: GestureDetector(
-                              onTap: () async{
-
-                              },
-                              child: const Icon(
-                                IconlyBold.closeSquare,
-                                color: Color(0xffee5353),
-                                size: 20,
-                              ),
-                            ),
-                          )
                         ],
                       ),
                     )
