@@ -74,7 +74,6 @@ class _MainPageState extends State<MainPage> {
           return Scaffold(
             backgroundColor: ColorConstant.BackGroundColor,
             body: SizedBox(
-              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
@@ -89,6 +88,9 @@ class _MainPageState extends State<MainPage> {
                     const Doctors(),
                     clinicsNearbyTitles(),
                     const ClinicsNearby(),
+                    const SizedBox(
+                      height: 100,
+                    )
                     // const SizedBox(height: 100)
                   ],
                 ),

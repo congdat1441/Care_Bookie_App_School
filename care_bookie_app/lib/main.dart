@@ -14,6 +14,7 @@ import 'package:care_bookie_app/view_model/schedule_detail_page_view_model.dart'
 import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
+import 'package:care_bookie_app/view_model/search_page_view_model.dart';
 import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SchedulePageViewModel(),),
         ChangeNotifierProvider(create: (context) => ScheduleDetailPageViewModel(),),
         ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel(),),
-        ChangeNotifierProvider(create: (context) => FavoritePageViewModel(),)
+        ChangeNotifierProvider(create: (context) => FavoritePageViewModel(),),
+        ChangeNotifierProvider(create: (context) => SearchPageViewModel(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

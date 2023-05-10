@@ -8,6 +8,7 @@ import '../../../../../res/constants/colors.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../../view_model/favorite_page_view_model.dart';
+import '../../../../view_model/order_hospital_data_view_model.dart';
 import '../../../../view_model/schedule_detail_page_view_model.dart';
 import '../../../../view_model/user_login_info_view_model.dart';
 import '../../review_page/review_clinic_page/review_clinic.dart';
@@ -469,7 +470,15 @@ class _DetailClinicState extends State<DetailClinic>
 
                               final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
+                              final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
+
                               doctorDetailPageViewModel.setDoctorDetail(hospitalDetailPageViewModel.doctors[index]);
+
+                              doctorDetailPageViewModel.setDoctorFavorite(favoritePageViewModel.listDoctorFavorite);
+
+                              doctorDetailPageViewModel.checkFavorite();
+
+                              doctorDetailPageViewModel.setIsFavoritePage(true);
 
                               hospitalDetailPageViewModel.scheduleWithHospital != null ?
                               {

@@ -285,6 +285,11 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
               )
             : const Icon(IconlyLight.arrowLeft, size: 30, color: Colors.white),
         onPressed: () {
+
+          final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
+          orderHospitalDataViewModel.resetAllData();
+
           Navigator.pop(context);
         },
       ),
