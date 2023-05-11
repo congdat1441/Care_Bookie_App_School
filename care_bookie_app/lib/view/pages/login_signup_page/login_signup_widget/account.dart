@@ -14,12 +14,12 @@ class _AddAcountState extends State<AddAcount> {
   Widget build(BuildContext context) {
     return Container(
       // color: Colors.green,
-      padding: EdgeInsets.fromLTRB(0, 20, 30, 0),
+      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
       // color: Colors.orange,
       width: 330,
       child: TextFormField(
         // textAlign: TextAlign.left,
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
           validator: (value) {
             if (value == null || value.isEmpty) {
               return "Add your phone number";

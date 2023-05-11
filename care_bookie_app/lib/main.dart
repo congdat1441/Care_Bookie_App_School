@@ -1,6 +1,5 @@
-
 import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
-import 'package:care_bookie_app/view/pages/login_signup_page/log_in.dart';
+import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view_model/bottom_navbar_provider.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
@@ -19,64 +18,80 @@ import 'package:care_bookie_app/view_model/search_page_view_model.dart';
 import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'models/user_login.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  final LoginPageViewModel _loginViewModel = LoginPageViewModel();
+  late bool isCheckLogin = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _loginViewModel.isLoggedIn().then((value) {
+      if (value.phone != '' && value.password != '') {
+        print('Login roi');
+        _loginViewModel.signIn(value.phone, value.password!);
+        setState(() {
+          isCheckLogin = true;
+        });
+      } else {
+        print('Chua login');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => _loginViewModel,
+        ),
         ChangeNotifierProvider(create: (context) => BottomNavBarProvider()),
-        ChangeNotifierProvider(create: (context) => HomePageViewModel(),),
-        ChangeNotifierProvider(create: (context) => DoctorDetailPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => HospitalDetailPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => ScheduleInfoPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => ScheduleDoctorInfoPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => UserLoginInfoViewModel(),),
-        ChangeNotifierProvider(create: (context) => HistoryPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => HistoryDetailPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => OrderHospitalDataViewModel(),),
-        ChangeNotifierProvider(create: (context) => SchedulePageViewModel(),),
-        ChangeNotifierProvider(create: (context) => ScheduleDetailPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel(),),
-        ChangeNotifierProvider(create: (context) => FavoritePageViewModel(),),
-        ChangeNotifierProvider(create: (context) => SearchPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => LoginPageViewModel(),)
+        ChangeNotifierProvider(create: (context) => HomePageViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => DoctorDetailPageViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => HospitalDetailPageViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => ScheduleInfoPageViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => ScheduleDoctorInfoPageViewModel()),
+        ChangeNotifierProvider(create: (context) => UserLoginInfoViewModel()),
+        ChangeNotifierProvider(create: (context) => HistoryPageViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => HistoryDetailPageViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => OrderHospitalDataViewModel()),
+        ChangeNotifierProvider(create: (context) => SchedulePageViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => ScheduleDetailPageViewModel()),
+        ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel()),
+        ChangeNotifierProvider(create: (context) => FavoritePageViewModel()),
+        ChangeNotifierProvider(create: (context) => SearchPageViewModel()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          fontFamily: 'Golos' 'Arimo' 'Poppins',
-        ),
-        home: StreamBuilder(
-          //stream: isLoggedIn(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return const Text('Lỗi khi kiểm tra đăng nhập');
-            } else if (snapshot.data == true) {
-              // Nếu đã đăng nhập, chuyển đến trang chủ
-              return ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => const NavbarLayout(index: 0)));
-                },
-                child: const Text('Trang chủ'),
-              );
-            } else {
-              return const Login();
-            }
-          },
-        ),
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            fontFamily: 'Golos' 'Arimo' 'Poppins',
+          ),
+          home: isCheckLogin ? const NavbarLayout(index: 0) : const Login()),
     );
   }
 }

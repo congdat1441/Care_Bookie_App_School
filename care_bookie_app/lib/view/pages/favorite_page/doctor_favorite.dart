@@ -30,7 +30,7 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
           scrollDirection: Axis.horizontal,
           children: [
             const SizedBox(
-              width: 35,
+              width: 20,
             ),
             ...favoritePageViewModel.listDoctorFavorite.map((favorite) => Container(
               margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),

@@ -83,7 +83,7 @@ class AccountPage extends StatelessWidget {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60),
-                            child: Image.asset('assets/images/ava.PNG',
+                            child: Image.asset('assets/images/doctor03.jpg',
                                 width: 60, height: 60, fit: BoxFit.cover),
                           ),
                         ),

@@ -1,5 +1,7 @@
+import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view_model/history_page_view_model.dart';
 import 'package:care_bookie_app/view_model/home_page_view_model.dart';
+import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -104,27 +106,26 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget hiPatient() {
-
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(35, 45, 35, 0),
-      child: Row(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Chào ${userLoginInfoViewModel.userLogin.firstName}",
-            style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 30,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 10),
-          Image.asset('assets/images/wavinghand.png',
-              width: 30, height: 30, fit: BoxFit.cover),
-        ],
-      ),
+    return Consumer<LoginPageViewModel>(
+      builder: (context, value, child) => Padding(
+        padding: const EdgeInsets.fromLTRB(35, 45, 35, 0),
+        child: Row(
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Chào ${value.userLogin.firstName}",
+              style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 30,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(width: 10),
+            Image.asset('assets/images/wavinghand.png',
+                width: 30, height: 30, fit: BoxFit.cover),
+          ],
+        ),
+      )
     );
   }
 

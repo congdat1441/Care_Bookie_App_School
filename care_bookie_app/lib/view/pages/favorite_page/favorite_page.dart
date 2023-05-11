@@ -39,7 +39,7 @@ class FavoritePage extends StatelessWidget {
 
   Widget favoriteDoctor() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(35, 20, 0, 0),
+        padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           //textBaseline: TextBaseline.alphabetic,
@@ -52,7 +52,7 @@ class FavoritePage extends StatelessWidget {
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Favorite",
+                    text: "Favourite",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
@@ -99,7 +99,7 @@ class FavoritePage extends StatelessWidget {
 
   Widget favoriteClinic() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(35, 20, 0, 0),
+        padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           //textBaseline: TextBaseline.alphabetic,
@@ -112,7 +112,7 @@ class FavoritePage extends StatelessWidget {
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Favorite",
+                    text: "Favourite",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,

@@ -18,6 +18,7 @@ class UserLoginInfoViewModel extends ChangeNotifier {
 
   void setUserLogin(UserLogin user) {
     userLogin = user;
+    notifyListeners();
   }
 
 }

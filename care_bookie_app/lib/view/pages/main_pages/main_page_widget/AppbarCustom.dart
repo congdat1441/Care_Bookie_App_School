@@ -29,25 +29,26 @@ class _AppbarCustomState extends State<AppbarCustom> {
                 child: Stack(
                   children: [
                     Container(
-                      width: 60.0,
-                      height: 60.0,
+                      width: 70.0,
+                      height: 70.0,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(100),
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              spreadRadius: 0.1,
-                              blurRadius: 2,
-                              offset: const Offset(0, 5))
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 0.1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 5),
+                          ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(7.5),
+                      padding: const EdgeInsets.all(10.5),
                       child: Container(
-                        width: 45,
-                        height: 45,
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           boxShadow: [
@@ -59,26 +60,13 @@ class _AppbarCustomState extends State<AppbarCustom> {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              elevation: 0.75,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const NavbarLayout(index: 4)));
-                            },
-                            child: Image.network(
-                                userLoginInfoViewModel.userLogin.image,
-                                width: 40, height: 40, fit: BoxFit.cover),
-                          ),
+                          borderRadius: BorderRadius.circular(60),
+                          child: Image.network(
+                                      userLoginInfoViewModel.userLogin.image,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
                         ),
                       ),
                     ),

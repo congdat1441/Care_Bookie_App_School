@@ -1,8 +1,8 @@
 
 import 'dart:convert';
-
 import '../models/user_login.dart';
 import 'package:http/http.dart' as http;
+import '../utils/host_util.dart';
 
 class LoginApi {
 
@@ -13,7 +13,7 @@ class LoginApi {
     };
 
     var response = await http.post(
-      Uri.parse("https://bbf2-2405-4802-60de-22c0-2c24-cdf5-ea0f-5bcf.ngrok-free.app/api/v1/care-bookie/common/login"),
+      Uri.parse("${HostUtil.host}api/v1/care-bookie/common/login"),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -21,7 +21,7 @@ class LoginApi {
     );
 
     UserLogin userLogin = UserLogin(
-        id: "Login Failed",
+        id: "",
         firstName: "",
         lastName: "",
         birthDay: "",
@@ -41,7 +41,6 @@ class LoginApi {
       return userLogin;
 
     } else {
-
       return userLogin;
 
     }

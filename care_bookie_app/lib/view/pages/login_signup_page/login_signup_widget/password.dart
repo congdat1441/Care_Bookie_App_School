@@ -25,20 +25,14 @@ class _AddPasswordState extends State<AddPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(0, 20, 30, 0),
+      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
       width: 330,
       child: TextFormField(
         //keyboardType: TextInputType.visiblePassword,
         obscureText: _obscured,
         focusNode: textFieldFocusNode,
         decoration: InputDecoration(
-          //floatingLabelBehavior: FloatingLabelBehavior.never,
-          //Hides label on focus or if filled
-          // filled: true,
-          // Needed for adding a fill color
-          //isDense: true,
-          // Reduces height a bit
-          enabledBorder: UnderlineInputBorder(
+          enabledBorder: const UnderlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(0),
               )),

@@ -274,7 +274,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                     child: Image.network(
                                       searchPageViewModel.dataSearch!.doctors[index].imageUrl,
                                       fit: BoxFit.fitWidth,
-
                                       //scale: 30,
                                     ),
                                   ),

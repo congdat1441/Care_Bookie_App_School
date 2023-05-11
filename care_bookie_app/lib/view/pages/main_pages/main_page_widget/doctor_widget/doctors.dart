@@ -19,7 +19,7 @@ class _DoctorsState extends State<Doctors> {
   Widget build(BuildContext context) {
     return Consumer<HomePageViewModel>(
       builder: (context, homePageViewModel, child) => Padding(
-        padding: const EdgeInsets.only(left: 15),
+        padding: const EdgeInsets.only(left: 15.0),
         child: SizedBox(
           height: 230,
           child: ListView.builder(
@@ -125,7 +125,7 @@ class _DoctorsState extends State<Doctors> {
                               height: 20,
                               //color: Colors.grey,
                               child: Text(
-                                  "Dr. ${homePageViewModel.doctors[index].firstName} ${homePageViewModel.doctors[index].lastName}",
+                                  "Bs. ${homePageViewModel.doctors[index].firstName} ${homePageViewModel.doctors[index].lastName}",
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,

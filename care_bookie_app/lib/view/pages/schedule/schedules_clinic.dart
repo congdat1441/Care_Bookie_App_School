@@ -41,8 +41,8 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
     final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
 
     return Container(
-        margin: const EdgeInsets.only(right: 10,bottom: 10),
-        height: 150,
+        margin: const EdgeInsets.fromLTRB(15,10,15,0),
+        height: 125,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(27),
           color: Colors.white,
@@ -85,8 +85,8 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
     final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
 
     return Container(
-        margin: const EdgeInsets.only(right: 5,bottom: 10),
-        height: 150,
+        margin: const EdgeInsets.fromLTRB(15,10,15,0),
+        height: 125,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(27),
           color: Colors.white,
@@ -126,8 +126,8 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
     final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
 
     return Container(
-        margin: const EdgeInsets.only(right: 15,bottom: 10),
-        height: 150,
+        margin: const EdgeInsets.fromLTRB(15,10,15,0),
+        height: 125,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(27),
           color: Colors.white,
@@ -167,7 +167,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
 
   Widget tagStatusPending() {
     return Positioned(
-        top: 110,
+        top: 88,
         left: 285,
         right: 15,
         bottom: 0,
@@ -185,7 +185,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
 
   Widget tagStatusAccept() {
     return Positioned(
-        top: 110,
+        top: 88,
         left: 285,
         right: 15,
         bottom: 0,
@@ -203,7 +203,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
 
   Widget tagStatusCancel() {
     return Positioned(
-        top: 110,
+        top: 81,
         left: 285,
         right: 15,
         bottom: 0,
@@ -248,7 +248,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             color: Color(0xff1c335b),
                             fontWeight: FontWeight.w600,
                             fontFamily: 'Merriweather Sans '))),
@@ -264,14 +264,14 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                       child: Row(
                         children: [
                           const Text(
-                            "Ngày Hẹn"
+                            "Ngày Hẹn: "
                           ),
                           Text("${int.parse(schedule.bookInformation.date) == 8 ? "CN" : "Thứ ${schedule.bookInformation.date}"} ${schedule.bookInformation.dateExamination}",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  height: 1,
-                                  fontSize: 15,
+                                  height: 1.3,
+                                  fontSize: 14,
                                   color: ColorConstant.Grey01,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Merriweather Sans'))
@@ -281,45 +281,49 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                 ),
                 Expanded(
                   flex: 2,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    width: 210,
-                    //color: Colors.black,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      //textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          size: 19,
-                          color: Colors.amber,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text("${schedule.starHospital}",
-                            style: const TextStyle(
-                                height: 0.9,
-                                fontSize: 15,
-                                color: ColorConstant.Grey01,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Merriweather Sans')),
-                        const Text("| ",
-                            style: TextStyle(
-                                height: 0.8,
-                                fontSize: 18,
-                                letterSpacing: 0.1,
-                                color: ColorConstant.Grey01,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Merriweather Sans')),
-                        const Text("Chi tiết",
-                            style: TextStyle(
-                                fontSize: 13,
-                                letterSpacing: 0.1,
-                                color: ColorConstant.BLueText,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Merriweather Sans'))
-                      ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal:10),
+                      width: 210,
+                      //color: Colors.black,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        //textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            size: 20,
+                            color: Colors.amber,
+                          ),
+                          const SizedBox(
+                            width:0,
+                          ),
+                          Text("${schedule.starHospital}",
+                              style: const TextStyle(
+                                  height: 1.5,
+                                  fontSize: 15,
+                                  color: ColorConstant.Grey01,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Merriweather Sans')),
+                          const Text("| ",
+                              style: TextStyle(
+                                  height: 1,
+                                  fontSize: 18,
+                                  letterSpacing: 0.1,
+                                  color: ColorConstant.Grey01,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Merriweather Sans')),
+                          const Text("Chi tiết",
+                              style: TextStyle(
+                                  height: 1.5,
+                                  fontSize: 15,
+                                  letterSpacing: 0.1,
+                                  color: ColorConstant.BLueText,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Merriweather Sans'))
+                        ],
+                      ),
                     ),
                   ),
                 )

@@ -24,7 +24,7 @@ class _ClinicFavoriteState extends State<ClinicFavorite> {
     return Column(
       children: [
         ...favoritePageViewModel.listHospitalFavorite.map((favorite) => Padding(
-          padding: const EdgeInsets.fromLTRB(30, 15, 10, 0),
+          padding: const EdgeInsets.fromLTRB(20, 15, 10, 0),
           child: Container(
             margin: const EdgeInsets.fromLTRB(5, 5, 5, 10),
             height: 120,
