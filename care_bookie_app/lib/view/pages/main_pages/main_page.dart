@@ -144,7 +144,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             const Text(
-              'DOCTORS',
+              'BÁC SỸ',
               style: TextStyle(
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w600,
@@ -174,19 +174,19 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 10),
               //color: Colors.grey,
               width: 200,
               height: 80,
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "CLINICS",
+                    text: "PHÒNG KHÁM",
                     style: TextStyle(
-                        height: 1,
+                        height: 1.4,
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w600,
-                        fontSize: 35,
+                        fontSize: 26,
                         //textBaseline: TextBaseline.alphabetic,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
@@ -197,16 +197,16 @@ class _MainPageState extends State<MainPage> {
                     padding:
                         EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
                     child: Text(
-                      "NEARBY",
+                      "SỨC KHỎE",
                       style: TextStyle(
-                          height: 1,
+                          height: 1.2,
                           fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 25,
                           //textBaseline: TextBaseline.alphabetic,
                           color: Colors.green,
-                          //letterSpacing: 1.5,
-                          fontFamily: 'Poppins'),
+                          letterSpacing: 1.5,
+                          fontFamily: 'Lemonada'),
                     ),
                   )),
                 ]),

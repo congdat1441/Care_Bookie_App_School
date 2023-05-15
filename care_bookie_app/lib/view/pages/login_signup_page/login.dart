@@ -138,10 +138,10 @@ class _LoginState extends State<Login> {
       child: Row(
         children: [
           const Text(
-            "Login",
+            "Đăng nhập",
             style: TextStyle(
-              fontFamily: "Poppins",
-              fontSize: 45,
+              fontFamily: "Montserrat",
+              fontSize: 40,
               fontWeight: FontWeight.w500,
               color: Color(0xFF2F3948),
             ),
@@ -149,7 +149,7 @@ class _LoginState extends State<Login> {
           const Text(
             "/ ",
             style: TextStyle(
-              fontFamily: "Poppins",
+              fontFamily: "Montserrat",
               fontSize: 28,
               fontWeight: FontWeight.w500,
               color: Color(0xFF2F3948),
@@ -161,9 +161,9 @@ class _LoginState extends State<Login> {
                   MaterialPageRoute(builder: (context) => const Signup()));
             },
             child: const Text(
-              "Sign up",
+              "Đăng ký",
               style: TextStyle(
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontSize: 25,
                 fontWeight: FontWeight.w400,
                 color: Color(0xFF168AD8),
@@ -193,9 +193,9 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.all(
                       Radius.circular(0),
                     )),
-                    label: Text("Phone number",
+                    label: Text("Số điện thoại",
                         style: TextStyle(color: Colors.black)),
-                    hintText: "Please add your phone number",
+                    hintText: "Vui lòng nhập số điện thoại",
                     hintStyle: TextStyle(
                       color: Color.fromARGB(255, 94, 92, 88),
                     ),
@@ -245,9 +245,9 @@ class _LoginState extends State<Login> {
                           borderRadius: BorderRadius.all(
                         Radius.circular(0),
                       )),
-                      label: const Text("Password",
+                      label: const Text("Mật khẩu",
                           style: TextStyle(color: Colors.black)),
-                      hintText: "Password",
+                      hintText: "Mật khẩu",
                       hintStyle: const TextStyle(
                         color: Color.fromARGB(255, 94, 92, 88),
                       ),
@@ -298,8 +298,8 @@ class _LoginState extends State<Login> {
       padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
       child: TextButton(
         child: const Text(
-          "Forgot password",
-          style: TextStyle(fontFamily: 'Poppins', color: Color(0xFF168AD8)),
+          "Quên mật khẩu",
+          style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF168AD8)),
         ),
         onPressed: () {
           Navigator.push(context,
@@ -360,7 +360,7 @@ class _LoginState extends State<Login> {
                         phoneController.text, passwordController.text);
                     if (value.userLogin.id == "") {
                       value.errorMessage =
-                          "Login failed. Please check your credentials.";
+                          "Đăng nhập thất bại, vui lòng kiểm tra thông tin";
                     } else {
                       // ignore: use_build_context_synchronously
                       Navigator.pushReplacement(
@@ -385,12 +385,12 @@ class _LoginState extends State<Login> {
                   child: isLoading
                       ? const CircularProgressIndicator()
                       : const Text(
-                          'LOGIN',
+                          'ĐĂNG NHẬP',
                           style: TextStyle(
                               fontSize: 22,
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
-                              fontFamily: 'Exo'),
+                              fontFamily: 'Montserrat'),
                         ),
                 ),
               ),

@@ -113,24 +113,24 @@ class _NavbarLayoutState extends State<NavbarLayout> {
                           tabs: const [
                             GButton(
                               icon: FontAwesomeIcons.houseChimneyMedical,
-                              text: 'Home',
+                              text: 'Trang chủ',
                             ),
                             GButton(
                                 icon: FontAwesomeIcons.calendarCheck,
-                                text: 'Schedule'),
+                                text: 'Lịch khám'),
                             GButton(
                               icon: FontAwesomeIcons.solidFolder,
-                              text: 'History',
+                              text: 'Lịch sử',
                             ),
                             GButton(
                               icon: IconlyBold.heart,
                               iconSize: 20,
-                              text: 'Favorite',
+                              text: 'Yêu thích',
                             ),
                             GButton(
                               icon: IconlyBold.profile,
                               iconSize: 30,
-                              text: 'Profile',
+                              text: 'Tài khoản',
                             ),
                           ],
                           selectedIndex: _currentIndex,

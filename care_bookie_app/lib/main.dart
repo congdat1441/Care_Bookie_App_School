@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
-            fontFamily: 'Golos' 'Arimo' 'Poppins',
+            fontFamily: 'Golos' 'Arimo' 'Poppins' 'Merienda',
           ),
           home: isCheckLogin ? const NavbarLayout(index: 0) : const Login()),
     );

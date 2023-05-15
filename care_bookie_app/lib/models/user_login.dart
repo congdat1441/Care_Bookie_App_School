@@ -1,12 +1,12 @@
 class UserLogin {
   final String id;
-  final String firstName;
+  late final String firstName;
   final String lastName;
-  final String birthDay;
-  final String email;
-  final int gender;
-  final String phone;
-  final String address;
+  late final String birthDay;
+  late final String email;
+  late final int gender;
+  late final String phone;
+  late final String address;
   final String image;
   String? password;
 

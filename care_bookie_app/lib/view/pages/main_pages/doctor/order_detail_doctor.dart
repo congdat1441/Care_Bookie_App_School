@@ -50,28 +50,28 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
     "Tối",
   ];
 
-  final List<String> _options = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-  ];
-
-  final List<String> _serviceList = [
-    "#Chăm sóc răng miệng",
-    "#Nhổ răng khôn",
-    "#Lấy cao răng",
-    "#Trám răng",
-    "#Bọc răng sứ",
-  ];
-
-  final List<String> _servicePriceList = [
-    "150,000đ",
-    "150,000đ",
-    "150,000đ",
-    "150,000đ",
-    "150,000đ",
-  ];
+  // final List<String> _options = [
+  //   'Option 1',
+  //   'Option 2',
+  //   'Option 3',
+  //   'Option 4',
+  // ];
+  //
+  // final List<String> _serviceList = [
+  //   "#Chăm sóc răng miệng",
+  //   "#Nhổ răng khôn",
+  //   "#Lấy cao răng",
+  //   "#Trám răng",
+  //   "#Bọc răng sứ",
+  // ];
+  //
+  // final List<String> _servicePriceList = [
+  //   "150,000đ",
+  //   "150,000đ",
+  //   "150,000đ",
+  //   "150,000đ",
+  //   "150,000đ",
+  // ];
 
   @override
   void initState() {
@@ -159,8 +159,6 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
       ),
 
       expandedHeight: 280,
-      //collapsedHeight: 70,
-      //floating: true,
 
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(

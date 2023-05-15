@@ -73,9 +73,9 @@ class Signup extends StatelessWidget {
                           child: Row(
                             children: [
                               const Text(
-                                "Sign up ",
+                                "Đăng ký ",
                                 style: TextStyle(
-                                  fontFamily: "Poppins",
+                                  fontFamily: "Montserrat",
                                   fontSize: 45,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xFF2F3948),
@@ -84,7 +84,7 @@ class Signup extends StatelessWidget {
                               const Text(
                                 "/ ",
                                 style: TextStyle(
-                                  fontFamily: "Poppins",
+                                  fontFamily: "Montserrat",
                                   fontSize: 28,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xFF2F3948),

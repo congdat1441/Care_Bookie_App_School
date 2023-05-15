@@ -37,7 +37,7 @@ class _SliverToBoxAdapterContentState extends State<SliverToBoxAdapterContent> {
           ),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const PersonalInfomation()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const PersonalInformation()));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -94,7 +94,6 @@ class _DetailDoctorState extends State<DetailDoctor>
         doctorDetailPageViewModel.isFavoritePage ? const SizedBox() : IconButton(
           onPressed: () async{
             setState(() {
-
             });
 
             doctorDetailPageViewModel.setIsFavorite(!doctorDetailPageViewModel.isFavorite);

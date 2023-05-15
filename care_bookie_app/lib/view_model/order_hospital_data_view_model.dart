@@ -260,12 +260,7 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
         dateExamination: dateTimeSelected!,
         date: weekdaySelected!.toString()
     );
-
     bool isSuccess = await invoiceApi.createInvoiceApi(invoiceData);
-
     return isSuccess;
-
   }
-
-
 }
