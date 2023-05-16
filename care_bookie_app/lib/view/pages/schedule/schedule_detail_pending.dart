@@ -1,3 +1,4 @@
+import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -424,6 +425,10 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
 
     final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
 
+    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -462,8 +467,6 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                         child: const Text('Gửi'),
                         onPressed: () async{
 
-                          final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
-
                           bool isSuccess = await scheduleCancelViewModel.cancelSchedule(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.id.toString(), message);
 
                           print("Success ----------> $isSuccess");
@@ -485,6 +488,8 @@ class _ScheduleDetailPendingState extends State<ScheduleDetailPending> {
                             schedulePageViewModel.resetSchedules();
 
                             hospitalDetailPageViewModel.resetScheduleWithHospital();
+
+                            doctorDetailPageViewModel.resetScheduleWithDoctor();
 
                           // ignore: use_build_context_synchronously
                             Navigator.push(context,

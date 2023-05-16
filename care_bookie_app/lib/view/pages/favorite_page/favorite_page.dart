@@ -52,7 +52,7 @@ class FavoritePage extends StatelessWidget {
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Favourite",
+                    text: "Bác",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
@@ -68,7 +68,7 @@ class FavoritePage extends StatelessWidget {
                         padding:
                         EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
                         child: Text(
-                          "Doctor",
+                          "Sỹ",
                           style: TextStyle(
                               height: 0.8,
                               fontStyle: FontStyle.italic,
@@ -112,7 +112,7 @@ class FavoritePage extends StatelessWidget {
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Favourite",
+                    text: "Bệnh",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
@@ -128,7 +128,7 @@ class FavoritePage extends StatelessWidget {
                         padding:
                         EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
                         child: Text(
-                          "Clinics",
+                          "Viện",
                           style: TextStyle(
                               height: 0.8,
                               fontStyle: FontStyle.italic,

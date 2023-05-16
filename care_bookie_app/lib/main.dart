@@ -1,6 +1,6 @@
 import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
-import 'package:care_bookie_app/view_model/bottom_navbar_provider.dart';
+import 'package:care_bookie_app/view_model/bottom_navbar_view_model.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
 import 'package:care_bookie_app/view_model/history_detail_page_view_model.dart';
@@ -15,12 +15,9 @@ import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.
 import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:care_bookie_app/view_model/search_page_view_model.dart';
-import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'models/user_login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +31,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
   final LoginPageViewModel _loginViewModel = LoginPageViewModel();
   late bool isCheckLogin = false;
 
@@ -62,7 +58,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => _loginViewModel,
         ),
-        ChangeNotifierProvider(create: (context) => BottomNavBarProvider()),
+        ChangeNotifierProvider(create: (context) => BottomNavBarViewModel()),
         ChangeNotifierProvider(create: (context) => HomePageViewModel()),
         ChangeNotifierProvider(
             create: (context) => DoctorDetailPageViewModel()),
@@ -72,7 +68,6 @@ class _MyAppState extends State<MyApp> {
             create: (context) => ScheduleInfoPageViewModel()),
         ChangeNotifierProvider(
             create: (context) => ScheduleDoctorInfoPageViewModel()),
-        ChangeNotifierProvider(create: (context) => UserLoginInfoViewModel()),
         ChangeNotifierProvider(create: (context) => HistoryPageViewModel()),
         ChangeNotifierProvider(
             create: (context) => HistoryDetailPageViewModel()),

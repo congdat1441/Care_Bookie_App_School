@@ -52,7 +52,7 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  final hospitalDetailPageProvider =
+                                  final hospitalDetailPageViewModel =
                                       Provider.of<HospitalDetailPageViewModel>(
                                           context,
                                           listen: false);
@@ -62,17 +62,27 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                           context,
                                           listen: false);
 
-                                  hospitalDetailPageProvider.setHospitalDetail(
+                                  final favoritePageViewModel =
+                                  Provider.of<FavoritePageViewModel>(
+                                      context,
+                                      listen: false);
+
+                                  hospitalDetailPageViewModel.setHospitalDetail(
                                       homePageViewModel.hospitals[index]);
 
-                                  hospitalDetailPageProvider
+                                  hospitalDetailPageViewModel
                                       .setScheduleWithHospital(
                                           schedulePageViewModel.schedules);
 
-                                  await hospitalDetailPageProvider
+                                  await hospitalDetailPageViewModel
                                       .getAllDoctorByHospitalId(
                                           homePageViewModel
                                               .hospitals[index].id);
+
+                                  hospitalDetailPageViewModel.setHospitalFavorite(favoritePageViewModel.listHospitalFavorite);
+
+                                  hospitalDetailPageViewModel.checkFavorite();
+
 
                                   // ignore: use_build_context_synchronously
                                   Navigator.push(

@@ -40,4 +40,5 @@ class UserLogin {
   String toString() {
     return 'UserLogin{id: $id, firstName: $firstName, lastName: $lastName, birthDay: $birthDay, email: $email, gender: $gender, phone: $phone, address: $address, image: $image, password: $password}';
   }
+
 }

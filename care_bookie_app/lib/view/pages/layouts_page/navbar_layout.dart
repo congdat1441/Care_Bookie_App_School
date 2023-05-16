@@ -1,11 +1,10 @@
 import 'package:care_bookie_app/view_model/login_page_view_model.dart';
-import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-import '../../../view_model/bottom_navbar_provider.dart';
+import '../../../view_model/bottom_navbar_view_model.dart';
 import '../account_page/account_page.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import '../favorite_page/favorite_page.dart';
@@ -25,7 +24,7 @@ class NavbarLayout extends StatefulWidget {
 class _NavbarLayoutState extends State<NavbarLayout> {
   int _currentIndex = 0;
   bool visible = true;
-  late BottomNavBarProvider _bottomNavBarProvider;
+  late BottomNavBarViewModel _bottomNavBarProvider;
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
@@ -41,7 +40,7 @@ class _NavbarLayoutState extends State<NavbarLayout> {
   @override
   void initState() {
     super.initState();
-    _bottomNavBarProvider = context.read<BottomNavBarProvider>();
+    _bottomNavBarProvider = context.read<BottomNavBarViewModel>();
     _currentIndex = widget.index;
   }
 

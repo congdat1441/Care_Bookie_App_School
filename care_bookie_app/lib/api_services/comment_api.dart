@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:care_bookie_app/models/comment_data.dart';
-
 import '../utils/host_util.dart';
 
 class CommentApi {

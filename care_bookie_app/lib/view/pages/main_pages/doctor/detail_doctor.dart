@@ -1,5 +1,4 @@
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
-import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -8,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../../../view_model/favorite_page_view_model.dart';
+import '../../../../view_model/login_page_view_model.dart';
 import '../../../../view_model/schedule_detail_page_view_model.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
 import '../../schedule/schedule_detail_accept.dart';
@@ -55,7 +55,7 @@ class _DetailDoctorState extends State<DetailDoctor>
 
     final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
 
     final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
 
@@ -98,11 +98,11 @@ class _DetailDoctorState extends State<DetailDoctor>
 
             doctorDetailPageViewModel.setIsFavorite(!doctorDetailPageViewModel.isFavorite);
 
-            await doctorDetailPageViewModel.changeFavoriteDoctor(doctorDetailPageViewModel.doctorDetail!.id, userLoginInfoViewModel.userLogin.id);
+            await doctorDetailPageViewModel.changeFavoriteDoctor(doctorDetailPageViewModel.doctorDetail!.id, loginPageViewModel.userLogin.id);
 
             favoritePageViewModel.resetListDoctorFavorite();
 
-            await favoritePageViewModel.getAllDoctorFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
+            await favoritePageViewModel.getAllDoctorFavoriteByUserId(loginPageViewModel.userLogin.id);
 
           },
           icon: doctorDetailPageViewModel.isFavorite  ?  const Icon(

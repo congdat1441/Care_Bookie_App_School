@@ -8,9 +8,8 @@ import '../../../../../res/constants/colors.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../../view_model/favorite_page_view_model.dart';
-import '../../../../view_model/order_hospital_data_view_model.dart';
+import '../../../../view_model/login_page_view_model.dart';
 import '../../../../view_model/schedule_detail_page_view_model.dart';
-import '../../../../view_model/user_login_info_view_model.dart';
 import '../../review_page/review_clinic_page/review_clinic.dart';
 import '../../schedule/schedule_detail_pending.dart';
 import '../doctor/detail_doctor.dart';
@@ -80,7 +79,7 @@ class _DetailClinicState extends State<DetailClinic>
 
     final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
 
     final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context,listen: false);
 
@@ -104,7 +103,6 @@ class _DetailClinicState extends State<DetailClinic>
       leading: IconButton(
         onPressed: () {
           hospitalDetailPageViewModel.resetScheduleWithHospital();
-
           hospitalDetailPageViewModel.setIsFavorite(false);
           hospitalDetailPageViewModel.resetHospitalFavorite();
           hospitalDetailPageViewModel.resetIsFavoritePage();
@@ -125,11 +123,11 @@ class _DetailClinicState extends State<DetailClinic>
 
             hospitalDetailPageViewModel.setIsFavorite(!hospitalDetailPageViewModel.isFavorite);
 
-            await hospitalDetailPageViewModel.changeFavoriteHospital(hospitalDetailPageViewModel.hospitalDetail!.id, userLoginInfoViewModel.userLogin.id);
+            await hospitalDetailPageViewModel.changeFavoriteHospital(hospitalDetailPageViewModel.hospitalDetail!.id, loginPageViewModel.userLogin.id);
 
             favoritePageViewModel.resetListHospitalFavorite();
 
-            await favoritePageViewModel.getAllHospitalFavoriteByUserId(userLoginInfoViewModel.userLogin.id);
+            await favoritePageViewModel.getAllHospitalFavoriteByUserId(loginPageViewModel.userLogin.id);
 
           },
           icon: hospitalDetailPageViewModel.isFavorite  ?  const Icon(

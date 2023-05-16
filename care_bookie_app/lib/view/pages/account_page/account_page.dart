@@ -4,15 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
-import '../../../view_model/user_login_info_view_model.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final userLoginInfoViewModel =
-        Provider.of<UserLoginInfoViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: ColorConstant.BackGroundColor,
       body: CustomScrollView(
@@ -46,7 +43,6 @@ class AccountPage extends StatelessWidget {
                       bottomRight: Radius.circular(0))),
               backgroundColor: ColorConstant.BLue05,
               expandedHeight: 280,
-              //collapsedHeight: 70,
               pinned: true,
               automaticallyImplyLeading: false,
               flexibleSpace: FlexibleSpaceBar(

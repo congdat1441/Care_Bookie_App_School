@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
-class BottomNavBarProvider extends ChangeNotifier {
+class BottomNavBarViewModel extends ChangeNotifier {
   bool _visible = true;
   final ScrollController _scrollController = ScrollController();
 

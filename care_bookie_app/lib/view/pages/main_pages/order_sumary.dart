@@ -1,6 +1,4 @@
-import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/order_hospital_data_view_model.dart';
-import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -8,9 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
-import 'main_page_widget/order_widget/describe_problem.dart';
-import 'main_page_widget/order_widget/info_order_detail.dart';
-import 'main_page_widget/order_widget/price_order.dart';
+import '../../../view_model/login_page_view_model.dart';
 import 'order_success.dart';
 
 
@@ -29,9 +25,9 @@ class _OrderSummaryState extends State<OrderSummary> {
 
     final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
 
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
 
-    orderHospitalDataViewModel.setInfoUser(userLoginInfoViewModel.userLogin);
+    orderHospitalDataViewModel.setInfoUser(loginPageViewModel.userLogin);
 
     return Scaffold(
         backgroundColor: ColorConstant.BackGroundColor,

@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
 import '../layouts_page/navbar_layout.dart';
-import 'main_page_widget/order_widget/info_order_detail.dart';
-import 'main_page_widget/order_widget/price_order.dart';
 
 class OrderSuccess extends StatefulWidget {
   const OrderSuccess({Key? key}) : super(key: key);

@@ -24,4 +24,8 @@ class HistoryPageViewModel extends ChangeNotifier {
     }
   }
 
+  void resetHistories() {
+    histories = [];
+  }
+
 }

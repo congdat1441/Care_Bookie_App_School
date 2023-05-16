@@ -55,7 +55,7 @@ class _ScheduleState extends State<Schedule> {
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Your",
+                    text: "Lịch",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
@@ -71,7 +71,7 @@ class _ScheduleState extends State<Schedule> {
                     padding:
                         EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
                     child: Text(
-                      "Schedule",
+                      "Khám",
                       style: TextStyle(
                           height: 0.8,
                           fontStyle: FontStyle.italic,

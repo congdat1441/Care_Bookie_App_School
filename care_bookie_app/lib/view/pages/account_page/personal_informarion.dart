@@ -55,7 +55,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
               Navigator.pop(context);
             },
           ),
-          //backgroundColor: Colors.transparent,
           bottomOpacity: 0.0,
           elevation: 0.0,
         ),

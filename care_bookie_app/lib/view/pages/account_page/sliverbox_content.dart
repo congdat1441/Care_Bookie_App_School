@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../../../view_model/favorite_page_view_model.dart';
+import '../../../view_model/history_page_view_model.dart';
+import '../../../view_model/schedule_page_view_model.dart';
 import '../login_signup_page/login.dart';
 
 class SliverToBoxAdapterContent extends StatefulWidget {
@@ -174,6 +177,9 @@ class _SliverToBoxAdapterContentState extends State<SliverToBoxAdapterContent> {
 
   Widget logout() {
     final loginViewModel = Provider.of<LoginPageViewModel>(context, listen: false);
+    final historyPageViewModel = Provider.of<HistoryPageViewModel>(context, listen: false);
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context, listen: false);
+    final favoritePageViewModel = Provider.of<FavoritePageViewModel>(context, listen: false);
     return Column(children: [
       TextButton(
         style: ButtonStyle(
@@ -185,6 +191,12 @@ class _SliverToBoxAdapterContentState extends State<SliverToBoxAdapterContent> {
         ),
         onPressed: () {
           loginViewModel.logout();
+
+          historyPageViewModel.resetHistories();
+          schedulePageViewModel.resetSchedules();
+          favoritePageViewModel.resetListDoctorFavorite();
+          favoritePageViewModel.resetListHospitalFavorite();
+
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

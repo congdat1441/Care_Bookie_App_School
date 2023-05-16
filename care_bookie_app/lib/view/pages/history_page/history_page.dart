@@ -50,7 +50,7 @@ class HistoryPage extends StatelessWidget {
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Your",
+                    text: "Lịch",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
@@ -66,7 +66,7 @@ class HistoryPage extends StatelessWidget {
                     padding:
                         EdgeInsets.fromLTRB(40,0,0,0),
                     child: Text(
-                      "History",
+                      "Sử",
                       style: TextStyle(
                           height: 1.2,
                           fontStyle: FontStyle.italic,

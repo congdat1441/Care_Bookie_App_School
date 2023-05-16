@@ -3,12 +3,12 @@ import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:care_bookie_app/view_model/history_page_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
-import 'package:care_bookie_app/view_model/user_login_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
+import '../../../../view_model/login_page_view_model.dart';
 import '../../../../view_model/order_hospital_data_view_model.dart';
 import '../main_page_widget/order_widget/select_day_order.dart';
 import '../order_sumary.dart';
@@ -820,7 +820,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
 
     final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
 
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -841,7 +841,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 orderHospitalDataViewModel.setAge(_controllerTextWordAge.text);
                 orderHospitalDataViewModel.setServices(hospitalDetailPageViewModel.listServiceCheck);
                 orderHospitalDataViewModel.setSymptom(_controllerTextWord.text);
-                orderHospitalDataViewModel.setUserLogin(userLoginInfoViewModel.userLogin);
+                orderHospitalDataViewModel.setUserLogin(loginPageViewModel.userLogin);
                 orderHospitalDataViewModel.setHospital(hospitalDetailPageViewModel.hospitalDetail!);
 
                 orderHospitalDataViewModel.validateDataOrder().isNotEmpty ? Fluttertoast.showToast(

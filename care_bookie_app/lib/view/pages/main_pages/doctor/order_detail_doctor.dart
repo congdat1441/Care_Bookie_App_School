@@ -11,9 +11,8 @@ import 'package:care_bookie_app/utils/date_utils.dart' as date_util;
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../../../view_model/history_page_view_model.dart';
-import '../../../../view_model/hospital_detail_page_view_model.dart';
+import '../../../../view_model/login_page_view_model.dart';
 import '../../../../view_model/order_hospital_data_view_model.dart';
-import '../../../../view_model/user_login_info_view_model.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
 import '../order_sumary.dart';
 
@@ -28,50 +27,13 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
   bool _isAppBarCollapsed = false;
   bool _isExpanded = false;
   bool isSelectedServices = false;
-  bool _isChecked = false;
   int _selectedTime = -1;
-  int _selectedService = -1;
   String? _gender;
 
   late ScrollController _scrollController;
   final TextEditingController _controllerTextWord = TextEditingController();
   final TextEditingController _controllerTextWordFullName = TextEditingController();
   final TextEditingController _controllerTextWordAge = TextEditingController();
-
-  final List<String> _timeList = [
-    "8:00 - 12:00",
-    "13:00 - 17:00",
-    "18:00 - 21:00",
-  ];
-
-  final List<String> _timeDay = [
-    "Sáng",
-    "Chiều",
-    "Tối",
-  ];
-
-  // final List<String> _options = [
-  //   'Option 1',
-  //   'Option 2',
-  //   'Option 3',
-  //   'Option 4',
-  // ];
-  //
-  // final List<String> _serviceList = [
-  //   "#Chăm sóc răng miệng",
-  //   "#Nhổ răng khôn",
-  //   "#Lấy cao răng",
-  //   "#Trám răng",
-  //   "#Bọc răng sứ",
-  // ];
-  //
-  // final List<String> _servicePriceList = [
-  //   "150,000đ",
-  //   "150,000đ",
-  //   "150,000đ",
-  //   "150,000đ",
-  //   "150,000đ",
-  // ];
 
   @override
   void initState() {
@@ -973,7 +935,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
 
     final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
-    final userLoginInfoViewModel = Provider.of<UserLoginInfoViewModel>(context,listen: false);
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -994,7 +956,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                 orderHospitalDataViewModel.setAge(_controllerTextWordAge.text);
                 orderHospitalDataViewModel.setServices(doctorDetailPageViewModel.listServiceCheck);
                 orderHospitalDataViewModel.setSymptom(_controllerTextWord.text);
-                orderHospitalDataViewModel.setUserLogin(userLoginInfoViewModel.userLogin);
+                orderHospitalDataViewModel.setUserLogin(loginPageViewModel.userLogin);
                 orderHospitalDataViewModel.setHospital(doctorDetailPageViewModel.hospital!);
                 orderHospitalDataViewModel.setDoctorSelected(doctorDetailPageViewModel.doctorDetail!);
                 orderHospitalDataViewModel.setOrderWithDoctor(true);
