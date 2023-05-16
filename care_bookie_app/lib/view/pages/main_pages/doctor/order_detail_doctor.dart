@@ -1,4 +1,3 @@
-
 import 'package:care_bookie_app/view/pages/main_pages/main_page_widget/order_widget/select_day_order_doctor.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.dart';
@@ -155,11 +154,8 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20),
                   topLeft: Radius.circular(20),
-                  //bottomRight: Radius.circular(10),
-                  // bottomLeft: Radius.circular(10)
                 )),
             margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-            //padding: const EdgeInsets.only(),
             width: double.maxFinite,
             height: 90,
             child: Padding(
@@ -238,7 +234,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ), //hospital of doctor
+                  ),
                   Row(
                     children: [
                       const Padding(
@@ -263,7 +259,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ), // Speciality of doctor
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -307,7 +303,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Merriweather Sans')))
                     ],
-                  ), // star doctor
+                  ),
                   Row(
                     children: [
                       const Padding(
@@ -332,7 +328,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ), //experience doctor
+                  ),
                   Row(
                     children: [
                       const Padding(
@@ -357,7 +353,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ), // number phone doctor
+                  ),
                 ],
               ),
             ),
@@ -421,9 +417,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                 children: [
                   SizedBox(
                     width: 350,
-                    //height: 40,
                     child: TextFormField(
-                      // textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.black),
                         controller: _controllerTextWordFullName,
                         decoration: const InputDecoration(
@@ -441,9 +435,7 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                   ),
                   SizedBox(
                     width: 350,
-                    //height: 40,
                     child: TextFormField(
-                      // textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.black),
                         controller: _controllerTextWordAge,
                         keyboardType: TextInputType.number,
@@ -613,7 +605,6 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
         width: double.maxFinite,
         height: 220,
         decoration: const BoxDecoration(
-            // color: Colors.amber
             ),
         child: const SelectDayDoctor(),
       ),
@@ -653,7 +644,6 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                       ),
                     )),
                 doctorDetailPageViewModel.workingDayDetailsCheck.isNotEmpty ?  GridView.count(
-                  //padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   crossAxisCount: 3,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -670,7 +660,6 @@ class _OrderDetailDoctorState extends State<OrderDetailDoctor> {
                           });
                         },
                         child: Container(
-                          //height: 100,
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             color: _selectedTime == index

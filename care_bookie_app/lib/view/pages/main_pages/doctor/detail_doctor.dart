@@ -23,9 +23,6 @@ class DetailDoctor extends StatefulWidget {
 
 class _DetailDoctorState extends State<DetailDoctor>
     with TickerProviderStateMixin {
-  final String longText =
-      'sit amet saidunt ante. Nullam fringilla, justo nec ultrices euismod, velit ipsum congue arcu, vel gravida eros mauris sit amet lorem. Mauris tincidunt justo sed nunc pretium fermentum. Vivamus vel aliquam enim. Vivamus tincidunt nunc eu orci venenatis, ut bibendum lorem bibendum. Sed feugiat tincidunt ipsum non feugiat. Suspendisse nec bibendum arcu Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque est eu mauris venenatis volutpat. In hac habitasse platea dictumst. Nulla feugiat lectus velit, nec dapibus purus lobortis et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eu eros ut orci commodo consequat a quis neque. Sed non justo non quam ultrices tempus sit amet non nulla. Nam vel arcu Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget convallis tortor. Suspendisse potenti. Sed dictum ante eu purus finibus, eu tristique tellus feugiat. Sed faucibus, elit et luctus malesuada, ipsum mauris faucibus odio, eget laoreet ipsum dolor nec nisi. Duis id vestibulum nulla. Nulla at magna vel nulla pharetra fermentum. Sed vitae ante malesuada, malesuada felis vitae, scelerisque arcu. Morbi pellentesque tellus maximus bibendum .';
-  bool isExpanded = false;
   late TabController _tabController;
 
   @override
@@ -66,7 +63,6 @@ class _DetailDoctorState extends State<DetailDoctor>
           "Dr. ${doctorDetailPageViewModel.doctorDetail!.firstName} ${doctorDetailPageViewModel.doctorDetail!.lastName}",
           style: const TextStyle(
               overflow: TextOverflow.ellipsis,
-              //letterSpacing: 2,
               fontSize: 20,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w500),
@@ -158,7 +154,6 @@ class _DetailDoctorState extends State<DetailDoctor>
                   topLeft: Radius.circular(20),
                 )),
             margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-            //padding: const EdgeInsets.only(),
             width: double.maxFinite,
             height: 90,
             child: Padding(
@@ -237,7 +232,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ), //hospital of doctor
+                  ),
                   Row(
                     children: [
                       const Padding(
@@ -262,7 +257,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                                 fontFamily: 'Merriweather Sans')),
                       ),
                     ],
-                  ), // Speciality of doctor
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -311,7 +306,7 @@ class _DetailDoctorState extends State<DetailDoctor>
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Merriweather Sans')))
                     ],
-                  ), // star doctor
+                  ),
                   Row(
                     children: [
                       const Padding(
@@ -436,7 +431,6 @@ class _DetailDoctorState extends State<DetailDoctor>
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ...doctorDetailPageViewModel.doctorDetail!.knowledges.map((e) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -20,25 +19,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  String _selectedStar = '5 Star';
-  String _selectedDisease = 'Non';
-
-  final List<String> _starLevels = [
-    '5 Star',
-    '4 Stars',
-    '3 Stars',
-    '2 Stars',
-    '1 Stars'
-  ];
-  final List<String> _diseases = [
-    'Non',
-    'Disease A',
-    'Disease B',
-    'Disease C',
-    'Disease D',
-    'Disease E',
-
-  ];
 
   bool isClickSearch = false;
 
@@ -129,7 +109,6 @@ class _SearchScreenState extends State<SearchScreen> {
         padding: const EdgeInsets.fromLTRB(35, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
@@ -145,7 +124,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w600,
                         fontSize: 35,
-                        //textBaseline: TextBaseline.alphabetic,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
                         fontFamily: 'Poppins'),
@@ -161,14 +139,11 @@ class _SearchScreenState extends State<SearchScreen> {
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w600,
                               fontSize: 32,
-                              //textBaseline: TextBaseline.alphabetic,
                               color: Colors.green,
-                              //letterSpacing: 1.5,
                               fontFamily: 'Poppins'),
                         ),
                       )),
                 ]),
-                //textScaleFactor: 0.8,
               ),
             ),
             Padding(
@@ -272,7 +247,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
                                     child: Image.network(
-                                      searchPageViewModel.dataSearch!.doctors[index].imageUrl,
+                                      searchPageViewModel.dataSearch.doctors[index].imageUrl,
                                       fit: BoxFit.fitWidth,
                                       //scale: 30,
                                     ),
@@ -294,7 +269,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                           fontSize: 14,
-                                          //overflow: TextOverflow.ellipsis,
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500,
                                           fontFamily: 'Merriweather Sans'))),
@@ -305,7 +279,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                         style: const TextStyle(
                                             overflow: TextOverflow.ellipsis,
                                             fontSize: 14,
-                                            //overflow: TextOverflow.ellipsis,
                                             color: ColorConstant.Grey01,
                                             fontWeight: FontWeight.w400,
                                             fontFamily: 'Merriweather Sans')),
@@ -336,11 +309,9 @@ class _SearchScreenState extends State<SearchScreen> {
         padding: const EdgeInsets.fromLTRB(35, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
-              //color: Colors.grey,
               width: 200,
               height: 80,
               child: RichText(
@@ -352,7 +323,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w600,
                         fontSize: 35,
-                        //textBaseline: TextBaseline.alphabetic,
                         color: Colors.orange,
                         letterSpacing: 1.5,
                         fontFamily: 'Poppins'),
@@ -368,14 +338,11 @@ class _SearchScreenState extends State<SearchScreen> {
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w600,
                               fontSize: 32,
-                              //textBaseline: TextBaseline.alphabetic,
                               color: Colors.blueAccent,
-                              //letterSpacing: 1.5,
                               fontFamily: 'Poppins'),
                         ),
                       )),
                 ]),
-                //textScaleFactor: 0.8,
               ),
             ),
             Padding(
@@ -507,11 +474,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 0),
                                     width: 210,
-                                    //color: Colors.black,
                                     child: Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.start,
-                                      //textBaseline: TextBaseline.alphabetic,
                                       children: [
                                         const Icon(
                                           Icons.star,

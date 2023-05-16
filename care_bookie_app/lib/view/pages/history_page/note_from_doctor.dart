@@ -33,7 +33,6 @@ class _NoteFromDoctorState extends State<NoteFromDoctor> {
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           width: double.maxFinite,
           decoration: BoxDecoration(
-            //color: Colors.white,
               borderRadius: BorderRadius.circular(25),
               border:
               Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),

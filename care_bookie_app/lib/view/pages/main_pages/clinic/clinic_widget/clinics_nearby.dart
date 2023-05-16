@@ -33,7 +33,6 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(5, 5, 5, 10),
                         height: 120,
-                        //width: 155,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(27),
                           color: Colors.white,
@@ -111,8 +110,6 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                     children: [
                                       SizedBox(
                                           width: 190,
-                                          //height: 40,
-                                          //color: Colors.grey,
                                           child: Text(
                                               homePageViewModel.hospitals[index]
                                                   .hospitalName,
@@ -157,11 +154,9 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 0),
                                           width: 210,
-                                          //color: Colors.black,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
-                                            //textBaseline: TextBaseline.alphabetic,
                                             children: [
                                               const Icon(
                                                 Icons.star,

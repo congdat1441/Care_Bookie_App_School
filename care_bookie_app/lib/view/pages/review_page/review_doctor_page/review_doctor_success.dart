@@ -1,5 +1,3 @@
-
-import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -111,7 +109,7 @@ class _ReviewDoctorState extends State<ReviewDoctorSuccess> {
                   thickness: 2,
                   indent: 9,
                   color: ColorConstant.Grey00.withOpacity(
-                      0.5), // Màu sắc của divider
+                      0.5),
                 ),
               ),
               Column(

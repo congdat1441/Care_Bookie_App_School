@@ -4,11 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
-import '../history_page/note_from_doctor.dart';
-import '../main_pages/main_page_widget/order_widget/describe_problem.dart';
-import '../main_pages/main_page_widget/order_widget/info_order_detail.dart';
-import '../main_pages/main_page_widget/order_widget/price_order.dart';
-import '../review_page/review_doctor_page/add_review_doctor.dart';
 
 class ScheduleDetailCancel extends StatefulWidget {
   const ScheduleDetailCancel({Key? key}) : super(key: key);
@@ -36,7 +31,6 @@ class _ScheduleDetailCancelState extends State<ScheduleDetailCancel> {
               color: Colors.white,
               fontWeight: FontWeight.w600,
               fontSize: 22,
-              //fontFamily: 'Poppins',
             ),
           ),
         ),
@@ -445,7 +439,7 @@ class _ScheduleDetailCancelState extends State<ScheduleDetailCancel> {
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
             ],
-          ), // Hospital name
+          ),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -459,7 +453,7 @@ class _ScheduleDetailCancelState extends State<ScheduleDetailCancel> {
                         overflow: TextOverflow.visible)),
               ),
             ],
-          ), // address hospital
+          ),
         ],
       ),
     );

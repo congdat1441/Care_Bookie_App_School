@@ -42,11 +42,9 @@ class FavoritePage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
-              //color: Colors.grey,
               width: 200,
               height: 80,
               child: RichText(
@@ -58,7 +56,6 @@ class FavoritePage extends StatelessWidget {
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w600,
                         fontSize: 35,
-                        //textBaseline: TextBaseline.alphabetic,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
                         fontFamily: 'Poppins'),
@@ -74,9 +71,7 @@ class FavoritePage extends StatelessWidget {
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w600,
                               fontSize: 32,
-                              //textBaseline: TextBaseline.alphabetic,
                               color: Colors.green,
-                              //letterSpacing: 1.5,
                               fontFamily: 'Poppins'),
                         ),
                       )),
@@ -102,11 +97,9 @@ class FavoritePage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
-              //color: Colors.grey,
               width: 200,
               height: 80,
               child: RichText(
@@ -118,7 +111,6 @@ class FavoritePage extends StatelessWidget {
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w600,
                         fontSize: 35,
-                        //textBaseline: TextBaseline.alphabetic,
                         color: Colors.orange,
                         letterSpacing: 1.5,
                         fontFamily: 'Poppins'),
@@ -134,14 +126,11 @@ class FavoritePage extends StatelessWidget {
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w600,
                               fontSize: 32,
-                              //textBaseline: TextBaseline.alphabetic,
                               color: Colors.blueAccent,
-                              //letterSpacing: 1.5,
                               fontFamily: 'Poppins'),
                         ),
                       )),
                 ]),
-                //textScaleFactor: 0.8,
               ),
             ),
             Padding(

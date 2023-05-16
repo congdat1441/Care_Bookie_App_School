@@ -123,13 +123,11 @@ class _DoctorsState extends State<Doctors> {
                           SizedBox(
                               width: 130,
                               height: 20,
-                              //color: Colors.grey,
                               child: Text(
                                   "Bs. ${homePageViewModel.doctors[index].firstName} ${homePageViewModel.doctors[index].lastName}",
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,
-                                      //overflow: TextOverflow.ellipsis,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'Merriweather Sans'))),
@@ -141,7 +139,6 @@ class _DoctorsState extends State<Doctors> {
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                         fontSize: 14,
-                                        //overflow: TextOverflow.ellipsis,
                                         color: ColorConstant.Grey01,
                                         fontWeight: FontWeight.w400,
                                         fontFamily: 'Merriweather Sans')),

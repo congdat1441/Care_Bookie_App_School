@@ -1,11 +1,10 @@
-
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
-import 'add_review_clinic.dart';
+
 
 class ReviewClinic extends StatefulWidget {
   const ReviewClinic({Key? key}) : super(key: key);
@@ -108,7 +107,7 @@ class _ReviewClinicState extends State<ReviewClinic> {
                   thickness: 2,
                   indent: 9,
                   color: ColorConstant.Grey00.withOpacity(
-                      0.5), // Màu sắc của divider
+                      0.5),
                 ),
               ),
               Column(

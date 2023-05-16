@@ -6,16 +6,15 @@ import 'package:provider/provider.dart';
 
 import '../../../models/history.dart';
 import '../../../res/constants/colors.dart';
-import '../schedule/schedule_detail_cancel.dart';
 
-class HistorylistClinics extends StatefulWidget {
-  const HistorylistClinics({Key? key}) : super(key: key);
+class HistoryListClinics extends StatefulWidget {
+  const HistoryListClinics({Key? key}) : super(key: key);
 
   @override
-  State<HistorylistClinics> createState() => _HistorylistClinicsState();
+  State<HistoryListClinics> createState() => _HistoryListClinicsState();
 }
 
-class _HistorylistClinicsState extends State<HistorylistClinics> {
+class _HistoryListClinicsState extends State<HistoryListClinics> {
   @override
   Widget build(BuildContext context) {
     final historyPageViewModel =
@@ -73,7 +72,6 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
                 child: Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     ClipRRect(
@@ -91,8 +89,6 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
                         children: [
                           SizedBox(
                               width: 190,
-                              //height: 40,
-                              //color: Colors.grey,
                               child: Text(history.hospitalName,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -108,8 +104,6 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
                             flex: 1,
                             child: SizedBox(
                                 width: 190,
-                                //height: 40,
-                                //color: Colors.grey,
                                 child: Text(history.address,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -126,7 +120,6 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 0),
                               width: 210,
-                              //color: Colors.black,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -194,119 +187,4 @@ class _HistorylistClinicsState extends State<HistorylistClinics> {
           ),
         ));
   }
-
-// Widget contentHistory() {
-//    return Padding(
-//      padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
-//      child: Row(
-//        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//        crossAxisAlignment: CrossAxisAlignment.end,
-//        children: [
-//          ClipRRect(
-//              borderRadius: BorderRadius.circular(30),
-//              child: Image.asset("assets/images/cisdemo.png",
-//                scale: 2,
-//                fit: BoxFit.cover,
-//              )
-//          ),
-//          Padding(
-//            padding: const EdgeInsets.fromLTRB(15, 5, 0, 0),
-//            child: Column(
-//              children: [
-//                const SizedBox(
-//                    width: 190,
-//                    //height: 40,
-//                    //color: Colors.grey,
-//                    child: Text("Supporting the CIS",
-//                        maxLines: 2,
-//                        overflow: TextOverflow.ellipsis,
-//                        style: TextStyle(
-//                            fontSize: 18,
-//                            color: Color(0xff1c335b),
-//                            fontWeight: FontWeight.w600,
-//                            fontFamily: 'Merriweather Sans '))),
-//                const SizedBox(
-//                  height: 3,
-//                ),
-//                const Expanded(
-//                  flex: 1,
-//                  child: SizedBox(
-//                      width: 190,
-//                      //height: 40,
-//                      //color: Colors.grey,
-//                      child: Text("15A/21 Nguyen Van Duong",
-//                          maxLines: 2,
-//                          overflow: TextOverflow.ellipsis,
-//                          style: TextStyle(
-//                              height: 1,
-//                              fontSize: 15,
-//                              color: ColorConstant.Grey01,
-//                              fontWeight: FontWeight.w400,
-//                              fontFamily: 'Merriweather Sans'))),
-//                ),
-//                Expanded(
-//                  flex: 2,
-//                  child: Container(
-//                    padding: const EdgeInsets.symmetric(horizontal: 0),
-//                    width: 210,
-//                    //color: Colors.black,
-//                    child: Row(
-//                      mainAxisAlignment: MainAxisAlignment.start,
-//                      //textBaseline: TextBaseline.alphabetic,
-//                      children: [
-//                        const Icon(
-//                          Icons.star,
-//                          size: 19,
-//                          color: Colors.amber,
-//                        ),
-//                        const SizedBox(
-//                          width: 5,
-//                        ),
-//                        const Text("4.5",
-//                            style: TextStyle(
-//                                height: 0.9,
-//                                fontSize: 15,
-//                                color: ColorConstant.Grey01,
-//                                fontWeight: FontWeight.w500,
-//                                fontFamily: 'Merriweather Sans')),
-//                        RichText(
-//                            text: const TextSpan(children: [
-//                              WidgetSpan(
-//                                  child: Padding(
-//                                    padding: EdgeInsets.only(left: 15),
-//                                    child: Text("10.00 AM ",
-//                                        style: TextStyle(
-//                                            letterSpacing: 0.2,
-//                                            fontSize: 15,
-//                                            color: ColorConstant.Grey01,
-//                                            fontWeight: FontWeight.w500,
-//                                            fontFamily: 'Merriweather Sans')),
-//                                  )),
-//                            ])),
-//                        const Text("| ",
-//                            style: TextStyle(
-//                                height: 0.8,
-//                                fontSize: 18,
-//                                letterSpacing: 0.1,
-//                                color: ColorConstant.Grey01,
-//                                fontWeight: FontWeight.w500,
-//                                fontFamily: 'Merriweather Sans')),
-//                        const Text("Chi tiết",
-//                            style: TextStyle(
-//                                fontSize: 13,
-//                                letterSpacing: 0.1,
-//                                color: ColorConstant.BLueText,
-//                                fontWeight: FontWeight.w500,
-//                                fontFamily: 'Merriweather Sans'))
-//                      ],
-//                    ),
-//                  ),
-//                )
-//              ],
-//            ),
-//          )
-//        ],
-//      ),
-//    );
-//  }
 }

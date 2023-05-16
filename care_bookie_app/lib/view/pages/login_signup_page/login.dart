@@ -1,11 +1,9 @@
-import 'package:care_bookie_app/view/pages/login_signup_page/reset_password.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../../view_model/login_page_view_model.dart';
 import '../layouts_page/navbar_layout.dart';
-import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -21,7 +19,6 @@ class _LoginState extends State<Login> {
   final textFieldFocusNode = FocusNode();
   bool _obscured = true;
   bool isLoading = false;
-  LoginPageViewModel _viewModel = LoginPageViewModel();
 
   void _toggleObscured() {
     setState(() {
@@ -56,7 +53,6 @@ class _LoginState extends State<Login> {
                       loginAndSignupTitle(),
                       addPhoneNumber(),
                       addPassword(),
-                      forgotPassword(),
                       loginButton()
                     ],
                   ),
@@ -279,22 +275,6 @@ class _LoginState extends State<Login> {
             ));
   }
 
-  Widget forgotPassword() {
-    return Container(
-      alignment: Alignment.centerRight,
-      padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-      child: TextButton(
-        child: const Text(
-          "Quên mật khẩu",
-          style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF168AD8)),
-        ),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ResetPassword()));
-        },
-      ),
-    );
-  }
 
   Widget loginButton() {
 
@@ -340,7 +320,7 @@ class _LoginState extends State<Login> {
                       color: Color(0xFF0675D6),
                       offset: Offset(0, 2),
                       blurRadius: 10,
-                      spreadRadius: 0.1, // changes position of shadow
+                      spreadRadius: 0.1,
                     ),
                   ],
                 ),
@@ -386,8 +366,6 @@ class _LoginState extends State<Login> {
                         ),
                 ),
               ),
-
-              // RecentlyViewed()
             ],
           ),
         );
