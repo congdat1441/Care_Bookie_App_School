@@ -1,7 +1,7 @@
 class UserLogin {
   final String id;
   late final String firstName;
-  final String lastName;
+  late final String lastName;
   late final String birthDay;
   late final String email;
   late final int gender;

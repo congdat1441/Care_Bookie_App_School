@@ -33,10 +33,10 @@ class _AddAcountState extends State<AddAcount> {
                 borderRadius: BorderRadius.all(
                   Radius.circular(0),
                 )),
-            label: Text("Phone number",
+            label: Text("Số điện thoại",
                 style:
                 TextStyle(color: Colors.black)),
-            hintText: "Please add your phone number",
+            hintText: "Vui lòng nhập vào số điện thoại",
             hintStyle: TextStyle(
               color: Color.fromARGB(255, 94, 92, 88),
             ),

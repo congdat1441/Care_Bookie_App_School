@@ -36,8 +36,8 @@ class _AddPasswordState extends State<AddPassword> {
               borderRadius: BorderRadius.all(
                 Radius.circular(0),
               )),
-          label: const Text("Password", style: TextStyle(color: Colors.black)),
-          hintText: "Password",
+          label: const Text("Mật khẩu", style: TextStyle(color: Colors.black)),
+          hintText: "Mật khẩu",
           hintStyle: const TextStyle(
             color: Color.fromARGB(255, 94, 92, 88),
           ),
