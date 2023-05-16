@@ -28,12 +28,13 @@ class UserLogin {
         id: json['userId'],
         firstName: json['firstName'],
         lastName: json['lastName'],
-        birthDay: json['birthDay'],
+        birthDay: json['birthDay'] ?? "",
         email: json['email'],
         gender: json['gender'],
         phone: json['phone'],
-        address: json['address'],
-        image: json['imageUrl']);
+        address: json['address'] ?? "",
+        image: json['imageUrl'] ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Breezeicons-actions-22-im-user.svg/512px-Breezeicons-actions-22-im-user.svg.png?20160527143724"
+    );
   }
 
   @override

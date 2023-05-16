@@ -56,7 +56,6 @@ class _LoginState extends State<Login> {
                       loginAndSignupTitle(),
                       addPhoneNumber(),
                       addPassword(),
-                      forgotPassword(),
                       loginButton()
                     ],
                   ),
@@ -277,23 +276,6 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ));
-  }
-
-  Widget forgotPassword() {
-    return Container(
-      alignment: Alignment.centerRight,
-      padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-      child: TextButton(
-        child: const Text(
-          "Quên mật khẩu",
-          style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF168AD8)),
-        ),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ResetPassword()));
-        },
-      ),
-    );
   }
 
   Widget loginButton() {

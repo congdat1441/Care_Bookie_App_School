@@ -50,32 +50,32 @@ class HistoryPage extends StatelessWidget {
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Lịch",
+                    text: "Lịch sử",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w800,
                         fontSize: 35,
                         //textBaseline: TextBaseline.alphabetic,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
-                        fontFamily: 'Poppins'),
+                        fontFamily: 'Montserrat'),
                   ),
                   WidgetSpan(
                       child: Padding(
                     padding:
                         EdgeInsets.fromLTRB(40,0,0,0),
                     child: Text(
-                      "Sử",
+                      "Khám bệnh",
                       style: TextStyle(
                           height: 1.2,
                           fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w800,
                           fontSize: 32,
                           //textBaseline: TextBaseline.alphabetic,
                           color: Colors.green,
                           //letterSpacing: 1.5,
-                          fontFamily: 'Poppins'),
+                          fontFamily: 'Montserrat'),
                     ),
                   )),
                 ]),
