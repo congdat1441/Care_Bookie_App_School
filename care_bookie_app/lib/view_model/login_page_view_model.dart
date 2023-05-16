@@ -84,14 +84,21 @@ class LoginPageViewModel extends ChangeNotifier {
     bool isValid = true;
     if (phone.isEmpty) {
       isValid = false;
-      errorPhone = "Phone number is required.";
+      errorPhone = "Vui lòng nhập đúng tài khoản";
     }
     if (password.isEmpty) {
       isValid = false;
-      errorPassword = "Password is required.";
+      errorPassword = "Vui lòng nhập đúng mật khẩu";
     }
 
     notifyListeners();
     return isValid;
+  }
+
+  void resetError() {
+    errorPassword = "";
+    errorPhone = "";
+    errorMessage = "";
+    notifyListeners();
   }
 }

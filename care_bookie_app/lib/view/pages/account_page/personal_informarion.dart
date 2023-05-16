@@ -67,7 +67,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 8.0),
       child: Column(
         children: [
-          name(),
+          firstName(),
+          lastName(),
           email(),
           phone(),
           gender(),
@@ -133,7 +134,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             )));
   }
 
-  Widget name() {
+  Widget firstName() {
     return Consumer<LoginPageViewModel>(
       builder: (context, value, child) => Column(
         children: [
@@ -167,7 +168,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      _textEditingController.text = value.userLogin.firstName;
+                      _textEditingController.text = value.userLogin.lastName;
                       return AlertDialog(
                         title: const Text("Sửa đổi tên"),
                         content: TextField(
@@ -216,6 +217,87 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
+  Widget lastName() {
+    return Consumer<LoginPageViewModel>(
+      builder: (context, value, child) => Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Tên",
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: ColorConstant.Grey01),
+                  ),
+                  Text(
+                    value.userLogin.lastName,
+                    style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      _textEditingController.text = value.userLogin.lastName;
+                      return AlertDialog(
+                        title: const Text("Sửa đổi tên"),
+                        content: TextField(
+                          controller: _textEditingController,
+                          decoration: const InputDecoration(
+                            labelText: 'Tên',
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('Hủy'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('Lưu'),
+                            onPressed: () {
+                              setState(() {
+                                value.userLogin.lastName =
+                                    _textEditingController.text;
+                              });
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                icon: const Icon(
+                  IconlyBold.edit,
+                  size: 30,
+                  color: ColorConstant.Grey01,
+                ),
+              ),
+            ],
+          ),
+          const Divider(
+            height: 30,
+            color: Color(0xFFF3EFEF),
+            thickness: 1.5,
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget email() {
     return Consumer<LoginPageViewModel>(
@@ -301,82 +383,82 @@ class _PersonalInformationState extends State<PersonalInformation> {
   Widget phone() {
     return Consumer<LoginPageViewModel>(
         builder: (context, value, child) => Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Số điện thoại",
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: ColorConstant.Grey01),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Số điện thoại",
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: ColorConstant.Grey01),
+                        ),
+                        Text(
+                          value.userLogin.phone,
+                          style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
+                        ),
+                      ],
                     ),
-                    Text(
-                      value.userLogin.phone,
-                      style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black),
+                    IconButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            _textEditingController.text = value.userLogin.phone;
+                            return AlertDialog(
+                              title: const Text("Thay đổi số điện thoại"),
+                              content: TextField(
+                                controller: _textEditingController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Tên',
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Hủy'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Lưu'),
+                                  onPressed: () {
+                                    setState(() {
+                                      value.userLogin.phone =
+                                          _textEditingController.text;
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      icon: const Icon(
+                        IconlyBold.edit,
+                        size: 30,
+                        color: ColorConstant.Grey01,
+                      ),
                     ),
                   ],
                 ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        _textEditingController.text = value.userLogin.phone;
-                        return AlertDialog(
-                          title: const Text("Thay đổi số điện thoại"),
-                          content: TextField(
-                            controller: _textEditingController,
-                            decoration: const InputDecoration(
-                              labelText: 'Tên',
-                            ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('Hủy'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('Lưu'),
-                              onPressed: () {
-                                setState(() {
-                                  value.userLogin.phone =
-                                      _textEditingController.text;
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  icon: const Icon(
-                    IconlyBold.edit,
-                    size: 30,
-                    color: ColorConstant.Grey01,
-                  ),
+                const Divider(
+                  height: 30,
+                  color: Color(0xFFF3EFEF),
+                  thickness: 1.5,
                 ),
               ],
-            ),
-            const Divider(
-              height: 30,
-              color: Color(0xFFF3EFEF),
-              thickness: 1.5,
-            ),
-          ],
-        ));
+            ));
   }
 
   Widget gender() {
@@ -423,7 +505,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               title: const Text('Nam'),
                               leading: Radio<Gender>(
                                 value: Gender.male,
-                                groupValue: value.userLogin.gender == 1 ? Gender.male : Gender.female,
+                                groupValue: value.userLogin.gender == 1
+                                    ? Gender.male
+                                    : Gender.female,
                                 onChanged: (Gender? newValue) {
                                   setState(() {
                                     value.userLogin.gender = newValue! as int;
@@ -436,7 +520,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               title: const Text('Nữ'),
                               leading: Radio<Gender>(
                                 value: Gender.female,
-                                groupValue: value.userLogin.gender == 1 ? Gender.male : Gender.female,
+                                groupValue: value.userLogin.gender == 1
+                                    ? Gender.male
+                                    : Gender.female,
                                 onChanged: (Gender? newValue) {
                                   setState(() {
                                     value.userLogin.gender = newValue! as int;
@@ -513,7 +599,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     onConfirm: (date) {
                       setState(() {
                         // Cập nhật giá trị ngày sinh
-                        value.userLogin.birthDay = DateFormat('dd/MM/yyyy').format(date);
+                        value.userLogin.birthDay =
+                            DateFormat('dd/MM/yyyy').format(date);
                       });
                     },
                     currentTime: DateTime.now(),
@@ -576,7 +663,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            _textEditingController.text = value.userLogin.address;
+                            _textEditingController.text =
+                                value.userLogin.address;
                             return AlertDialog(
                               title: const Text("Thay đổi email"),
                               content: TextField(
@@ -668,7 +756,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
         ),
         onPressed: () {},
         child: const Text(
-          "Xóa tài khoản",
+          "Lưu chỉnh sửa",
           style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 16,

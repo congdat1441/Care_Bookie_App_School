@@ -16,8 +16,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final TextEditingController phoneController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
+
   final textFieldFocusNode = FocusNode();
   bool _obscured = true;
   bool isLoading = false;
@@ -27,29 +27,11 @@ class _LoginState extends State<Login> {
     setState(() {
       _obscured = !_obscured;
       if (textFieldFocusNode.hasPrimaryFocus)
-        return; // If focus is on text field, dont unfocus
+        return;
       textFieldFocusNode.canRequestFocus =
-          false; // Prevents focus if tap on eye
+          false;
     });
   }
-
-/*  @override
-  void initState() {
-    super.initState();
-    checkLoggedInStatus();
-  }
-
-  void checkLoggedInStatus() async {
-    bool loggedIn = await _viewModel.isLoggedIn();
-    if (loggedIn) {
-      // Đã đăng nhập, chuyển hướng đến trang chủ
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const NavbarLayout(index: 0)),
-      );
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +139,11 @@ class _LoginState extends State<Login> {
           ),
           GestureDetector(
             onTap: () {
+
+              final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
+
+              loginPageViewModel.resetError();
+
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const Signup()));
             },
@@ -310,6 +297,9 @@ class _LoginState extends State<Login> {
   }
 
   Widget loginButton() {
+
+    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
+
     return Consumer<LoginPageViewModel>(
       builder: (context, value, child) {
         return Container(
@@ -362,6 +352,8 @@ class _LoginState extends State<Login> {
                       value.errorMessage =
                           "Đăng nhập thất bại, vui lòng kiểm tra thông tin";
                     } else {
+
+                      loginPageViewModel.resetError();
                       // ignore: use_build_context_synchronously
                       Navigator.pushReplacement(
                         context,

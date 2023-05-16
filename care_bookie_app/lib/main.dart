@@ -15,6 +15,7 @@ import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.
 import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:care_bookie_app/view_model/search_page_view_model.dart';
+import 'package:care_bookie_app/view_model/signup_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -79,6 +80,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel()),
         ChangeNotifierProvider(create: (context) => FavoritePageViewModel()),
         ChangeNotifierProvider(create: (context) => SearchPageViewModel()),
+        ChangeNotifierProvider(create: (context) => SignupPageViewModel())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
