@@ -55,30 +55,30 @@ class _ScheduleState extends State<Schedule> {
                   TextSpan(
                     text: "Lịch",
                     style: TextStyle(
-                        height: 1,
+                        height: 0.8,
                         fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         fontSize: 35,
                         //textBaseline: TextBaseline.alphabetic,
                         color: Color(0xff4fa2e7),
-                        letterSpacing: 1.5,
-                        fontFamily: 'Poppins'),
+                        letterSpacing: 1.0,
+                        fontFamily: 'Montserrat'),
                   ),
                   WidgetSpan(
                       child: Padding(
                     padding:
-                        EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 10.0),
                     child: Text(
-                      "Khám",
+                      "Khám Bệnh ",
                       style: TextStyle(
-                          height: 0.8,
+                          height: 0.7,
                           fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                           fontSize: 32,
                           //textBaseline: TextBaseline.alphabetic,
                           color: Colors.green,
                           //letterSpacing: 1.5,
-                          fontFamily: 'Poppins'),
+                          fontFamily: 'Montserrat'),
                     ),
                   )),
                 ]),

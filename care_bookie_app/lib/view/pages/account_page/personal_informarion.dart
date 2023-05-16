@@ -666,11 +666,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             _textEditingController.text =
                                 value.userLogin.address;
                             return AlertDialog(
-                              title: const Text("Thay đổi email"),
+                              title: const Text("Thay đổi địa chỉ"),
                               content: TextField(
                                 controller: _textEditingController,
                                 decoration: const InputDecoration(
-                                  labelText: 'Tên',
+                                  labelText: 'Địa chỉ',
                                 ),
                               ),
                               actions: <Widget>[

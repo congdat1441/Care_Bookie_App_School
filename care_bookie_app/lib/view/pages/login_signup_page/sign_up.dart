@@ -6,9 +6,6 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 
-import '../../../view_model/login_page_view_model.dart';
-import '../../../view_model/signup_page_view_model.dart';
-
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
 
@@ -512,6 +509,7 @@ class _SignupState extends State<Signup> {
           children: [
             const Padding(padding: EdgeInsets.only(top: 20)),
             Consumer<SignupPageViewModel>(
+              // ignore: avoid_types_as_parameter_names
               builder: (context, SignupPageViewModel, _) {
                 if (SignupPageViewModel.errorMessage != '') {
                   return Container(

@@ -45,34 +45,37 @@ class FavoritePage extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
-              width: 200,
+              width: 220,
               height: 80,
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Bác",
+                    text: "Bác sỹ",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 35,
+
+                        fontWeight: FontWeight.w800,
+                        fontSize: 32,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
-                        fontFamily: 'Poppins'),
+                        fontFamily: 'Montserrat'),
                   ),
                   WidgetSpan(
                       child: Padding(
                         padding:
-                        EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 20.0),
                         child: Text(
-                          "Sỹ",
+                          "Yêu thích",
                           style: TextStyle(
-                              height: 0.8,
+                              height: 0.6,
                               fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 32,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 28,
+                              //textBaseline: TextBaseline.alphabetic,
                               color: Colors.green,
-                              fontFamily: 'Poppins'),
+                              //letterSpacing: 1.5,
+                              fontFamily: 'Montserrat'),
                         ),
                       )),
                 ]),
@@ -82,9 +85,9 @@ class FavoritePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 0, 0.0),
               child: SvgPicture.asset(
-                'assets/images/schedule.svg',
-                width: 80,
-                height: 80,
+                'assets/images/doctorFavourite.svg',
+                width: 90,
+                height: 90,
                 fit: BoxFit.fill,
               ),
             ),
@@ -94,40 +97,42 @@ class FavoritePage extends StatelessWidget {
 
   Widget favoriteClinic() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+        padding: const EdgeInsets.fromLTRB(20,30, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
-              width: 200,
+              width: 220,
               height: 80,
               child: RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                    text: "Bệnh",
+                    text: "Phòng khám",
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 35,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 30,
+                        //textBaseline: TextBaseline.alphabetic,
                         color: Colors.orange,
                         letterSpacing: 1.5,
-                        fontFamily: 'Poppins'),
+                        fontFamily: 'Montserrat'),
                   ),
                   WidgetSpan(
                       child: Padding(
                         padding:
-                        EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 3.0, horizontal: 20.0),
                         child: Text(
-                          "Viện",
+                          "yêu thích",
                           style: TextStyle(
-                              height: 0.8,
+                              height: 1,
                               fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 32,
                               color: Colors.blueAccent,
-                              fontFamily: 'Poppins'),
+                              fontWeight: FontWeight.w800,
+                              fontSize: 28,
+                              //letterSpacing: 1.5,
+                              fontFamily: 'Montserrat'),
                         ),
                       )),
                 ]),
@@ -136,9 +141,9 @@ class FavoritePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 0, 0.0),
               child: SvgPicture.asset(
-                'assets/images/schedule.svg',
-                width: 80,
-                height: 80,
+                'assets/images/clinicFavourite.svg',
+                width: 90,
+                height: 90,
                 fit: BoxFit.fill,
               ),
             ),

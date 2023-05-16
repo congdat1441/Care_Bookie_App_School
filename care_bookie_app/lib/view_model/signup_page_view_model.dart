@@ -53,14 +53,6 @@ class SignupPageViewModel extends ChangeNotifier {
     return isSuccess;
   }
 
-  // bool isSignupSuccessful() {
-  //   // Perform your signup logic here
-  //   // Return true if the signup is successful, false otherwise
-  //   // You can check the values of firstName, lastName, phoneNumber, email, password properties to perform the signup
-  //   // For example, you can validate the data and make an API request to create a new user account
-  //   return true;
-  // }
-
   bool validateFields(String firstName, String lastName, String phone, String email, String password) {
     bool isValid = true;
     if (firstName.isEmpty) {
