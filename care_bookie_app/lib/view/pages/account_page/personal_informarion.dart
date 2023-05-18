@@ -632,8 +632,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
               ),
               IconButton(
                 onPressed: () async {
-                  print('1');
-
                   final DateTime? picked = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),

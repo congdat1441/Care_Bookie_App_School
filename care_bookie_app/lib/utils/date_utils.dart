@@ -237,7 +237,8 @@ class DateUtils {
 
   static String convertDateString(String input) {
     DateTime dateTime = DateTime.parse(input);
-    String formattedDate = "${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year.toString()}";
+    String formattedDate =
+        "${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year.toString()}";
     return formattedDate;
   }
 
@@ -285,5 +286,4 @@ class DateUtils {
 
     return age;
   }
-
 }
