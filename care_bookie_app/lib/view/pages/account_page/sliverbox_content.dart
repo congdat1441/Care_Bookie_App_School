@@ -1,3 +1,4 @@
+import 'package:care_bookie_app/models/user_login.dart';
 import 'package:care_bookie_app/view/pages/account_page/personal_informarion.dart';
 import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,7 +41,7 @@ class _SliverToBoxAdapterContentState extends State<SliverToBoxAdapterContent> {
           ),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const PersonalInformation()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const PersonalInformation())).then((value) {});
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

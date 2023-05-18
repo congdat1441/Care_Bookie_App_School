@@ -16,11 +16,15 @@ import 'package:care_bookie_app/view_model/schedule_info_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:care_bookie_app/view_model/search_page_view_model.dart';
 import 'package:care_bookie_app/view_model/signup_page_view_model.dart';
+import 'package:care_bookie_app/view_model/update_user_page_view_model.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -80,7 +84,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => ScheduleCancelViewModel()),
         ChangeNotifierProvider(create: (context) => FavoritePageViewModel()),
         ChangeNotifierProvider(create: (context) => SearchPageViewModel()),
-        ChangeNotifierProvider(create: (context) => SignupPageViewModel())
+        ChangeNotifierProvider(create: (context) => SignupPageViewModel()),
+        ChangeNotifierProvider(create: (context) => UpdateUserPageViewModel(),)
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

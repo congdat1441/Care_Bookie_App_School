@@ -63,6 +63,7 @@ class _MainPageState extends State<MainPage> {
 
     favoritePageViewModel
         .getAllHospitalFavoriteByUserId(loginPageViewModel.userLogin.id);
+
   }
 
   @override
