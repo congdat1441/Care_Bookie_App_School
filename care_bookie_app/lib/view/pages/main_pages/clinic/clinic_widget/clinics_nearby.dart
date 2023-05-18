@@ -135,12 +135,12 @@ class _ClinicsNearbyState extends State<ClinicsNearby> {
                                               child: Text(
                                                   homePageViewModel
                                                       .hospitals[index].address,
-                                                  maxLines: 2,
+                                                  maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: const TextStyle(
-                                                      height: 0.9,
-                                                      fontSize: 13,
+                                                      height: 1.0,
+                                                      fontSize: 15,
                                                       color:
                                                           ColorConstant.Grey01,
                                                       fontWeight:

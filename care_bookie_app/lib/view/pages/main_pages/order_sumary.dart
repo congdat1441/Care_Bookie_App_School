@@ -9,7 +9,6 @@ import '../../../res/constants/colors.dart';
 import '../../../view_model/login_page_view_model.dart';
 import 'order_success.dart';
 
-
 class OrderSummary extends StatefulWidget {
   const OrderSummary({Key? key}) : super(key: key);
 
@@ -22,10 +21,11 @@ class _OrderSummaryState extends State<OrderSummary> {
 
   @override
   Widget build(BuildContext context) {
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
-
-    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
+    final loginPageViewModel =
+        Provider.of<LoginPageViewModel>(context, listen: false);
 
     orderHospitalDataViewModel.setInfoUser(loginPageViewModel.userLogin);
 
@@ -65,18 +65,21 @@ class _OrderSummaryState extends State<OrderSummary> {
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
-              children:  [
+              children: [
                 infoOrderDetail(),
                 symptom(),
                 price(),
-                const SizedBox(height: 50,)
+                const SizedBox(
+                  height: 50,
+                )
               ],
             )),
         bottomNavigationBar: bottomBooking());
   }
-  Widget infoOrderDetail() {
 
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+  Widget infoOrderDetail() {
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -121,7 +124,10 @@ class _OrderSummaryState extends State<OrderSummary> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(orderHospitalDataViewModel.doctorSelected != null ? "${orderHospitalDataViewModel.doctorSelected!.lastName} ${orderHospitalDataViewModel.doctorSelected!.firstName}" : "Không lựa chọn",
+                  child: Text(
+                      orderHospitalDataViewModel.doctorSelected != null
+                          ? "${orderHospitalDataViewModel.doctorSelected!.lastName} ${orderHospitalDataViewModel.doctorSelected!.firstName}"
+                          : "Không lựa chọn",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -148,7 +154,8 @@ class _OrderSummaryState extends State<OrderSummary> {
               SizedBox(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("${orderHospitalDataViewModel.dateTimeSelected} || ${orderHospitalDataViewModel.session} ${orderHospitalDataViewModel.timeSelected}",
+                  child: Text(
+                      "${orderHospitalDataViewModel.dateTimeSelected} || ${orderHospitalDataViewModel.session} ${orderHospitalDataViewModel.timeSelected}",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -194,7 +201,7 @@ class _OrderSummaryState extends State<OrderSummary> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[
+            children: [
               const Text("Tuổi",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -232,7 +239,8 @@ class _OrderSummaryState extends State<OrderSummary> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(orderHospitalDataViewModel.gender == 1 ? "Nam" : "Nữ",
+                  child: Text(
+                      orderHospitalDataViewModel.gender == 1 ? "Nam" : "Nữ",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -260,7 +268,10 @@ class _OrderSummaryState extends State<OrderSummary> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(orderHospitalDataViewModel.shareHistoryList.isNotEmpty ? "Có" : "Không",
+                  child: Text(
+                      orderHospitalDataViewModel.shareHistoryList.isNotEmpty
+                          ? "Có"
+                          : "Không",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -282,8 +293,8 @@ class _OrderSummaryState extends State<OrderSummary> {
   }
 
   Widget symptom() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return Column(
       children: [
@@ -303,16 +314,15 @@ class _OrderSummaryState extends State<OrderSummary> {
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           width: double.maxFinite,
           decoration: BoxDecoration(
-            //color: Colors.white,
+              //color: Colors.white,
               borderRadius: BorderRadius.circular(25),
               border:
-              Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
+                  Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  orderHospitalDataViewModel.symptom!,
+              child: Text(orderHospitalDataViewModel.symptom!,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
@@ -332,12 +342,11 @@ class _OrderSummaryState extends State<OrderSummary> {
   }
 
   Widget price() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return Container(
-      decoration: const BoxDecoration(
-      ),
+      decoration: const BoxDecoration(),
       child: Column(
         children: [
           Row(
@@ -354,31 +363,36 @@ class _OrderSummaryState extends State<OrderSummary> {
             ],
           ),
           ...orderHospitalDataViewModel.services.map((e) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20,10,0,0),
-                child: Text(e.serviceName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
-              ),
-              SizedBox(
-                width: 200,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("${e.price}00đ",
-                      maxLines: 2,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.amber,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
-              ),
-            ],
-          )),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                    child: SizedBox(
+                      width: 180,
+                      child: Text(e.serviceName,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                              overflow: TextOverflow.visible)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 200,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text("${e.price}00đ",
+                          maxLines: 2,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.amber,
+                              fontSize: 17,
+                              overflow: TextOverflow.ellipsis)),
+                    ),
+                  ),
+                ],
+              )),
           const Divider(
             height: 30,
             color: Colors.grey,
@@ -394,15 +408,12 @@ class _OrderSummaryState extends State<OrderSummary> {
       height: 160,
       color: Colors.white,
       child: Column(
-        children: [
-          termsAndPolicy(),
-          confirmBooking()
-        ],
+        children: [termsAndPolicy(), confirmBooking()],
       ),
     );
   }
 
-  Widget termsAndPolicy(){
+  Widget termsAndPolicy() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 20, 10),
       child: Row(
@@ -415,8 +426,8 @@ class _OrderSummaryState extends State<OrderSummary> {
               });
             },
             child: Icon(
-              check ?  IconlyBold.tickSquare : FontAwesomeIcons.square,
-              size:  35,
+              check ? IconlyBold.tickSquare : FontAwesomeIcons.square,
+              size: 35,
               color: check ? Colors.lightBlueAccent : Colors.grey,
             ),
           ),
@@ -456,62 +467,61 @@ class _OrderSummaryState extends State<OrderSummary> {
     );
   }
 
-  Widget confirmBooking(){
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+  Widget confirmBooking() {
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
         child: Container(
           width: double.maxFinite,
           height: 70,
-          decoration:
-          BoxDecoration(
+          decoration: BoxDecoration(
               color: ColorConstant.BackGroundColor,
               borderRadius: BorderRadius.circular(20)),
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              onPressed: () async{
+              onPressed: () async {
                 bool isSuccess = false;
-                check ? {
-                  isSuccess =  await orderHospitalDataViewModel.createInvoice()
-                } : {
-                  Fluttertoast.showToast(
-                      msg: "Vui lòng đồng ý với điều khoản dịch vụ",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0
-                  )
-                };
+                check
+                    ? {
+                        isSuccess =
+                            await orderHospitalDataViewModel.createInvoice()
+                      }
+                    : {
+                        Fluttertoast.showToast(
+                            msg: "Vui lòng đồng ý với điều khoản dịch vụ",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0)
+                      };
 
-                isSuccess ? {
-                  // ignore: use_build_context_synchronously
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) => const OrderSuccess())
-                  )
-                } : {
-                  Fluttertoast.showToast(
-                    msg: "Đặt lịch khám không thành công",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0
-                  )
-                };
-
+                isSuccess
+                    ? {
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OrderSuccess()))
+                      }
+                    : {
+                        Fluttertoast.showToast(
+                            msg: "Đặt lịch khám không thành công",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0)
+                      };
               },
               child: const Padding(
                 padding: EdgeInsets.only(
@@ -520,12 +530,9 @@ class _OrderSummaryState extends State<OrderSummary> {
                 ),
                 child: Text(
                   "Xác nhận hoàn tất",
-                  style: TextStyle(
-                      fontSize: 21, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                 ),
               )),
         ));
   }
-
-
 }

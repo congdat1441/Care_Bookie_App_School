@@ -2,6 +2,7 @@ import 'package:care_bookie_app/models/user_login.dart';
 import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
@@ -16,6 +17,8 @@ class PersonalInformation extends StatefulWidget {
 }
 
 class _PersonalInformationState extends State<PersonalInformation> {
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+  GlobalKey<ScaffoldMessengerState>();
   TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -793,6 +796,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
           onPressed: () async {
             if (updateUserPageViewModel.images.isNotEmpty) {
               updateUserPageViewModel.saveAccount();
+              Fluttertoast.showToast(
+                  msg: "Chỉnh sửa thông tin thành công",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+
               loginPageViewModel.userLogin = UserLogin(
                   id: updateUserPageViewModel.userUpdate!.userId,
                   firstName: updateUserPageViewModel.userUpdate!.firstName,
@@ -803,8 +816,17 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   phone: updateUserPageViewModel.userUpdate!.phone,
                   address: updateUserPageViewModel.userUpdate!.address,
                   image: updateUserPageViewModel.userUpdate!.imageUrl);
+
             } else {
-              print("chưa chỉnh sửa dược");
+              Fluttertoast.showToast(
+                  msg: "Chưa chỉnh sửa thông tin",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
             }
           },
           child: const Text(

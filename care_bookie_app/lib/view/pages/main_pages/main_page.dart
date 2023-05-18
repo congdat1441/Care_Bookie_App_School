@@ -63,7 +63,6 @@ class _MainPageState extends State<MainPage> {
 
     favoritePageViewModel
         .getAllHospitalFavoriteByUserId(loginPageViewModel.userLogin.id);
-
   }
 
   @override
@@ -106,25 +105,27 @@ class _MainPageState extends State<MainPage> {
 
   Widget hiPatient() {
     return Consumer<LoginPageViewModel>(
-      builder: (context, value, child) => Padding(
-        padding: const EdgeInsets.fromLTRB(35, 45, 35, 0),
-        child: Row(
-          children: [
-            Text(
-              "Chào ${value.userLogin.firstName}",
-              style: const TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 30,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(width: 10),
-            Image.asset('assets/images/wavinghand.png',
-                width: 30, height: 30, fit: BoxFit.cover),
-          ],
-        ),
-      )
-    );
+        builder: (context, value, child) => Padding(
+              padding: const EdgeInsets.fromLTRB(40, 45, 35, 0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 240,
+                    child: Text(
+                      "Chào ${value.userLogin.lastName}",
+                      style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 30,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  //
+                  Image.asset('assets/images/wavinghand.png',
+                      width: 60, height: 60, fit: BoxFit.cover),
+                ],
+              ),
+            ));
   }
 
   Widget doctorTitle() {

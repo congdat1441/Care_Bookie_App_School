@@ -3,6 +3,7 @@ import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view_model/signup_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -564,6 +565,15 @@ class _SignupState extends State<Signup> {
                       phone: phoneController.text);
 
                   bool isSuccess = false;
+                  isValid ? Fluttertoast.showToast(
+                      msg: "Đăng ký thành công, vui lòng đợi trong giây lát",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  ) : "";
 
                   isValid ? isSuccess =  await value.signup(userSignup) : "";
                   // ignore: use_build_context_synchronously

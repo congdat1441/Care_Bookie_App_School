@@ -2,6 +2,7 @@ import 'package:care_bookie_app/view/pages/login_signup_page/reset_password.dart
 import 'package:care_bookie_app/view/pages/login_signup_page/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../view_model/login_page_view_model.dart';
 import '../layouts_page/navbar_layout.dart';
@@ -352,7 +353,15 @@ class _LoginState extends State<Login> {
                       value.errorMessage =
                           "Đăng nhập thất bại, vui lòng kiểm tra thông tin";
                     } else {
-
+                      Fluttertoast.showToast(
+                          msg: "Đăng nhập thành công",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
                       loginPageViewModel.resetError();
                       // ignore: use_build_context_synchronously
                       Navigator.pushReplacement(

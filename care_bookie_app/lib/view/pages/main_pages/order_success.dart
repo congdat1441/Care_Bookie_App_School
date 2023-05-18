@@ -74,8 +74,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget infoOrderDetail() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -120,7 +120,10 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(orderHospitalDataViewModel.doctorSelected != null ? "${orderHospitalDataViewModel.doctorSelected!.lastName} ${orderHospitalDataViewModel.doctorSelected!.firstName}" : "Không lựa chọn",
+                  child: Text(
+                      orderHospitalDataViewModel.doctorSelected != null
+                          ? "${orderHospitalDataViewModel.doctorSelected!.lastName} ${orderHospitalDataViewModel.doctorSelected!.firstName}"
+                          : "Không lựa chọn",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -148,7 +151,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 140,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("${orderHospitalDataViewModel.dateTimeSelected} || ${orderHospitalDataViewModel.session} ${orderHospitalDataViewModel.timeSelected}",
+                  child: Text(
+                      "${orderHospitalDataViewModel.dateTimeSelected} || ${orderHospitalDataViewModel.session} ${orderHospitalDataViewModel.timeSelected}",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -232,7 +236,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(orderHospitalDataViewModel.gender! == 1 ?  "Nam" : "Nữ",
+                  child: Text(
+                      orderHospitalDataViewModel.gender! == 1 ? "Nam" : "Nữ",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -260,7 +265,10 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(orderHospitalDataViewModel.shareHistoryList.isEmpty ? "Không" : "Có",
+                  child: Text(
+                      orderHospitalDataViewModel.shareHistoryList.isEmpty
+                          ? "Không"
+                          : "Có",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -282,8 +290,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget symptom() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return Column(
       children: [
@@ -303,16 +311,15 @@ class _OrderSuccessState extends State<OrderSuccess> {
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           width: double.maxFinite,
           decoration: BoxDecoration(
-            //color: Colors.white,
+              //color: Colors.white,
               borderRadius: BorderRadius.circular(25),
               border:
-              Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
+                  Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  orderHospitalDataViewModel.symptom!,
+              child: Text(orderHospitalDataViewModel.symptom!,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
@@ -332,12 +339,11 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget price() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return Container(
-      decoration: const BoxDecoration(
-      ),
+      decoration: const BoxDecoration(),
       child: Column(
         children: [
           Row(
@@ -360,11 +366,16 @@ class _OrderSuccessState extends State<OrderSuccess> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                  child: Text(service.serviceName,
-                      style: const TextStyle(
+                  child: SizedBox(
+                    width: 180,
+                    child: Text(service.serviceName,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 18,
-                          overflow: TextOverflow.visible)),
+                        )),
+                  ),
                 ),
                 SizedBox(
                   width: 200,
@@ -381,13 +392,12 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 ),
               ],
             );
-          }
-          ),
+          }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
-                padding: EdgeInsets.fromLTRB(0,20,0,0),
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Text("Chi phí dự kiến",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -420,12 +430,14 @@ class _OrderSuccessState extends State<OrderSuccess> {
   }
 
   Widget bottomNavigatorBar() {
+    final schedulePageViewModel =
+        Provider.of<SchedulePageViewModel>(context, listen: false);
 
-    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
-
-    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+    final hospitalDetailPageViewModel =
+        Provider.of<HospitalDetailPageViewModel>(context, listen: false);
 
     return Container(
       height: 80,
@@ -447,13 +459,15 @@ class _OrderSuccessState extends State<OrderSuccess> {
                       ),
                     ),
                     onPressed: () {
-
                       schedulePageViewModel.resetSchedules();
                       orderHospitalDataViewModel.resetAllData();
                       hospitalDetailPageViewModel.resetListServiceCheck();
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const  NavbarLayout(index: 0)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const NavbarLayout(index: 0)));
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(
