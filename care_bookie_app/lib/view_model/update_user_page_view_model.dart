@@ -103,8 +103,4 @@ class UpdateUserPageViewModel extends ChangeNotifier{
     setImage(listImageUrl[0]);
     UpdateUserApi.updateAccountUser(userUpdate!);
   }
-
-
-
-
 }
