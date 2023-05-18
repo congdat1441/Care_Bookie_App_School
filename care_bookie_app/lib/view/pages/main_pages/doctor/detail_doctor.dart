@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
 import '../../../../view_model/favorite_page_view_model.dart';
 import '../../../../view_model/login_page_view_model.dart';
+import '../../../../view_model/order_hospital_data_view_model.dart';
 import '../../../../view_model/schedule_detail_page_view_model.dart';
+import '../../../../view_model/schedule_page_view_model.dart';
 import '../../review_page/review_doctor_page/review_doctor.dart';
 import '../../schedule/schedule_detail_accept.dart';
 import '../../schedule/schedule_detail_pending.dart';
@@ -474,6 +476,10 @@ class _DetailDoctorState extends State<DetailDoctor>
 
     final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
 
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
     return SliverToBoxAdapter(
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -490,6 +496,9 @@ class _DetailDoctorState extends State<DetailDoctor>
                   ),
                 ),
                 onPressed: () {
+
+                  orderHospitalDataViewModel.setListScheduleCheckData(schedulePageViewModel.schedules);
+
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,

@@ -1,6 +1,8 @@
 import 'package:care_bookie_app/view/pages/schedule/schedule_detail_accept.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
+import 'package:care_bookie_app/view_model/order_hospital_data_view_model.dart';
+import 'package:care_bookie_app/view_model/schedule_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
@@ -893,6 +895,10 @@ class _DetailClinicState extends State<DetailClinic>
 
     final scheduleDetailPageViewModel = Provider.of<ScheduleDetailPageViewModel>(context,listen: false);
 
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
+    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -909,6 +915,9 @@ class _DetailClinicState extends State<DetailClinic>
                   ),
                 ),
                 onPressed: () {
+
+                  orderHospitalDataViewModel.setListScheduleCheckData(schedulePageViewModel.schedules);
+
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,

@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../models/history.dart';
 import '../models/history_checkbox.dart';
+import '../models/schedule.dart';
 import '../models/service.dart';
 import '../models/working_day_detail.dart';
 
@@ -52,6 +53,8 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
 
   bool orderWithDoctor = false;
 
+  List<Schedule> listScheduleCheckData = [];
+
   void setOrderWithDoctor(bool value) {
     orderWithDoctor = value;
   }
@@ -84,6 +87,7 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
     userLogin = null;
     totalFee = 0;
     orderWithDoctor = false;
+    notifyListeners();
   }
 
 
@@ -154,10 +158,24 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
 
   void setInfoUser(UserLogin userLogin) {
     if(name!.isEmpty) {
-      age = date_util.DateUtils.calculateAge(userLogin.birthDay);
+
+      userLogin.birthDay.isEmpty ? age = 0 : age = date_util.DateUtils.calculateAge(userLogin.birthDay);
+
       name = '${userLogin.lastName} ${userLogin.firstName}';
-      gender = userLogin.gender;
+      userLogin.birthDay.isEmpty ? gender =1 : gender = userLogin.gender;
     }
+  }
+
+  void setListScheduleCheckData(List<Schedule> schedules) {
+
+    listScheduleCheckData = [];
+
+    for(var schedule in schedules) {
+      if(schedule.bookInformation.status != "CANCEL") {
+        listScheduleCheckData.add(schedule);
+      }
+    }
+
   }
 
   String validateDataOrder() {
@@ -180,6 +198,10 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
 
     if(validateDataWorkingDayDetailSelected()) {
       return "Vui lòng chọn thời gian hẹn khám bệnh";
+    }
+
+    if(validateCheckSchedule()) {
+      return "Thời gian bị trùng với lịch hẹn bạn đã đặt trước đó";
     }
 
     if(validateSymptom()) {
@@ -238,6 +260,17 @@ class OrderHospitalDataViewModel extends ChangeNotifier {
     if(symptom!.isEmpty){
       return true;
     }
+    return false;
+  }
+
+  bool validateCheckSchedule() {
+
+    for(var schedule in listScheduleCheckData) {
+      if(schedule.bookInformation.session == session && schedule.bookInformation.dateExamination == dateTimeSelected) {
+        return true;
+      }
+    }
+
     return false;
   }
 

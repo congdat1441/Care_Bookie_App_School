@@ -56,7 +56,7 @@ class _OrderSummaryState extends State<OrderSummary> {
               size: 30,
             ),
             onPressed: () {
-              orderHospitalDataViewModel.resetData();
+              orderHospitalDataViewModel.resetAllData();
               Navigator.pop(context);
             },
           ),
