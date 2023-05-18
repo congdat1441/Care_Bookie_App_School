@@ -1,3 +1,4 @@
+
 import 'package:care_bookie_app/models/comment_data.dart';
 import 'package:care_bookie_app/view/pages/review_page/review_doctor_page/review_doctor_success.dart';
 import 'package:care_bookie_app/view_model/history_detail_page_view_model.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
-
+import '../../layouts_page/navbar_layout.dart';
 
 class AddReviewDoctor extends StatefulWidget {
   const AddReviewDoctor({Key? key}) : super(key: key);
@@ -121,6 +122,8 @@ class _AddReviewDoctorState extends State<AddReviewDoctor> {
               child: TextFormField(
                 controller: _controllerTextWord,
                 maxLines: 100,
+                //inputFormatters: [WhitelistingTextInputFormatter(RegExp("[a-zA-ZÀ-ỹ ]"))],
+                //maxLength: 350,
                 decoration: InputDecoration(
                     hintText: 'Thêm nhận xét của bạn...',
                     hintStyle: TextStyle(

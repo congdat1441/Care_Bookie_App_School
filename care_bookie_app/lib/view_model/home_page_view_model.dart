@@ -29,15 +29,6 @@ class HomePageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadDataHomepage() {
-    if (doctors.isEmpty) {
-      getAllDoctor();
-    }
-    if (hospitals.isEmpty) {
-      getAllHospital();
-    }
-  }
-
 
 
 }

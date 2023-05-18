@@ -223,6 +223,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
       child: Row(
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ClipRRect(
@@ -241,6 +242,8 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
               children: [
                 SizedBox(
                     width: 180,
+                    //height: 40,
+                    //color: Colors.grey,
                     child: Text(schedule.hospitalName,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -256,6 +259,8 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                   flex: 1,
                   child: SizedBox(
                       width: 180,
+                      //height: 40,
+                      //color: Colors.grey,
                       child: Row(
                         children: [
                           const Text(
@@ -284,6 +289,7 @@ class _ScheduleClinicsState extends State<ScheduleClinics> {
                       //color: Colors.black,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        //textBaseline: TextBaseline.alphabetic,
                         children: [
                           const Icon(
                             Icons.star,

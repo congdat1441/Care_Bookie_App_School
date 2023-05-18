@@ -7,6 +7,9 @@ import 'package:provider/provider.dart';
 import '../../../../models/comment_data.dart';
 import '../../../../res/constants/colors.dart';
 import '../../../../view_model/history_detail_page_view_model.dart';
+import '../../layouts_page/navbar_layout.dart';
+
+
 
 class AddReviewClinic extends StatefulWidget {
   const AddReviewClinic({Key? key}) : super(key: key);
@@ -120,6 +123,7 @@ class _AddReviewClinicState extends State<AddReviewClinic> {
               child: TextFormField(
                 controller: _controllerTextWord,
                 maxLines: 100,
+                //maxLength: 350,
                 decoration: InputDecoration(
                     hintText: 'Thêm nhận xét của bạn...',
                     hintStyle: TextStyle(

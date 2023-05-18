@@ -98,6 +98,8 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                                 child: Image.network(
                                   favorite.doctor.image,
                                   fit: BoxFit.fitWidth,
+
+                                  //scale: 30,
                                 ),
                               ),
                             ),
@@ -131,10 +133,12 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                           SizedBox(
                               width: 130,
                               height: 20,
+                              //color: Colors.grey,
                               child: Text("Dr. ${favorite.doctor.lastName} ${favorite.doctor.firstName}",
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,
+                                      //overflow: TextOverflow.ellipsis,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'Merriweather Sans'))),
@@ -145,6 +149,7 @@ class _DoctorFavoriteState extends State<DoctorFavorite> {
                                     style: const TextStyle(
                                         overflow: TextOverflow.ellipsis,
                                         fontSize: 14,
+                                        //overflow: TextOverflow.ellipsis,
                                         color: ColorConstant.Grey01,
                                         fontWeight: FontWeight.w400,
                                         fontFamily: 'Merriweather Sans')),

@@ -108,7 +108,7 @@ class _ReviewDoctorState extends State<ReviewDoctor> {
                   thickness: 2,
                   indent: 9,
                   color: ColorConstant.Grey00.withOpacity(
-                      0.5),
+                      0.5), // Màu sắc của divider
                 ),
               ),
               Column(

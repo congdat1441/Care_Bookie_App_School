@@ -29,32 +29,41 @@ class _MainPageState extends State<MainPage> {
     // TODO: implement initState
     super.initState();
 
-    final historyPageViewModel =
-    Provider.of<HistoryPageViewModel>(context, listen: false);
-
-    final loginPageViewModel =
-    Provider.of<LoginPageViewModel>(context, listen: false);
-
-    final loadHospitalAndDoctor =
+    var loadHospitalAndDoctor =
         Provider.of<HomePageViewModel>(context, listen: false);
 
-    final favoritePageViewModel =
-    Provider.of<FavoritePageViewModel>(context, listen: false);
+    if (loadHospitalAndDoctor.doctors.isEmpty) {
+      loadHospitalAndDoctor.getAllDoctor();
+    }
 
-    final schedulePageViewModel =
-    Provider.of<SchedulePageViewModel>(context, listen: false);
+    if (loadHospitalAndDoctor.hospitals.isEmpty) {
+      loadHospitalAndDoctor.getAllHospital();
+    }
 
-    loadHospitalAndDoctor.loadDataHomepage();
+    final historyPageViewModel =
+        Provider.of<HistoryPageViewModel>(context, listen: false);
+
+    final loginPageViewModel =
+        Provider.of<LoginPageViewModel>(context, listen: false);
 
     historyPageViewModel.setHistories(loginPageViewModel.userLogin.id);
 
+    final schedulePageViewModel =
+        Provider.of<SchedulePageViewModel>(context, listen: false);
+
+    print(loginPageViewModel.userLogin.toString());
+
     schedulePageViewModel.loadSchedules(loginPageViewModel.userLogin.id);
+
+    final favoritePageViewModel =
+        Provider.of<FavoritePageViewModel>(context, listen: false);
 
     favoritePageViewModel
         .getAllDoctorFavoriteByUserId(loginPageViewModel.userLogin.id);
 
     favoritePageViewModel
         .getAllHospitalFavoriteByUserId(loginPageViewModel.userLogin.id);
+
   }
 
   @override

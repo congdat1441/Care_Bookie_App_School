@@ -42,9 +42,11 @@ class FavoritePage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
+              //color: Colors.grey,
               width: 220,
               height: 80,
               child: RichText(
@@ -54,9 +56,9 @@ class FavoritePage extends StatelessWidget {
                     style: TextStyle(
                         height: 1,
                         fontStyle: FontStyle.italic,
-
                         fontWeight: FontWeight.w800,
                         fontSize: 32,
+                        //textBaseline: TextBaseline.alphabetic,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
                         fontFamily: 'Montserrat'),
@@ -100,9 +102,11 @@ class FavoritePage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20,30, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
+              //color: Colors.grey,
               width: 220,
               height: 80,
               child: RichText(
@@ -128,14 +132,16 @@ class FavoritePage extends StatelessWidget {
                           style: TextStyle(
                               height: 1,
                               fontStyle: FontStyle.italic,
-                              color: Colors.blueAccent,
                               fontWeight: FontWeight.w800,
                               fontSize: 28,
+                              //textBaseline: TextBaseline.alphabetic,
+                              color: Colors.blueAccent,
                               //letterSpacing: 1.5,
                               fontFamily: 'Montserrat'),
                         ),
                       )),
                 ]),
+                //textScaleFactor: 0.8,
               ),
             ),
             Padding(

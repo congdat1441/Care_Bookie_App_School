@@ -1,5 +1,6 @@
 import 'package:care_bookie_app/view/pages/schedule/schedules_clinic.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../res/constants/colors.dart';
 import '../main_pages/main_page_widget/AppbarCustom.dart';
@@ -44,6 +45,7 @@ class _ScheduleState extends State<Schedule> {
         padding: const EdgeInsets.fromLTRB(35, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),

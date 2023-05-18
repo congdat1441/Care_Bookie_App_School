@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../utils/host_util.dart';
 
 class SignupApi {
-  Future<bool> createAccountUser(UserSignup signupUser) async {
+  static Future<bool> createAccountUser(UserSignup signupUser) async {
     String url = "${HostUtil.host}api/v1/care-bookie/user/register";
 
     Map<String, String> headers = {'content-type': 'application/json'};

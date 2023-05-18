@@ -1,9 +1,5 @@
-
-
 import 'package:care_bookie_app/models/user_signup.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-
 import '../api_services/signup_api.dart';
 
 class SignupPageViewModel extends ChangeNotifier {
@@ -19,7 +15,6 @@ class SignupPageViewModel extends ChangeNotifier {
   String errorLastName = '';
   String errorEmail = '';
 
-  SignupApi signupApi = SignupApi();
 
 
   bool _isLoading = false;
@@ -49,7 +44,7 @@ class SignupPageViewModel extends ChangeNotifier {
   }
 
   Future<bool> signup(UserSignup userSignup) async{
-    bool isSuccess = await signupApi.createAccountUser(userSignup);
+    bool isSuccess = await SignupApi.createAccountUser(userSignup);
     return isSuccess;
   }
 

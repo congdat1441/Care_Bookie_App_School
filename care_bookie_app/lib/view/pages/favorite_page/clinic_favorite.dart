@@ -87,6 +87,8 @@ class _ClinicFavoriteState extends State<ClinicFavorite> {
                             children: [
                               SizedBox(
                                   width: 190,
+                                  //height: 40,
+                                  //color: Colors.grey,
                                   child: Text(
                                       favorite.hospital.hospitalName,
                                       maxLines: 2,
@@ -126,9 +128,11 @@ class _ClinicFavoriteState extends State<ClinicFavorite> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 0),
                                   width: 210,
+                                  //color: Colors.black,
                                   child: Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.start,
+                                    //textBaseline: TextBaseline.alphabetic,
                                     children: [
                                       const Icon(
                                         Icons.star,
@@ -197,6 +201,7 @@ class _ClinicFavoriteState extends State<ClinicFavorite> {
                           right: 10,
                           child: GestureDetector(
                             onTap: () async{
+                              print("ID -------------> ${favorite.hospitalFavouriteId}");
 
                               await favoritePageViewModel.deleteHospitalFavorite(favorite.hospitalFavouriteId.toString(), favorite);
                               setState(() {

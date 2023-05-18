@@ -105,6 +105,9 @@ class _SelectDayState extends State<SelectDay> {
 
               orderHospitalDataViewModel.setDateTimeSelected(date_util.DateUtils.convertDateString(currentDateTime.toString()));
 
+              print("DATEEEEEEEEEEE ${orderHospitalDataViewModel.dateTimeSelected}");
+
+
             });
           },
           child: Container(

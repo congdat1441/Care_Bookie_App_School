@@ -21,6 +21,7 @@ class _FavoriteInfosState extends State<FavoriteInfos> {
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.centerRight,
+              //end: Alignment(0.9, 0.2),
               colors: <Color>[
                 Color(0xFF237be5),
                 Color(0xFF1e81e7),
@@ -51,6 +52,7 @@ class _FavoriteInfosState extends State<FavoriteInfos> {
         Container(
           width: 200,
           height: 140,
+          // color: Colors.orange,
           margin: const EdgeInsets.fromLTRB(170, 60, 0, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -460,6 +460,8 @@ class ScheduleDetailAccept extends StatelessWidget {
 
                           bool isSuccess = await scheduleCancelViewModel.cancelSchedule(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.id.toString(), message);
 
+                          print("Success ----------> $isSuccess");
+
                           if (isSuccess) {
 
                             Fluttertoast.showToast(

@@ -1,3 +1,4 @@
+import 'package:care_bookie_app/models/user_login.dart';
 import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -5,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../../res/constants/colors.dart';
 import '../../../utils/enums.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import '../../../view_model/update_user_page_view_model.dart';
 
 class PersonalInformation extends StatefulWidget {
   const PersonalInformation({Key? key}) : super(key: key);
@@ -21,6 +22,18 @@ class _PersonalInformationState extends State<PersonalInformation> {
   void dispose() {
     _textEditingController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var updateUserPageViewModel =
+        Provider.of<UpdateUserPageViewModel>(context, listen: false);
+    var loginPageViewModel =
+        Provider.of<LoginPageViewModel>(context, listen: false);
+    updateUserPageViewModel.images = [];
+    updateUserPageViewModel.setUserLogin(loginPageViewModel.userLogin);
   }
 
   @override
@@ -75,15 +88,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
           birthDay(),
           address(),
           changePassword(),
-          deleteAccount(),
+          saveAccount(),
         ],
       ),
     );
   }
 
   Widget avatar() {
-    return Consumer<LoginPageViewModel>(
-        builder: (context, value, child) => Padding(
+    return Consumer<UpdateUserPageViewModel>(
+        builder: (context, updateUserPageViewModel, child) => Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
             child: Center(
               child: Stack(
@@ -118,13 +131,33 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               offset: const Offset(0, 5))
                         ],
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(60),
-                        child: Image.network(
-                          value.userLogin.image,
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.cover,
+                      child: InkWell(
+                        onTap: () {
+                          updateUserPageViewModel.selectImages(context);
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(60),
+                          child: updateUserPageViewModel.images.isEmpty
+                              ? Image.network(
+                                  updateUserPageViewModel.userUpdate!.imageUrl,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                )
+                              : FutureBuilder(
+                                  future:
+                                      updateUserPageViewModel.images[0].file,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Image.file(
+                                        snapshot.data!,
+                                        fit: BoxFit.cover,
+                                      );
+                                    } else {
+                                      return const CircularProgressIndicator();
+                                    }
+                                  },
+                                ),
                         ),
                       ),
                     ),
@@ -135,8 +168,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Widget firstName() {
-    return Consumer<LoginPageViewModel>(
-      builder: (context, value, child) => Column(
+    return Consumer<UpdateUserPageViewModel>(
+      builder: (context, updateUserPageViewModel, child) => Column(
         children: [
           avatar(),
           Row(
@@ -146,7 +179,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Tên",
+                    "Họ",
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 15,
@@ -154,7 +187,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         color: ColorConstant.Grey01),
                   ),
                   Text(
-                    value.userLogin.firstName,
+                    updateUserPageViewModel.userUpdate!.firstName,
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 16,
@@ -168,7 +201,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      _textEditingController.text = value.userLogin.lastName;
+                      _textEditingController.text =
+                          updateUserPageViewModel.userUpdate!.firstName;
                       return AlertDialog(
                         title: const Text("Sửa đổi tên"),
                         content: TextField(
@@ -187,10 +221,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           TextButton(
                             child: const Text('Lưu'),
                             onPressed: () {
-                              setState(() {
-                                value.userLogin.firstName =
-                                    _textEditingController.text;
-                              });
+                              updateUserPageViewModel
+                                  .setFirstName(_textEditingController.text);
                               Navigator.of(context).pop();
                             },
                           ),
@@ -218,8 +250,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Widget lastName() {
-    return Consumer<LoginPageViewModel>(
-      builder: (context, value, child) => Column(
+    return Consumer<UpdateUserPageViewModel>(
+      builder: (context, updateUserPageViewModel, child) => Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,7 +268,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         color: ColorConstant.Grey01),
                   ),
                   Text(
-                    value.userLogin.lastName,
+                    updateUserPageViewModel.userUpdate!.lastName,
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 16,
@@ -250,7 +282,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      _textEditingController.text = value.userLogin.lastName;
+                      _textEditingController.text =
+                          updateUserPageViewModel.userUpdate!.lastName;
                       return AlertDialog(
                         title: const Text("Sửa đổi tên"),
                         content: TextField(
@@ -269,10 +302,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           TextButton(
                             child: const Text('Lưu'),
                             onPressed: () {
-                              setState(() {
-                                value.userLogin.lastName =
-                                    _textEditingController.text;
-                              });
+                              updateUserPageViewModel
+                                  .setLastName(_textEditingController.text);
                               Navigator.of(context).pop();
                             },
                           ),
@@ -300,8 +331,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Widget email() {
-    return Consumer<LoginPageViewModel>(
-        builder: (context, value, child) => Column(
+    return Consumer<UpdateUserPageViewModel>(
+        builder: (context, updateUserPageViewModel, child) => Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -318,7 +349,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               color: ColorConstant.Grey01),
                         ),
                         Text(
-                          value.userLogin.email,
+                          updateUserPageViewModel.userUpdate!.email,
                           style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 16,
@@ -332,7 +363,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            _textEditingController.text = value.userLogin.email;
+                            _textEditingController.text =
+                                updateUserPageViewModel.userUpdate!.email;
                             return AlertDialog(
                               title: const Text("Thay đổi email"),
                               content: TextField(
@@ -351,10 +383,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                 TextButton(
                                   child: const Text('Lưu'),
                                   onPressed: () {
-                                    setState(() {
-                                      value.userLogin.email =
-                                          _textEditingController.text;
-                                    });
+                                    updateUserPageViewModel
+                                        .setEmail(_textEditingController.text);
+
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -381,8 +412,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Widget phone() {
-    return Consumer<LoginPageViewModel>(
-        builder: (context, value, child) => Column(
+    return Consumer<UpdateUserPageViewModel>(
+        builder: (context, updateUserPageViewModel, child) => Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -399,7 +430,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               color: ColorConstant.Grey01),
                         ),
                         Text(
-                          value.userLogin.phone,
+                          updateUserPageViewModel.userUpdate!.phone,
                           style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 16,
@@ -413,7 +444,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            _textEditingController.text = value.userLogin.phone;
+                            _textEditingController.text =
+                                updateUserPageViewModel.userUpdate!.phone;
                             return AlertDialog(
                               title: const Text("Thay đổi số điện thoại"),
                               content: TextField(
@@ -432,10 +464,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                 TextButton(
                                   child: const Text('Lưu'),
                                   onPressed: () {
-                                    setState(() {
-                                      value.userLogin.phone =
-                                          _textEditingController.text;
-                                    });
+                                    updateUserPageViewModel
+                                        .setPhone(_textEditingController.text);
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -462,8 +492,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Widget gender() {
-    return Consumer<LoginPageViewModel>(
-      builder: (context, value, child) => Column(
+    return Consumer<UpdateUserPageViewModel>(
+      builder: (context, updateUserPageViewModel, child) => Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -481,7 +511,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     ),
                   ),
                   Text(
-                    value.userLogin.gender == Gender.male ? 'Nam' : 'Nữ',
+                    updateUserPageViewModel.userUpdate!.gender == 1
+                        ? 'Nam'
+                        : 'Nữ',
                     style: const TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 16,
@@ -505,13 +537,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               title: const Text('Nam'),
                               leading: Radio<Gender>(
                                 value: Gender.male,
-                                groupValue: value.userLogin.gender == 1
+                                groupValue: updateUserPageViewModel
+                                            .userUpdate!.gender ==
+                                        1
                                     ? Gender.male
                                     : Gender.female,
                                 onChanged: (Gender? newValue) {
-                                  setState(() {
-                                    value.userLogin.gender = newValue! as int;
-                                  });
+                                  newValue! == Gender.male
+                                      ? updateUserPageViewModel.setGender(1)
+                                      : updateUserPageViewModel.setGender(0);
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -520,13 +554,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               title: const Text('Nữ'),
                               leading: Radio<Gender>(
                                 value: Gender.female,
-                                groupValue: value.userLogin.gender == 1
+                                groupValue: updateUserPageViewModel
+                                            .userUpdate!.gender ==
+                                        1
                                     ? Gender.male
                                     : Gender.female,
                                 onChanged: (Gender? newValue) {
-                                  setState(() {
-                                    value.userLogin.gender = newValue! as int;
-                                  });
+                                  newValue! == Gender.male
+                                      ? updateUserPageViewModel.setGender(1)
+                                      : updateUserPageViewModel.setGender(0);
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -564,8 +600,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Widget birthDay() {
-    return Consumer<LoginPageViewModel>(
-      builder: (context, value, child) => Column(
+    return Consumer<UpdateUserPageViewModel>(
+      builder: (context, updateUserPageViewModel, child) => Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -582,7 +618,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         color: ColorConstant.Grey01),
                   ),
                   Text(
-                    value.userLogin.birthDay,
+                    updateUserPageViewModel.userUpdate!.birthDay,
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 16,
@@ -592,19 +628,26 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 ],
               ),
               IconButton(
-                onPressed: () {
-                  DatePicker.showDatePicker(
+                onPressed: () async {
+                  print('1');
+                  /* DatePicker.showDatePicker(
                     context,
                     showTitleActions: true,
                     onConfirm: (date) {
-                      setState(() {
-                        // Cập nhật giá trị ngày sinh
-                        value.userLogin.birthDay =
-                            DateFormat('dd/MM/yyyy').format(date);
-                      });
+                      print('2');
+                      updateUserPageViewModel.setBirthDay(DateFormat('dd/MM/yyyy').format(date));
                     },
                     currentTime: DateTime.now(),
+                  );*/
+                  final DateTime? picked = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2025),
                   );
+                  if (picked != null && picked != DateTime.now())
+                    updateUserPageViewModel
+                        .setBirthDay(DateFormat('dd/MM/yyyy').format(picked));
                 },
                 icon: const Icon(
                   IconlyBold.edit,
@@ -625,8 +668,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Widget address() {
-    return Consumer<LoginPageViewModel>(
-        builder: (context, value, child) => Column(
+    return Consumer<UpdateUserPageViewModel>(
+        builder: (context, updateUserPageViewModel, child) => Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -647,7 +690,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           child: Text(
                             overflow: TextOverflow.ellipsis,
                             maxLines: 3,
-                            value.userLogin.address,
+                            updateUserPageViewModel.userUpdate!.address,
                             style: const TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 16,
@@ -664,7 +707,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           context: context,
                           builder: (BuildContext context) {
                             _textEditingController.text =
-                                value.userLogin.address;
+                                updateUserPageViewModel.userUpdate!.address;
                             return AlertDialog(
                               title: const Text("Thay đổi địa chỉ"),
                               content: TextField(
@@ -683,10 +726,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                 TextButton(
                                   child: const Text('Lưu'),
                                   onPressed: () {
-                                    setState(() {
-                                      value.userLogin.address =
-                                          _textEditingController.text;
-                                    });
+                                    updateUserPageViewModel.setAddress(
+                                        _textEditingController.text);
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -740,28 +781,47 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
-  Widget deleteAccount() {
-    return Container(
-      width: double.maxFinite,
-      height: 50,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.white,
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+  Widget saveAccount() {
+    return Consumer2<UpdateUserPageViewModel, LoginPageViewModel>(
+      builder: (context, updateUserPageViewModel, loginPageViewModel, child) =>
+          Container(
+        width: double.maxFinite,
+        height: 50,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.white,
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
           ),
-        ),
-        onPressed: () {},
-        child: const Text(
-          "Lưu chỉnh sửa",
-          style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.black),
+          onPressed: () async {
+            if (updateUserPageViewModel.images.isNotEmpty) {
+              updateUserPageViewModel.saveAccount();
+              loginPageViewModel.userLogin = UserLogin(
+                  id: updateUserPageViewModel.userUpdate!.userId,
+                  firstName: updateUserPageViewModel.userUpdate!.firstName,
+                  lastName: updateUserPageViewModel.userUpdate!.lastName,
+                  birthDay: updateUserPageViewModel.userUpdate!.birthDay,
+                  email: updateUserPageViewModel.userUpdate!.email,
+                  gender: updateUserPageViewModel.userUpdate!.gender,
+                  phone: updateUserPageViewModel.userUpdate!.phone,
+                  address: updateUserPageViewModel.userUpdate!.address,
+                  image: updateUserPageViewModel.userUpdate!.imageUrl);
+            } else {
+              print("chưa chỉnh sửa dược");
+            }
+          },
+          child: const Text(
+            "Lưu chỉnh sửa",
+            style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.black),
+          ),
         ),
       ),
     );

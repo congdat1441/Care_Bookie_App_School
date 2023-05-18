@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../res/constants/colors.dart';
 import '../main_pages/main_page_widget/AppbarCustom.dart';
@@ -25,7 +26,8 @@ class HistoryPage extends StatelessWidget {
               children: [
                 const AppbarCustom(),
                 yourHistory(),
-                const HistoryListClinics(),
+                const HistorylistClinics(),
+
               ],
             ),
           ),
@@ -39,6 +41,7 @@ class HistoryPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(35, 20, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          //textBaseline: TextBaseline.alphabetic,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 20),
@@ -53,6 +56,7 @@ class HistoryPage extends StatelessWidget {
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w800,
                         fontSize: 35,
+                        //textBaseline: TextBaseline.alphabetic,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
                         fontFamily: 'Montserrat'),
@@ -68,13 +72,14 @@ class HistoryPage extends StatelessWidget {
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w800,
                           fontSize: 32,
+                          //textBaseline: TextBaseline.alphabetic,
                           color: Colors.green,
-
                           //letterSpacing: 1.5,
                           fontFamily: 'Montserrat'),
                     ),
                   )),
                 ]),
+                //textScaleFactor: 0.8,
               ),
             ),
             Padding(

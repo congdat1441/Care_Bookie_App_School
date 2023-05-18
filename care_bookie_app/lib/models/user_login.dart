@@ -1,13 +1,13 @@
 class UserLogin {
   final String id;
   late final String firstName;
-  late final String lastName;
-  late final String birthDay;
-  late final String email;
-  late final int gender;
-  late final String phone;
-  late final String address;
-  final String image;
+  late String lastName = "";
+  late String birthDay = "01-01-2001";
+  late String email = "";
+  late int gender = 1;
+  late String phone = "";
+  late String address = "";
+  late String image = "";
   String? password;
 
   UserLogin(
@@ -20,8 +20,7 @@ class UserLogin {
       required this.phone,
       required this.address,
       required this.image,
-      this.password
-      });
+      this.password});
 
   factory UserLogin.fromJson(Map<String, dynamic> json) {
     return UserLogin(
@@ -33,13 +32,12 @@ class UserLogin {
         gender: json['gender'],
         phone: json['phone'],
         address: json['address'] ?? "",
-        image: json['imageUrl'] ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Breezeicons-actions-22-im-user.svg/512px-Breezeicons-actions-22-im-user.svg.png?20160527143724"
-    );
+        image: json['imageUrl'] ??
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Breezeicons-actions-22-im-user.svg/512px-Breezeicons-actions-22-im-user.svg.png?20160527143724");
   }
 
   @override
   String toString() {
     return 'UserLogin{id: $id, firstName: $firstName, lastName: $lastName, birthDay: $birthDay, email: $email, gender: $gender, phone: $phone, address: $address, image: $image, password: $password}';
   }
-
 }

@@ -1,10 +1,31 @@
+import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'enter_code.dart';
 
-class ResetPassword extends StatelessWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+class AddNewPassword extends StatefulWidget {
+  const AddNewPassword({Key? key}) : super(key: key);
 
+  @override
+  State<AddNewPassword> createState() => _AddNewPasswordState();
+}
+
+class _AddNewPasswordState extends State<AddNewPassword> {
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordAgainController = TextEditingController();
+
+  final textFieldFocusNode = FocusNode();
+  bool _obscured = true;
+  bool isLoading = false;
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (textFieldFocusNode.hasPrimaryFocus)
+        return;
+      textFieldFocusNode.canRequestFocus =
+      false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +47,8 @@ class ResetPassword extends StatelessWidget {
                     children: [
                       titleForgotPassword(),
                       textRequire(),
-                      addPhoneNumberRegistered(),
+                      addPassword(),
+                      addPasswordAgain(),
                       nextButton(context)
                     ],
                   ),
@@ -115,7 +137,7 @@ class ResetPassword extends StatelessWidget {
       child: Row(
         children: const [
           Text(
-            "Quên mật khẩu",
+            "Mật khẩu mới",
             style: TextStyle(
               fontFamily: "Montserrat",
               fontSize: 35,
@@ -132,44 +154,130 @@ class ResetPassword extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 10, 20, 0),
       child: const Text(
-          "Vui lòng nhập số điện thoại đã đăng ký của bạn và chúng tôi sẽ gửi cho bạn một mã xác minh.\n \n"
-          //"Chúng tôi sẽ gửi một mã xác minh qua tin nhắn văn bản. Điều này giúp chúng tôi loại bỏ thư rác - chúng tôi sẽ không cung cấp số điện thoại của bạn cho bất kỳ bên thứ ba nào."
-          ),
-    );
-  }
-
-  Widget addPhoneNumberRegistered() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
-      width: 330,
-      child: const TextField(
-        style: TextStyle(color: Colors.black),
-        decoration: InputDecoration(
-          enabledBorder: UnderlineInputBorder(
-              borderRadius: BorderRadius.all(
-            Radius.circular(0),
-          )),
-          label: Text("Số điện thoại đăng ký",
-              style: TextStyle(color: Colors.black, fontFamily: 'Montserrat')),
-          hintText: "",
-          hintStyle: TextStyle(
-            color: Color.fromARGB(255, 94, 92, 88),
-          ),
-          prefixIcon: SizedBox(
-            width: 0,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Icon(
-                Icons.phone,
-                color: Colors.black,
-              ),
-            ),
-          ),
+        "Vui lòng thêm vào mật khẩu mới cho tài khoản của bạn\n",
+        style: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Montserrat',
+          fontSize: 17
         ),
-        keyboardType: TextInputType.number,
       ),
     );
   }
+
+  Widget addPassword() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
+      width: 330,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: passwordController,
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: _obscured,
+            focusNode: textFieldFocusNode,
+            decoration: InputDecoration(
+              enabledBorder: const UnderlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(0),
+                  )),
+              label: const Text("Mật khẩu mới",
+                  style: TextStyle(color: Colors.black)),
+              hintText: "Mật khẩu",
+              hintStyle: const TextStyle(
+                color: Color.fromARGB(255, 94, 92, 88),
+              ),
+              prefixIcon: const SizedBox(
+                width: 0,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Icon(
+                    IconlyLight.lock,
+                    color: Colors.black,
+                    size: 24,
+                  ),
+                ),
+              ),
+              suffixIcon: SizedBox(
+                width: 0,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                      _obscured
+                          ? Icons.visibility_rounded
+                          : Icons.visibility_off_rounded,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+
+        ],
+      ),
+    );
+  }
+
+  Widget addPasswordAgain() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
+      width: 330,
+      child: Column(
+        children: [
+          TextFormField(
+            //controller: passwordAgainController,
+            //keyboardType: TextInputType.visiblePassword,
+            obscureText: _obscured,
+            //focusNode: textFieldFocusNode,
+            decoration: InputDecoration(
+              enabledBorder: const UnderlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(0),
+                  )),
+              label: const Text("Nhập lại mật khẩu",
+                  style: TextStyle(color: Colors.black)),
+              hintText: "Mật khẩu",
+              hintStyle: const TextStyle(
+                color: Color.fromARGB(255, 94, 92, 88),
+              ),
+              prefixIcon: const SizedBox(
+                width: 0,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Icon(
+                    IconlyLight.lock,
+                    color: Colors.black,
+                    size: 24,
+                  ),
+                ),
+              ),
+              suffixIcon: SizedBox(
+                width: 0,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                      _obscured
+                          ? Icons.visibility_rounded
+                          : Icons.visibility_off_rounded,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+
+        ],
+      ),
+    );
+  }
+
 
   Widget nextButton(BuildContext context) {
     return Container(
@@ -219,7 +327,7 @@ class ResetPassword extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const EnterCodeOTP()));
+                        builder: (context) => const Login()));
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
