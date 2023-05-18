@@ -42,6 +42,16 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
   
   DoctorFavorite? doctorFavorite;
 
+  Schedule? scheduleWithHospital;
+
+  void setScheduleWithHospital(List<Schedule> schedules) {
+    for (var element in schedules) {
+      if(element.bookInformation.hospitalId == hospital!.id && element.bookInformation.status != "CANCEL") {
+        scheduleWithHospital = element;
+      }
+    }
+  }
+
   void setIsFavoritePage(bool value){
     isFavoritePage = value;
   }
@@ -114,6 +124,10 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
 
   void resetScheduleWithDoctor() {
     scheduleWithDoctor = null;
+  }
+
+  void resetScheduleWithHospital() {
+    scheduleWithHospital = null;
   }
   
   void setDoctorFavorite(List<DoctorFavorite> favorites) {

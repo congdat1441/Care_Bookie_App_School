@@ -629,25 +629,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
               ),
               IconButton(
                 onPressed: () async {
-                  print('1');
-                  /* DatePicker.showDatePicker(
-                    context,
-                    showTitleActions: true,
-                    onConfirm: (date) {
-                      print('2');
-                      updateUserPageViewModel.setBirthDay(DateFormat('dd/MM/yyyy').format(date));
-                    },
-                    currentTime: DateTime.now(),
-                  );*/
                   final DateTime? picked = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
+                    firstDate: DateTime(1900),
                     lastDate: DateTime(2025),
                   );
-                  if (picked != null && picked != DateTime.now())
+                  if (picked != null && picked != DateTime.now()) {
                     updateUserPageViewModel
-                        .setBirthDay(DateFormat('dd/MM/yyyy').format(picked));
+                        .setBirthDay(DateFormat('dd-MM-yyyy').format(picked));
+                  }
                 },
                 icon: const Icon(
                   IconlyBold.edit,

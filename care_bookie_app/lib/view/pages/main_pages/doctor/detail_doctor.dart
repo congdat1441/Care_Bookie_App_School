@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/constants/colors.dart';
@@ -35,6 +36,12 @@ class _DetailDoctorState extends State<DetailDoctor>
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
+
+    final schedulePageViewModel = Provider.of<SchedulePageViewModel>(context,listen: false);
+
+    doctorDetailPageViewModel.setScheduleWithHospital(schedulePageViewModel.schedules);
   }
 
   @override
@@ -84,6 +91,7 @@ class _DetailDoctorState extends State<DetailDoctor>
           doctorDetailPageViewModel.setIsFavorite(false);
           doctorDetailPageViewModel.resetDoctorFavorite();
           doctorDetailPageViewModel.resetIsFavoritePage();
+          doctorDetailPageViewModel.resetScheduleWithHospital();
 
           Navigator.pop(context);
         },
@@ -497,30 +505,43 @@ class _DetailDoctorState extends State<DetailDoctor>
                 ),
                 onPressed: () {
 
-                  orderHospitalDataViewModel.setListScheduleCheckData(schedulePageViewModel.schedules);
+                  if(doctorDetailPageViewModel.scheduleWithHospital != null) {
+                    Fluttertoast.showToast(
+                        msg: "Bạn đã đặt lịch của phòng khám trước đó",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                  } else {
+                    orderHospitalDataViewModel.setListScheduleCheckData(schedulePageViewModel.schedules);
 
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    isDismissible: true,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      isDismissible: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
                       ),
-                    ),
-                    builder: (context) {
-                      return const FractionallySizedBox(
-                        heightFactor: 0.93,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                            child: OrderDetailDoctor()),
-                      );
-                    },
-                  );
+                      builder: (context) {
+                        return const FractionallySizedBox(
+                          heightFactor: 0.93,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
+                              ),
+                              child: OrderDetailDoctor()),
+                        );
+                      },
+                    );
+                  }
+
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(
