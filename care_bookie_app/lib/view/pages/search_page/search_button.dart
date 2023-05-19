@@ -15,7 +15,7 @@ class _SearchButtonState extends State<SearchButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(35, 20, 35, 0),
+      padding: const EdgeInsets.fromLTRB(35, 20, 10, 0),
       child: Container(
         height: 65,
         decoration: BoxDecoration(

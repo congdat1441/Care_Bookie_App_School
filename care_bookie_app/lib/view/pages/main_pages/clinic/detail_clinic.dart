@@ -215,7 +215,7 @@ class _DetailClinicState extends State<DetailClinic>
                     ),
                   ),
                   const SizedBox(
-                    width: 60,
+                    width: 10,
                   ),
                   Expanded(
                     child: SizedBox(

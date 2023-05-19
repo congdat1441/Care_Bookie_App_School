@@ -90,7 +90,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
           gender(),
           birthDay(),
           address(),
-          changePassword(),
+          // changePassword(),
           saveAccount(),
         ],
       ),

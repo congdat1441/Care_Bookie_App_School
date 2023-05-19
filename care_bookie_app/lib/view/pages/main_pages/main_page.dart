@@ -172,7 +172,7 @@ class _MainPageState extends State<MainPage> {
             ),
             Container(
               padding: const EdgeInsets.only(top: 10),
-              width: 200,
+              width: 180,
               height: 80,
               child: RichText(
                 text: const TextSpan(children: [
@@ -182,7 +182,7 @@ class _MainPageState extends State<MainPage> {
                         height: 1.4,
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w600,
-                        fontSize: 26,
+                        fontSize: 23,
                         color: Color(0xff4fa2e7),
                         letterSpacing: 1.5,
                         fontFamily: 'Poppins'),
@@ -197,7 +197,7 @@ class _MainPageState extends State<MainPage> {
                           height: 1.2,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w700,
-                          fontSize: 25,
+                          fontSize: 20,
                           color: Colors.green,
                           letterSpacing: 1.5,
                           fontFamily: 'Lemonada'),

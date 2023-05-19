@@ -103,7 +103,7 @@ class _NavbarLayoutState extends State<NavbarLayout> {
                           hoverColor: const Color(0xFF2b85e6),
                           gap: 8,
                           activeColor: const Color(0xFFFAF1F1),
-                          iconSize: 20,
+                          iconSize: 15,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 15),
                           duration: const Duration(milliseconds: 600),
