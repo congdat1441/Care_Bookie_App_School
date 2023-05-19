@@ -1,7 +1,9 @@
 import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/new_password.dart';
+import 'package:care_bookie_app/view_model/reset_password_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 import 'login_signup_widget/otp_input.dart';
 
@@ -142,7 +144,7 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
             "Một mã code OTP đã được gửi đến Email đăng ký của bạn, vui lòng nhập vào mã code",
             style: TextStyle(
               fontFamily: "Montserrat",
-              fontSize: 18,
+              fontSize: 15,
               fontWeight: FontWeight.w400,
               color: Color(0xFF2F3948),
             ),
@@ -153,33 +155,49 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
   }
 
   Widget addOTP() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 15, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: OtpInput(_fieldOne, true, false),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: OtpInput(_fieldTwo, false, false),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: OtpInput(_fieldThree, false, false),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: OtpInput(_fieldFour, false, true),
-          ),
-        ],
+    return Selector<ResetPasswordViewModel, String>(
+      selector: (context, resetPasswordViewModel) => resetPasswordViewModel.errorOTP,
+      builder: (context, value, child) =>  Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 15, 0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: OtpInput(_fieldOne, true, false),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: OtpInput(_fieldTwo, false, false),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: OtpInput(_fieldThree, false, false),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: OtpInput(_fieldFour, false, true),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Colors.red, fontSize: 11, fontWeight: FontWeight.w500),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget resendOTPAndNext(BuildContext context) {
+
+    final resetPasswordViewModel = Provider.of<ResetPasswordViewModel>(context,listen: false);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -189,21 +207,6 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 20)),
-              // Consumer<LoginPageViewModel>(
-              //   builder: (context, loginPageViewModel, _) {
-              //     if (loginPageViewModel.errorMessage != '') {
-              //       return Container(
-              //         margin: const EdgeInsets.symmetric(vertical: 10),
-              //         child: Text(
-              //           loginPageViewModel.errorMessage,
-              //           style: const TextStyle(color: Colors.red),
-              //         ),
-              //       );
-              //     } else {
-              //       return const SizedBox.shrink();
-              //     }
-              //   },
-              // ),
               Container(
                 width: 200,
                 height: 60,
@@ -226,7 +229,9 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
                   ],
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async{
+                    await resetPasswordViewModel.getOTPByPhoneNumber();
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -282,11 +287,22 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
                   ],
                 ),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AddNewPassword()));
+                  onPressed: () async {
+
+                    String otp = "${_fieldOne.text}${_fieldTwo.text}${_fieldThree.text}${_fieldFour.text}";
+
+                    bool isValidate = resetPasswordViewModel.validateOTP(otp);
+
+                    if(isValidate) {
+                      bool isSuccess =  await resetPasswordViewModel.checkOTPByPhoneNumber(otp);
+
+                      // ignore: use_build_context_synchronously
+                      isSuccess ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddNewPassword()))  :
+                      resetPasswordViewModel.setErrorOTP("Mã OTP không đúng");
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

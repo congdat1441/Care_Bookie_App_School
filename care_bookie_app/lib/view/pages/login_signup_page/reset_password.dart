@@ -1,9 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
+import '../../../view_model/reset_password_view_model.dart';
 import 'enter_code.dart';
 
 class ResetPassword extends StatelessWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+  ResetPassword({Key? key}) : super(key: key);
+
+  TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -139,60 +144,63 @@ class ResetPassword extends StatelessWidget {
   }
 
   Widget addPhoneNumberRegistered() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
-      width: 330,
-      child: const TextField(
-        style: TextStyle(color: Colors.black),
-        decoration: InputDecoration(
-          enabledBorder: UnderlineInputBorder(
-              borderRadius: BorderRadius.all(
-            Radius.circular(0),
-          )),
-          label: Text("Số điện thoại đăng ký",
-              style: TextStyle(color: Colors.black, fontFamily: 'Montserrat')),
-          hintText: "",
-          hintStyle: TextStyle(
-            color: Color.fromARGB(255, 94, 92, 88),
-          ),
-          prefixIcon: SizedBox(
-            width: 0,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Icon(
-                Icons.phone,
-                color: Colors.black,
+    return Selector<ResetPasswordViewModel, String>(
+      selector: (context, resetPasswordViewModel) => resetPasswordViewModel.errorPhone,
+      builder: (context, value, child) => Container(
+        padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
+        width: 330,
+        child: Column(
+          children: [
+            TextField(
+              controller: phoneController,
+              style: const TextStyle(color: Colors.black),
+              decoration: const InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                  Radius.circular(0),
+                )),
+                label: Text("Số điện thoại đăng ký",
+                    style: TextStyle(
+                        color: Colors.black, fontFamily: 'Montserrat')),
+                hintText: "",
+                hintStyle: TextStyle(
+                  color: Color.fromARGB(255, 94, 92, 88),
+                ),
+                prefixIcon: SizedBox(
+                  width: 0,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Icon(
+                      Icons.phone,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
               ),
+              keyboardType: TextInputType.number,
             ),
-          ),
+            const SizedBox(height: 5),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Colors.red, fontSize: 11, fontWeight: FontWeight.w500),
+            )
+          ],
         ),
-        keyboardType: TextInputType.number,
       ),
     );
   }
 
   Widget nextButton(BuildContext context) {
+
+    final resetPasswordViewModel = Provider.of<ResetPasswordViewModel>(context,listen: false);
+
     return Container(
       width: 330,
       padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
       child: Column(
         children: [
           const Padding(padding: EdgeInsets.only(top: 20)),
-          // Consumer<LoginPageViewModel>(
-          //   builder: (context, loginPageViewModel, _) {
-          //     if (loginPageViewModel.errorMessage != '') {
-          //       return Container(
-          //         margin: const EdgeInsets.symmetric(vertical: 10),
-          //         child: Text(
-          //           loginPageViewModel.errorMessage,
-          //           style: const TextStyle(color: Colors.red),
-          //         ),
-          //       );
-          //     } else {
-          //       return const SizedBox.shrink();
-          //     }
-          //   },
-          // ),
           Container(
             width: 350,
             height: 60,
@@ -215,11 +223,25 @@ class ResetPassword extends StatelessWidget {
               ],
             ),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const EnterCodeOTP()));
+              onPressed: () async{
+
+                bool isValidate = resetPasswordViewModel.validateFields(phoneController.text);
+
+                if(isValidate) {
+
+                  resetPasswordViewModel.setPhone(phoneController.text);
+
+                  bool isSuccess =  await resetPasswordViewModel.getOTPByPhoneNumber();
+
+                  // ignore: use_build_context_synchronously
+                  isSuccess ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EnterCodeOTP()))  :
+                  resetPasswordViewModel.setErrorPhone("Số điện thoại không đúng");
+                }
+
+
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(

@@ -9,6 +9,7 @@ import 'package:care_bookie_app/view_model/home_page_view_model.dart';
 import 'package:care_bookie_app/view_model/hospital_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:care_bookie_app/view_model/order_hospital_data_view_model.dart';
+import 'package:care_bookie_app/view_model/reset_password_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_cancel_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_detail_page_view_model.dart';
 import 'package:care_bookie_app/view_model/schedule_doctor_info_page_view_model.dart';
@@ -85,7 +86,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => FavoritePageViewModel()),
         ChangeNotifierProvider(create: (context) => SearchPageViewModel()),
         ChangeNotifierProvider(create: (context) => SignupPageViewModel()),
-        ChangeNotifierProvider(create: (context) => UpdateUserPageViewModel(),)
+        ChangeNotifierProvider(create: (context) => UpdateUserPageViewModel(),),
+        ChangeNotifierProvider(create: (context) => ResetPasswordViewModel(),)
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

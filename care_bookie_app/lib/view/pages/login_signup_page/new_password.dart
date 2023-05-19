@@ -1,6 +1,8 @@
 import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
+import '../../../view_model/reset_password_view_model.dart';
 import 'enter_code.dart';
 
 class AddNewPassword extends StatefulWidget {
@@ -48,7 +50,6 @@ class _AddNewPasswordState extends State<AddNewPassword> {
                       titleForgotPassword(),
                       textRequire(),
                       addPassword(),
-                      addPasswordAgain(),
                       nextButton(context)
                     ],
                   ),
@@ -165,114 +166,122 @@ class _AddNewPasswordState extends State<AddNewPassword> {
   }
 
   Widget addPassword() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
-      width: 330,
-      child: Column(
+    return Selector<ResetPasswordViewModel, String>(
+      selector: (context, resetPasswordViewModel) => resetPasswordViewModel.errorResetPassword,
+      builder: (context, value, child) =>  Column(
         children: [
-          TextFormField(
-            controller: passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: _obscured,
-            focusNode: textFieldFocusNode,
-            decoration: InputDecoration(
-              enabledBorder: const UnderlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(0),
-                  )),
-              label: const Text("Mật khẩu mới",
-                  style: TextStyle(color: Colors.black)),
-              hintText: "Mật khẩu",
-              hintStyle: const TextStyle(
-                color: Color.fromARGB(255, 94, 92, 88),
-              ),
-              prefixIcon: const SizedBox(
-                width: 0,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(
-                    IconlyLight.lock,
-                    color: Colors.black,
-                    size: 24,
-                  ),
-                ),
-              ),
-              suffixIcon: SizedBox(
-                width: 0,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: _toggleObscured,
-                    child: Icon(
-                      _obscured
-                          ? Icons.visibility_rounded
-                          : Icons.visibility_off_rounded,
-                      size: 24,
+          Container(
+            padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
+            width: 330,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: _obscured,
+                  focusNode: textFieldFocusNode,
+                  decoration: InputDecoration(
+                    enabledBorder: const UnderlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(0),
+                        )),
+                    label: const Text("Mật khẩu mới",
+                        style: TextStyle(color: Colors.black)),
+                    hintText: "Mật khẩu",
+                    hintStyle: const TextStyle(
+                      color: Color.fromARGB(255, 94, 92, 88),
+                    ),
+                    prefixIcon: const SizedBox(
+                      width: 0,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Icon(
+                          IconlyLight.lock,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                    suffixIcon: SizedBox(
+                      width: 0,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: _toggleObscured,
+                          child: Icon(
+                            _obscured
+                                ? Icons.visibility_rounded
+                                : Icons.visibility_off_rounded,
+                            size: 24,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 5),
+
+              ],
             ),
           ),
-          const SizedBox(height: 5),
-
-        ],
-      ),
-    );
-  }
-
-  Widget addPasswordAgain() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
-      width: 330,
-      child: Column(
-        children: [
-          TextFormField(
-            //controller: passwordAgainController,
-            //keyboardType: TextInputType.visiblePassword,
-            obscureText: _obscured,
-            //focusNode: textFieldFocusNode,
-            decoration: InputDecoration(
-              enabledBorder: const UnderlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(0),
-                  )),
-              label: const Text("Nhập lại mật khẩu",
-                  style: TextStyle(color: Colors.black)),
-              hintText: "Mật khẩu",
-              hintStyle: const TextStyle(
-                color: Color.fromARGB(255, 94, 92, 88),
-              ),
-              prefixIcon: const SizedBox(
-                width: 0,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(
-                    IconlyLight.lock,
-                    color: Colors.black,
-                    size: 24,
-                  ),
-                ),
-              ),
-              suffixIcon: SizedBox(
-                width: 0,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: _toggleObscured,
-                    child: Icon(
-                      _obscured
-                          ? Icons.visibility_rounded
-                          : Icons.visibility_off_rounded,
-                      size: 24,
+          Container(
+            padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
+            width: 330,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: passwordAgainController,
+                  //keyboardType: TextInputType.visiblePassword,
+                  obscureText: _obscured,
+                  //focusNode: textFieldFocusNode,
+                  decoration: InputDecoration(
+                    enabledBorder: const UnderlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(0),
+                        )),
+                    label: const Text("Nhập lại mật khẩu",
+                        style: TextStyle(color: Colors.black)),
+                    hintText: "Mật khẩu",
+                    hintStyle: const TextStyle(
+                      color: Color.fromARGB(255, 94, 92, 88),
+                    ),
+                    prefixIcon: const SizedBox(
+                      width: 0,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Icon(
+                          IconlyLight.lock,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                    suffixIcon: SizedBox(
+                      width: 0,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: _toggleObscured,
+                          child: Icon(
+                            _obscured
+                                ? Icons.visibility_rounded
+                                : Icons.visibility_off_rounded,
+                            size: 24,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 5),
+              ],
             ),
           ),
-          const SizedBox(height: 5),
-
+          Text(
+            value,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: Colors.red, fontSize: 11, fontWeight: FontWeight.w500),
+          )
         ],
       ),
     );
@@ -280,27 +289,15 @@ class _AddNewPasswordState extends State<AddNewPassword> {
 
 
   Widget nextButton(BuildContext context) {
+
+    final resetPasswordViewModel = Provider.of<ResetPasswordViewModel>(context,listen: false);
+
     return Container(
       width: 330,
       padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
       child: Column(
         children: [
           const Padding(padding: EdgeInsets.only(top: 20)),
-          // Consumer<LoginPageViewModel>(
-          //   builder: (context, loginPageViewModel, _) {
-          //     if (loginPageViewModel.errorMessage != '') {
-          //       return Container(
-          //         margin: const EdgeInsets.symmetric(vertical: 10),
-          //         child: Text(
-          //           loginPageViewModel.errorMessage,
-          //           style: const TextStyle(color: Colors.red),
-          //         ),
-          //       );
-          //     } else {
-          //       return const SizedBox.shrink();
-          //     }
-          //   },
-          // ),
           Container(
             width: 350,
             height: 60,
@@ -323,11 +320,24 @@ class _AddNewPasswordState extends State<AddNewPassword> {
               ],
             ),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Login()));
+              onPressed: () async{
+
+                resetPasswordViewModel.setPassword(passwordController.text, passwordAgainController.text);
+
+                bool isValidate = resetPasswordViewModel.validateResetPassword();
+
+                if(isValidate) {
+
+                  bool isSuccess =  await resetPasswordViewModel.resetPassword();
+
+                  // ignore: use_build_context_synchronously
+                  isSuccess ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Login()))  :
+                  resetPasswordViewModel.setErrorResetPassword("Không thể đổi mật khẩu");
+
+                }
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
