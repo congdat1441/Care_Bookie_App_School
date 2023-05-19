@@ -776,7 +776,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             ),
             builder: (context) {
               return const FractionallySizedBox(
-                heightFactor: 0.48,
+                heightFactor: 0.53,
                 child: ClipRRect(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
@@ -791,7 +791,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
           "Đổi mật khẩu",
           style: TextStyle(
               fontFamily: 'Montserrat',
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
               color: Colors.black),
         ),
@@ -809,7 +809,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.white,
+            primary: Colors.blueAccent,
             elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -855,9 +855,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
             "Lưu chỉnh sửa",
             style: TextStyle(
                 fontFamily: 'Montserrat',
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: Colors.black),
+                color: Colors.white),
           ),
         ),
       ),

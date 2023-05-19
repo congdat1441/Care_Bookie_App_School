@@ -50,7 +50,7 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
                         ),
                         TextFormField(
                           decoration:
-                              const InputDecoration(labelText: 'Mật kHz mới'),
+                              const InputDecoration(labelText: 'Mật khẩu mới'),
                         ),
                         TextFormField(
                           decoration:  const InputDecoration(
@@ -102,7 +102,7 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
                             onPressed: () {
                               // Xử lý khi nhấn vào nút "Quên mật khẩu"
                             },
-                            child: const Text('Lưu',
+                            child: const Text('Thay đổi mật khẩu',
                                 style: TextStyle(
                                     fontSize: 18,
                                     //textBaseline: TextBaseline.alphabetic,

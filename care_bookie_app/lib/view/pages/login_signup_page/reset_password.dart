@@ -183,7 +183,7 @@ class ResetPassword extends StatelessWidget {
             Text(
               value,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: Colors.red, fontSize: 11, fontWeight: FontWeight.w500),
+                  color: Colors.red, fontSize: 15, fontWeight: FontWeight.w500),
             )
           ],
         ),
