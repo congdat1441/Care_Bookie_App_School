@@ -54,9 +54,22 @@ class _DetailDoctorState extends State<DetailDoctor>
           basicInfoDoctor(),
           detailInfoDoctor(),
           certification(),
-          bookingApointMent(context)
         ],
       ),
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Colors.transparent, // Đặt màu nền trong suốt
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.7), // Đặt màu nền trong suốt
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(50),
+              ),
+            ),
+            child: bookingDoctor(context),
+          ),
+        )
     );
   }
 
@@ -72,7 +85,7 @@ class _DetailDoctorState extends State<DetailDoctor>
       title: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Text(
-          "Dr. ${doctorDetailPageViewModel.doctorDetail!.firstName} ${doctorDetailPageViewModel.doctorDetail!.lastName}",
+          "Bs. ${doctorDetailPageViewModel.doctorDetail!.firstName} ${doctorDetailPageViewModel.doctorDetail!.lastName}",
           style: const TextStyle(
               overflow: TextOverflow.ellipsis,
               //letterSpacing: 2,
@@ -478,7 +491,7 @@ class _DetailDoctorState extends State<DetailDoctor>
     );
   }
 
-  Widget bookingApointMent(BuildContext context) {
+  Widget bookingDoctor(BuildContext context) {
 
     final doctorDetailPageViewModel = Provider.of<DoctorDetailPageViewModel>(context,listen: false);
 
@@ -488,105 +501,103 @@ class _DetailDoctorState extends State<DetailDoctor>
 
     final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
 
-    return SliverToBoxAdapter(
-      child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          child: Container(
-            height: 70,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child:
-            doctorDetailPageViewModel.scheduleWithDoctor == null ?
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        child: Container(
+          height: 70,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+          child:
+          doctorDetailPageViewModel.scheduleWithDoctor == null ?
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
-                onPressed: () {
+              ),
+              onPressed: () {
 
-                  if(doctorDetailPageViewModel.scheduleWithHospital != null) {
-                    Fluttertoast.showToast(
-                        msg: "Bạn đã đặt lịch của phòng khám trước đó",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0
-                    );
-                  } else {
-                    orderHospitalDataViewModel.setListScheduleCheckData(schedulePageViewModel.schedules);
+                if(doctorDetailPageViewModel.scheduleWithHospital != null) {
+                  Fluttertoast.showToast(
+                      msg: "Bạn đã đặt lịch của phòng khám trước đó",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  );
+                } else {
+                  orderHospitalDataViewModel.setListScheduleCheckData(schedulePageViewModel.schedules);
 
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      isDismissible: true,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    isDismissible: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
                       ),
-                      builder: (context) {
-                        return const FractionallySizedBox(
-                          heightFactor: 0.93,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
-                              ),
-                              child: OrderDetailDoctor()),
-                        );
-                      },
-                    );
-                  }
+                    ),
+                    builder: (context) {
+                      return const FractionallySizedBox(
+                        heightFactor: 0.93,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                            child: OrderDetailDoctor()),
+                      );
+                    },
+                  );
+                }
 
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                  ),
-                  child: Text(
-                    "Đặt lịch khám",
-                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
-                  ),
-                )) :
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
                 ),
-                onPressed: () {
+                child: Text(
+                  "Đặt lịch khám",
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                ),
+              )) :
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              onPressed: () {
 
-                  scheduleDetailPageViewModel.setScheduleDetail(doctorDetailPageViewModel.scheduleWithDoctor!);
+                scheduleDetailPageViewModel.setScheduleDetail(doctorDetailPageViewModel.scheduleWithDoctor!);
 
-                  doctorDetailPageViewModel.scheduleWithDoctor!.bookInformation.status == "PENDING" ?
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ScheduleDetailPending())) :
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ScheduleDetailAccept()));
+                doctorDetailPageViewModel.scheduleWithDoctor!.bookInformation.status == "PENDING" ?
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ScheduleDetailPending())) :
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ScheduleDetailAccept()));
 
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                  ),
-                  child: Text(
-                    "Xem lịch khám",
-                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
-                  ),
-                ))
-            ,
-          )),
-    );
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                ),
+                child: Text(
+                  "Xem lịch khám",
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                ),
+              ))
+          ,
+        ));
   }
 }

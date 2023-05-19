@@ -196,8 +196,8 @@ class _MainPageState extends State<MainPage> {
                       style: TextStyle(
                           height: 1.2,
                           fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 22,
                           color: Colors.green,
                           letterSpacing: 1.5,
                           fontFamily: 'Lemonada'),

@@ -24,45 +24,15 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   bool _isAppBarCollapsed = false;
   bool _isExpanded = false;
   bool isSelectedServices = false;
-  bool _isChecked = false;
   int _selectedDoctor = -1;
   int _selectedTime = -1;
-  int _selectedService = -1;
   String? _gender;
 
   late ScrollController _scrollController;
   final TextEditingController _controllerTextWord = TextEditingController();
   final TextEditingController _controllerTextWordFullName = TextEditingController();
   final TextEditingController _controllerTextWordAge = TextEditingController();
-  final List<String> _timeList = [
-    "8:00 - 12:00",
-    "13:00 - 17:00",
-    "18:00 - 21:00",
-  ];
-  final List<String> _timeDay = [
-    "Sáng",
-    "Chiều",
-    "Tối",
-  ];
-
   late List<Doctor> _options = [];
-
-  final List<String> _serviceList = [
-    "#Chăm sóc răng miệng",
-    "#Nhổ răng khôn",
-    "#Lấy cao răng",
-    "#Trám răng",
-    "#Bọc răng sứ",
-  ];
-
-  final List<String> _servicePriceList = [
-    "150,000đ",
-    "150,000đ",
-    "150,000đ",
-    "150,000đ",
-    "150,000đ",
-  ];
-
 
   @override
   void initState() {
@@ -259,9 +229,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget sliverAppbar() {
-
     final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
-
     return SliverAppBar(
       title: Text(
         hospitalDetailPageViewModel.hospitalDetail!.hospitalName,

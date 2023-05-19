@@ -1,4 +1,5 @@
 import 'package:care_bookie_app/models/user_login.dart';
+import 'package:care_bookie_app/view/pages/account_page/change_password_user.dart';
 import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -90,7 +91,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
           gender(),
           birthDay(),
           address(),
-          // changePassword(),
+          changePassword(),
           saveAccount(),
         ],
       ),
@@ -757,16 +758,39 @@ class _PersonalInformationState extends State<PersonalInformation> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.white,
-          elevation: 1,
+          elevation: 4,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            isDismissible: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            builder: (context) {
+              return const FractionallySizedBox(
+                heightFactor: 0.48,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                    child: ChangePasswordUser()),
+              );
+            },
+          );
+        },
         child: const Text(
           "Đổi mật khẩu",
           style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: 'Montserrat',
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: Colors.black),
@@ -786,7 +810,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.white,
-            elevation: 1,
+            elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
@@ -830,7 +854,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
           child: const Text(
             "Lưu chỉnh sửa",
             style: TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Montserrat',
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 color: Colors.black),
