@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 import '../../../res/constants/colors.dart';
+import '../login_signup_page/reset_password.dart';
 
 class ChangePasswordUser extends StatefulWidget {
   const ChangePasswordUser({Key? key}) : super(key: key);
@@ -34,90 +35,7 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
                   color: Colors.black,
                   fontFamily: 'Montserrat')),
         ),
-        body: CustomScrollView(slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Mật khẩu cũ'),
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Mật khẩu mới'),
-                        ),
-                        TextFormField(
-                          decoration:  const InputDecoration(
-                              labelText: 'Nhập lại mật khẩu mới', hintStyle: TextStyle(
-                              fontSize: 15,
-                              //textBaseline: TextBaseline.alphabetic,
-                              color: Colors.blueAccent,
-                              fontFamily: 'Montserrat')
-                          ),
-
-                        ),
-                        const SizedBox(height: 16.0),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20),
-                          width: double.maxFinite,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Xử lý khi nhấn vào nút "Quên mật khẩu"
-                            },
-                            child: const Text('Quên mật khẩu',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    //textBaseline: TextBaseline.alphabetic,
-                                    color: Colors.blueAccent,
-                                    fontFamily: 'Montserrat')),
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20),
-                          width: double.maxFinite,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blueAccent,
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Xử lý khi nhấn vào nút "Quên mật khẩu"
-                            },
-                            child: const Text('Thay đổi mật khẩu',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    //textBaseline: TextBaseline.alphabetic,
-                                    color: Colors.white,
-                                    fontFamily: 'Montserrat')),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ]));
+        body: customScrollViewBody());
   }
 
   Widget sliverAppBar() {
@@ -204,5 +122,71 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
         ),
       ),
     );
+  }
+
+  Widget customScrollViewBody() {
+    return CustomScrollView(slivers: <Widget>[
+      SliverList(
+        delegate: SliverChildListDelegate(
+          [
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration:
+                      const InputDecoration(labelText: 'Mật khẩu cũ'),
+                    ),
+                    TextFormField(
+                      decoration:
+                      const InputDecoration(labelText: 'Mật khẩu mới'),
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'Nhập lại mật khẩu mới',
+                          hintStyle: TextStyle(
+                              fontSize: 15,
+                              //textBaseline: TextBaseline.alphabetic,
+                              color: Colors.blueAccent,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    const SizedBox(height: 16.0),
+                    const SizedBox(width: 15),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      width: double.maxFinite,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueAccent,
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResetPassword()));
+                        },
+                        child: const Text('Thay đổi mật khẩu',
+                            style: TextStyle(
+                                fontSize: 18,
+                                //textBaseline: TextBaseline.alphabetic,
+                                color: Colors.white,
+                                fontFamily: 'Montserrat')),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      )
+    ]);
   }
 }

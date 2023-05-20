@@ -19,65 +19,74 @@ class SignupApi {
     }
   }
 
-  static Future<bool> getOTPByPhoneNumber(String phone) async{
-
-    String url = "${HostUtil.host}api/v1/care-bookie/common/user/forgot-password?phone=$phone";
+  static Future<bool> getOTPByPhoneNumber(String phone) async {
+    String url =
+        "${HostUtil.host}api/v1/care-bookie/common/user/forgot-password?phone=$phone";
 
     Map<String, String> headers = {'content-type': 'application/json'};
 
     var response = await http.post(Uri.parse(url), headers: headers);
 
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       return true;
     } else {
       return false;
     }
   }
 
-  static Future<bool> checkOTPByPhoneNumber(String phone,String code) async {
-
+  static Future<bool> checkOTPByPhoneNumber(String phone, String code) async {
     String url = "${HostUtil.host}api/v1/care-bookie/common/user/check-code";
 
     Map<String, String> headers = {'content-type': 'application/json'};
     var response = await http.post(Uri.parse(url),
-        headers: headers, body: jsonEncode({
-          "code": code,
-          "phone": phone
-        }));
+        headers: headers, body: jsonEncode({"code": code, "phone": phone}));
 
-    if(response.statusCode == 200) {
-
+    if (response.statusCode == 200) {
       return jsonDecode(response.body);
-
     } else {
-
       return false;
-
     }
-
   }
 
-  static Future<bool> resetPassword(String newPassword,String confirmPassword,String phone) async {
-
-    String url = "${HostUtil.host}api/v1/care-bookie/common/user/reset-password";
+  static Future<bool> resetPassword(
+      String newPassword, String confirmPassword, String phone) async {
+    String url =
+        "${HostUtil.host}api/v1/care-bookie/common/user/reset-password";
 
     Map<String, String> headers = {'content-type': 'application/json'};
     var response = await http.post(Uri.parse(url),
-        headers: headers, body: jsonEncode({
+        headers: headers,
+        body: jsonEncode({
           "newPassword": newPassword,
           "confirmPassword": confirmPassword,
-          "phone" : phone
+          "phone": phone
         }));
 
-    if(response.statusCode == 200) {
-
+    if (response.statusCode == 200) {
       return true;
-
     } else {
-
       return false;
-
     }
   }
 
+  static Future<bool> changePassword(
+      String oldPassword, String newPassword, String confirmPassword) async {
+    String url =
+        "${HostUtil.host}api/v1/care-bookie/common/user/change-password";
+
+    Map<String, String> headers = {'content-type': 'application/json'};
+    var response = await http.post(Uri.parse(url),
+        headers: headers,
+        body: jsonEncode({
+          "oldPassword": oldPassword,
+          "newPassword": newPassword,
+          "confirmPassword": confirmPassword,
+        }));
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

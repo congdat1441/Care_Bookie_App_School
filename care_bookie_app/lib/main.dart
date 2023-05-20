@@ -1,6 +1,7 @@
 import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view_model/bottom_navbar_view_model.dart';
+import 'package:care_bookie_app/view_model/change_password_view_model.dart';
 import 'package:care_bookie_app/view_model/doctor_detail_view_model.dart';
 import 'package:care_bookie_app/view_model/favorite_page_view_model.dart';
 import 'package:care_bookie_app/view_model/history_detail_page_view_model.dart';
@@ -22,8 +23,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -86,8 +86,15 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => FavoritePageViewModel()),
         ChangeNotifierProvider(create: (context) => SearchPageViewModel()),
         ChangeNotifierProvider(create: (context) => SignupPageViewModel()),
-        ChangeNotifierProvider(create: (context) => UpdateUserPageViewModel(),),
-        ChangeNotifierProvider(create: (context) => ResetPasswordViewModel(),)
+        ChangeNotifierProvider(
+          create: (context) => UpdateUserPageViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ResetPasswordViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ChangePasswordViewModel(),
+        )
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

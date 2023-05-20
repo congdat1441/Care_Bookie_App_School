@@ -1,20 +1,12 @@
-
-
 import 'package:care_bookie_app/api_services/signup_api.dart';
 import 'package:flutter/material.dart';
 
 class ResetPasswordViewModel extends ChangeNotifier {
-
   String? phone;
-
   String? password;
-
   String? passwordReset;
-
   String errorPhone = "";
-
   String errorOTP = "";
-
   String errorResetPassword = "";
 
   bool validateFields(String phone) {
@@ -26,7 +18,7 @@ class ResetPasswordViewModel extends ChangeNotifier {
     return true;
   }
 
-  void setPassword(String password,String passwordReset) {
+  void setPassword(String password, String passwordReset) {
     this.password = password;
     this.passwordReset = passwordReset;
   }
@@ -38,14 +30,13 @@ class ResetPasswordViewModel extends ChangeNotifier {
       return false;
     }
 
-    if(password! != passwordReset!) {
+    if (password! != passwordReset!) {
       errorResetPassword = "Vui lòng kiểm tra lại mật khẩu";
       notifyListeners();
       return false;
     }
     return true;
   }
-
 
   bool validateOTP(String otp) {
     if (otp.length < 4) {
@@ -86,6 +77,4 @@ class ResetPasswordViewModel extends ChangeNotifier {
   Future<bool> resetPassword() async {
     return await SignupApi.resetPassword(password!, passwordReset!, phone!);
   }
-
-
 }

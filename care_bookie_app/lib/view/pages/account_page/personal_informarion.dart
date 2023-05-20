@@ -776,7 +776,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             ),
             builder: (context) {
               return const FractionallySizedBox(
-                heightFactor: 0.53,
+                heightFactor: 0.43,
                 child: ClipRRect(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
