@@ -75,7 +75,7 @@ class _DetailClinicState extends State<DetailClinic>
             //bookingClinic(context)
           ],
         ),
-       // extendBody: true,
+        // extendBody: true,
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
             canvasColor: Colors.transparent, // Đặt màu nền trong suốt
@@ -681,7 +681,11 @@ class _DetailClinicState extends State<DetailClinic>
                                 .map((day) {
                               if (day.date.isNotEmpty) {
                                 if (e == num.parse(day.date)) {
-                                  if (day.session == "MORNING") {
+                                  if (day.session == "Sáng" &&
+                                      day.startHour?.toString().isNotEmpty ==
+                                          true &&
+                                      day.endHour?.toString().isNotEmpty ==
+                                          true) {
                                     return Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5),
@@ -731,7 +735,11 @@ class _DetailClinicState extends State<DetailClinic>
                                         ),
                                       ),
                                     );
-                                  } else {
+                                  } else if (day.session == "Chiều" &&
+                                      day.startHour?.toString().isNotEmpty ==
+                                          true &&
+                                      day.endHour?.toString().isNotEmpty ==
+                                          true) {
                                     return Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5),
@@ -752,6 +760,60 @@ class _DetailClinicState extends State<DetailClinic>
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
                                             const Text("Chiều ",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    color: Colors.white,
+                                                    height: 1,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily:
+                                                        'Merriweather Sans')),
+                                            Text(
+                                                "${day.startHour} - ${day.endHour}",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    color: Colors.white,
+                                                    height: 1,
+                                                    letterSpacing: 0.05,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily:
+                                                        'Merriweather Sans'))
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  } else if (day.session == "Tối" &&
+                                      day.startHour?.toString().isNotEmpty ==
+                                          true &&
+                                      day.endHour?.toString().isNotEmpty ==
+                                          true) {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      height: 60,
+                                      width: 110,
+                                      decoration: BoxDecoration(
+                                        color: ColorConstant.BLue02,
+                                        border: Border.all(
+                                            color: ColorConstant.BLue05),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            const Text("Tối",
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(

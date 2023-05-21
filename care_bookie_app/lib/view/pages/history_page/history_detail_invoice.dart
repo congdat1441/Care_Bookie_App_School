@@ -67,8 +67,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget infoOrderDetail() {
-
-    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+    final historyDetailPageViewModel =
+        Provider.of<HistoryDetailPageViewModel>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -85,7 +85,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(historyDetailPageViewModel.historyDetail!.hospitalName,
+                  child: Text(
+                      historyDetailPageViewModel.historyDetail!.hospitalName,
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -113,7 +114,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(historyDetailPageViewModel.historyDetail!.doctorName,
+                  child: Text(
+                      historyDetailPageViewModel.historyDetail!.doctorName,
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -131,7 +133,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[
+            children: [
               const Text("Thời gian",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -141,7 +143,10 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 140,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(date_util.DateUtils.convertDateTime(historyDetailPageViewModel.historyDetail!.invoiceInformation.dateTimeInvoice),
+                  child: Text(
+                      date_util.DateUtils.convertDateTime(
+                          historyDetailPageViewModel.historyDetail!
+                              .invoiceInformation.dateTimeInvoice),
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -159,7 +164,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[
+            children: [
               const Text("Bệnh nhân điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -169,7 +174,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(historyDetailPageViewModel.historyDetail!.fullNameBook,
+                  child: Text(
+                      historyDetailPageViewModel.historyDetail!.fullNameBook,
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -197,7 +203,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 width: 200,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("${historyDetailPageViewModel.historyDetail!.ageBook}",
+                  child: Text(
+                      "${historyDetailPageViewModel.historyDetail!.ageBook}",
                       maxLines: 2,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -215,7 +222,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[
+            children: [
               const Text("Giới tính",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -275,8 +282,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget symptom() {
-
-    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+    final historyDetailPageViewModel =
+        Provider.of<HistoryDetailPageViewModel>(context, listen: false);
 
     return Column(
       children: [
@@ -296,16 +303,17 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           width: double.maxFinite,
           decoration: BoxDecoration(
-            //color: Colors.white,
+              //color: Colors.white,
               borderRadius: BorderRadius.circular(25),
               border:
-              Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
+                  Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                  historyDetailPageViewModel.historyDetail!.invoiceInformation.symptomDetail,
+                  historyDetailPageViewModel
+                      .historyDetail!.invoiceInformation.symptomDetail,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
@@ -325,8 +333,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget price() {
-
-    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+    final historyDetailPageViewModel =
+        Provider.of<HistoryDetailPageViewModel>(context, listen: false);
 
     return Column(
       children: [
@@ -344,36 +352,36 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           ],
         ),
         ...historyDetailPageViewModel.historyDetail!.services.map((e) => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Text(e.serviceName,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-            ),
-            SizedBox(
-              width: 200,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text("${e.price}00đ",
-                    maxLines: 2,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.amber,
-                        fontSize: 17,
-                        overflow: TextOverflow.ellipsis)),
-              ),
-            ),
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                  child: Text(e.serviceName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          overflow: TextOverflow.visible)),
+                ),
+                SizedBox(
+                  width: 200,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text("${e.price}00đ",
+                        maxLines: 2,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.amber,
+                            fontSize: 17,
+                            overflow: TextOverflow.ellipsis)),
+                  ),
+                ),
+              ],
+            )),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Padding(
-              padding: EdgeInsets.only(left: 8.0,top: 10),
+              padding: EdgeInsets.only(left: 8.0, top: 10),
               child: Text("Tổng tiền",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
@@ -399,8 +407,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget noteFromDoctor() {
-
-    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+    final historyDetailPageViewModel =
+        Provider.of<HistoryDetailPageViewModel>(context, listen: false);
 
     return Column(
       children: [
@@ -425,16 +433,17 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           width: double.maxFinite,
           decoration: BoxDecoration(
-            //color: Colors.white,
+              //color: Colors.white,
               borderRadius: BorderRadius.circular(25),
               border:
-              Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
+                  Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                  historyDetailPageViewModel.historyDetail!.invoiceInformation.advices,
+                  historyDetailPageViewModel
+                      .historyDetail!.invoiceInformation.advices,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
@@ -454,8 +463,8 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
   }
 
   Widget contentNoteDrug() {
-
-    final historyDetailPageViewModel = Provider.of<HistoryDetailPageViewModel>(context,listen: false);
+    final historyDetailPageViewModel =
+        Provider.of<HistoryDetailPageViewModel>(context, listen: false);
 
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -472,38 +481,38 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                   fontWeight: FontWeight.w500,
                   fontSize: 20,
                   overflow: TextOverflow.visible)),
-          ...historyDetailPageViewModel.historyDetail!.medicines.map((e) => Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(e.medicineName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
-                SizedBox(
-                  width: 180,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text( "${e.medicinePrice.toInt()} ${e.medicineUnit}",
-                        maxLines: 2,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black54,
-                            fontSize: 17,
-                            overflow: TextOverflow.ellipsis)),
-                  ),
-                ),
-              ],
-            ),
-          ))
-
+          ...historyDetailPageViewModel.historyDetail!.medicines
+              .map((e) => Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(e.medicineName,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                overflow: TextOverflow.visible)),
+                        SizedBox(
+                          width: 150,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                                "${e.medicinePrice.toInt()} ${e.medicineUnit}",
+                                maxLines: 2,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black54,
+                                    fontSize: 17,
+                                    overflow: TextOverflow.ellipsis)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
         ],
       ),
     );
   }
-
 
   Widget bottomNavigatorBar() {
     return Container(
@@ -514,10 +523,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
           notifyReview(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              reviewDoctor(),
-              reviewClinic()
-            ],
+            children: [reviewDoctor(), reviewClinic()],
           )
         ],
       ),
@@ -550,7 +556,6 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
 
   Widget reviewDoctor() {
     return Container(
-
       width: 160,
       height: 60,
       decoration: BoxDecoration(
@@ -563,7 +568,6 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.white,
-
           elevation: 1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -579,12 +583,16 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 Text(
                   "Đánh giá",
                   style: TextStyle(
-                      fontSize: 15, color: Colors.amber, fontWeight: FontWeight.w600),
+                      fontSize: 15,
+                      color: Colors.amber,
+                      fontWeight: FontWeight.w600),
                 ),
                 Text(
                   "bác sỹ",
                   style: TextStyle(
-                      fontSize: 16, color: Colors.amber, fontWeight: FontWeight.w600),
+                      fontSize: 16,
+                      color: Colors.amber,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -601,7 +609,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
 
   Widget reviewClinic() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(10,0,0,0),
+      margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
       width: 160,
       height: 60,
       decoration: BoxDecoration(
@@ -614,7 +622,6 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.white,
-
           elevation: 1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -630,12 +637,16 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                 Text(
                   "Đánh giá",
                   style: TextStyle(
-                      fontSize: 15, color: Colors.amber, fontWeight: FontWeight.w600),
+                      fontSize: 15,
+                      color: Colors.amber,
+                      fontWeight: FontWeight.w600),
                 ),
                 Text(
                   "phòng khám",
                   style: TextStyle(
-                      fontSize: 16, color: Colors.amber, fontWeight: FontWeight.w600),
+                      fontSize: 16,
+                      color: Colors.amber,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),

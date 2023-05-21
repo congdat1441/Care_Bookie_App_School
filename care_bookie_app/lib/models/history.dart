@@ -64,7 +64,7 @@ class History {
         gender: genderBook,
         hospitalName: json['hospitalName'],
         address: json['address'],
-        star: json['star'],
+        star: json['star'] ?? 0,
         hospitalImage: json['imageUrl'],
         doctorName: json['doctorName'],
         services: services,

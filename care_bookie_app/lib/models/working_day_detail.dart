@@ -20,8 +20,8 @@ class WorkingDayDetail {
     return WorkingDayDetail(
         date: json['date'] ?? "",
         session: json['session'],
-        startHour: json['startHour'],
-        endHour: json['endHour'],
+        startHour: json['startHour'] ?? "",
+        endHour: json['endHour'] ?? "",
         hospitalId: json['hospitalId']
     );
 

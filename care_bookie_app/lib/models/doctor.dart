@@ -29,15 +29,15 @@ class Doctor {
 
     return Doctor(
         id: json['userId'],
-        firstName: json['firstName'],
-        lastName: json['lastName'],
-        phone: json['phone'],
-        speciality: json['speciality'],
+        firstName: json['firstName'] ?? "",
+        lastName: json['lastName'] ?? "",
+        phone: json['phone'] ?? "",
+        speciality: json['speciality'] ?? "",
         hospitalId: json['hospitalId'],
         information: json['information'] ?? "",
         image: json['imageUrl'] ?? "https://thumbs.dreamstime.com/b/generic-person-gray-photo-placeholder-man-silhouette-white-background-144511705.jpg",
         star: json['star'] ?? 0,
-        knowledges: json['knowledges']
+        knowledges: json['knowledges'] ?? []
     );
 
   }

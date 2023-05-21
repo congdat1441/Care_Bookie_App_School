@@ -7,8 +7,8 @@ class Hospital {
   final String id;
   final String hospitalName;
   final String address;
-  final num priceFrom;
-  final num priceTo;
+  final double priceFrom;
+  final double priceTo;
   final bool status;
   final String information;
   final num star;
@@ -49,11 +49,11 @@ class Hospital {
     return Hospital(
         id: json['hospitalId'],
         hospitalName: json['hospitalName'],
-        address: json['address'],
-        priceFrom: json['priceFrom'],
-        priceTo: json['priceTo'],
+        address: json['address'] ?? "",
+        priceFrom: json['priceFrom'] ?? 0,
+        priceTo: json['priceTo'] ?? 0,
         status: json['status'],
-        information: json['information'],
+        information: json['information'] ?? "",
         star: json['star'],
         services: services,
         workingDayDetails: workingDayDetails,

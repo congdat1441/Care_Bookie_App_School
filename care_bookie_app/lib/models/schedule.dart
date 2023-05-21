@@ -35,7 +35,7 @@ class Schedule {
     return Schedule(
         imageHospital: json['imageUrlH'],
         hospitalName: json['hospitalNameH'],
-        addressHospital: json['addressH'],
+        addressHospital: json['addressH'] ?? "",
         starHospital: json['starH'] ?? 0,
         bookInformation: bookInformation,
         services: services,

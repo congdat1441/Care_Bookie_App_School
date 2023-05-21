@@ -30,7 +30,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
 
   late ScrollController _scrollController;
   final TextEditingController _controllerTextWord = TextEditingController();
-  final TextEditingController _controllerTextWordFullName = TextEditingController();
+  final TextEditingController _controllerTextWordFullName =
+      TextEditingController();
   final TextEditingController _controllerTextWordAge = TextEditingController();
   late List<Doctor> _options = [];
 
@@ -51,16 +52,19 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
       }
     });
 
-    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+    final hospitalDetailPageViewModel =
+        Provider.of<HospitalDetailPageViewModel>(context, listen: false);
 
     _options = hospitalDetailPageViewModel.doctors;
 
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
-    final historyPageViewModel = Provider.of<HistoryPageViewModel>(context,listen: false);
+    final historyPageViewModel =
+        Provider.of<HistoryPageViewModel>(context, listen: false);
 
-    orderHospitalDataViewModel.setListHistoryCheckBox(historyPageViewModel.histories);
-
+    orderHospitalDataViewModel
+        .setListHistoryCheckBox(historyPageViewModel.histories);
   }
 
   @override
@@ -74,7 +78,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
     return Scaffold(
       backgroundColor: ColorConstant.BackGroundColor,
       body: Consumer<ScheduleInfoPageViewModel>(
-        builder: (context, scheduleInfoPageViewModel, child) => CustomScrollView(
+        builder: (context, scheduleInfoPageViewModel, child) =>
+            CustomScrollView(
           controller: _scrollController,
           slivers: <Widget>[
             sliverAppbar(),
@@ -95,8 +100,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget bookingForOtherPerson() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -170,15 +175,15 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                     width: 350,
                     //height: 40,
                     child: TextFormField(
-                      // textAlign: TextAlign.left,
+                        // textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.black),
                         controller: _controllerTextWordAge,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(0),
-                              )),
+                            Radius.circular(0),
+                          )),
                           label: Text("Tuổi",
                               style: TextStyle(color: Colors.black)),
                           hintText: "Vui lòng nhập tuổi người bệnh",
@@ -229,7 +234,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget sliverAppbar() {
-    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+    final hospitalDetailPageViewModel =
+        Provider.of<HospitalDetailPageViewModel>(context, listen: false);
     return SliverAppBar(
       title: Text(
         hospitalDetailPageViewModel.hospitalDetail!.hospitalName,
@@ -253,8 +259,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
               )
             : const Icon(IconlyLight.arrowLeft, size: 30, color: Colors.white),
         onPressed: () {
-
-          final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+          final orderHospitalDataViewModel =
+              Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
           orderHospitalDataViewModel.resetAllData();
 
@@ -312,8 +318,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget selectDoctor() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -323,7 +329,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
             children: <Widget>[
               RadioListTile<int>(
                 activeColor: ColorConstant.BLue02,
-                title: Text("Dr. ${option.lastName} ${option.firstName}",
+                title: Text(
+                  "Dr. ${option.lastName} ${option.firstName}",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: _selectedDoctor == index
@@ -350,8 +357,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget selectServices() {
-
-    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+    final hospitalDetailPageViewModel =
+        Provider.of<HospitalDetailPageViewModel>(context, listen: false);
 
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -381,24 +388,31 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 children: List.generate(
                     hospitalDetailPageViewModel.hospitalDetail!.services.length,
                     (index) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          hospitalDetailPageViewModel.setCheck(hospitalDetailPageViewModel.listServiceCheck.contains(hospitalDetailPageViewModel.hospitalDetail!.services[index]));
-                          hospitalDetailPageViewModel.setListServiceCheck(hospitalDetailPageViewModel.hospitalDetail!.services[index]);
-                        });
-                      },
-                      child: Container(
+                          onTap: () {
+                            setState(() {
+                              hospitalDetailPageViewModel.setCheck(
+                                  hospitalDetailPageViewModel.listServiceCheck
+                                      .contains(hospitalDetailPageViewModel
+                                          .hospitalDetail!.services[index]));
+                              hospitalDetailPageViewModel.setListServiceCheck(
+                                  hospitalDetailPageViewModel
+                                      .hospitalDetail!.services[index]);
+                            });
+                          },
+                          child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 5),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             height: 100,
-                        decoration: BoxDecoration(
-                          color: hospitalDetailPageViewModel.listServiceCheck.contains(hospitalDetailPageViewModel.hospitalDetail!.services[index])
-                              ? ColorConstant.BLue02
-                              : const Color(0x0fffffff),
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(width: 1.0,
-                          color: ColorConstant.BLue02)
-                        ),
+                            decoration: BoxDecoration(
+                                color: hospitalDetailPageViewModel
+                                        .listServiceCheck
+                                        .contains(hospitalDetailPageViewModel
+                                            .hospitalDetail!.services[index])
+                                    ? ColorConstant.BLue02
+                                    : const Color(0x0fffffff),
+                                borderRadius: BorderRadius.circular(20.0),
+                                border: Border.all(
+                                    width: 1.0, color: ColorConstant.BLue02)),
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Column(
@@ -408,12 +422,20 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      hospitalDetailPageViewModel.hospitalDetail!.services[index].serviceName,
+                                      hospitalDetailPageViewModel
+                                          .hospitalDetail!
+                                          .services[index]
+                                          .serviceName,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         overflow: TextOverflow.ellipsis,
-                                        color: hospitalDetailPageViewModel.listServiceCheck.contains(hospitalDetailPageViewModel.hospitalDetail!.services[index])
+                                        color: hospitalDetailPageViewModel
+                                                .listServiceCheck
+                                                .contains(
+                                                    hospitalDetailPageViewModel
+                                                        .hospitalDetail!
+                                                        .services[index])
                                             ? Colors.white
                                             : ColorConstant.BLue05,
                                         height: 1,
@@ -446,7 +468,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                               ),
                             ),
                           ),
-                    ))),
+                        ))),
           ],
         ),
       ),
@@ -463,23 +485,27 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
         decoration: const BoxDecoration(
             // color: Colors.amber
             ),
-        child:  const SelectDay(
-        ),
+        child: const SelectDay(),
       ),
     ));
   }
 
   Widget selectTime() {
+    final hospitalDetailPageViewModel =
+        Provider.of<HospitalDetailPageViewModel>(context, listen: false);
 
-    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
+    final scheduleInfoPageViewModel =
+        Provider.of<ScheduleInfoPageViewModel>(context, listen: false);
 
-    final scheduleInfoPageViewModel = Provider.of<ScheduleInfoPageViewModel>(context,listen: false);
+    hospitalDetailPageViewModel.setWorkingDayDetailsCheck(
+        hospitalDetailPageViewModel.hospitalDetail!.workingDayDetails,
+        scheduleInfoPageViewModel.weekday);
 
-    hospitalDetailPageViewModel.setWorkingDayDetailsCheck(hospitalDetailPageViewModel.hospitalDetail!.workingDayDetails, scheduleInfoPageViewModel.weekday);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
-
-    orderHospitalDataViewModel.setWorkingDayDetailsCheck(hospitalDetailPageViewModel.workingDayDetailsCheck);
+    orderHospitalDataViewModel.setWorkingDayDetailsCheck(
+        hospitalDetailPageViewModel.workingDayDetailsCheck);
 
     return Consumer<ScheduleInfoPageViewModel>(
       builder: (context, scheduleInfoPageProvider, child) => SliverPadding(
@@ -501,73 +527,174 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                         ),
                       ),
                     )),
-                hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty ?  GridView.count(
-                  //padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  childAspectRatio: (1 / .4),
-                  children: List.generate(
-                    hospitalDetailPageViewModel.workingDayDetailsCheck.length,
-                        (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedTime = index;
+                if(hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty)
+                  GridView.count(
+                    //padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    childAspectRatio: (1 / .4),
+                    children: List.generate(
+                      hospitalDetailPageViewModel
+                          .workingDayDetailsCheck.length,
+                          (index) {
+                        if (hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour != null &&
+                            hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour != null &&
+                            hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour.toString().isNotEmpty &&
+                            hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour.toString().isNotEmpty) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedTime = index;
 
-                            orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "MORNING" ? "Sáng" : "Chiều");
-                            orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+                                orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Sáng"? "Sáng": "");
+                                orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Chiều"? "Chiều": "");
+                                orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Tối"? "Tối": "");
 
+                                orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
 
-                            print("TIME --------> ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
-                          });
-                        },
-                        child: Container(
-                          //height: 100,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            color: _selectedTime == index
-                                ? ColorConstant.BLue02
-                                : const Color(0xFFf6f6f6),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "MORNING" ? "Sáng" : "Chiều",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Poppins',
-                                    color: _selectedTime == index
-                                        ? Colors.white
-                                        : Colors.black,
-                                  ),
+                                print("TIME --------> "
+                                    "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} "
+                                    "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} "
+                                    "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                color: _selectedTime == index
+                                    ? ColorConstant.BLue02
+                                    : const Color(0xFFf6f6f6),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(0.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Sáng" ? "Sáng" :
+                                      (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Chiều" ? "Chiều" :
+                                      (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Tối" ? "Tối" : "")),
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Poppins',
+                                        color: _selectedTime == index
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Poppins',
+                                        color: _selectedTime == index
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Poppins',
-                                    color: _selectedTime == index
-                                        ? Colors.white
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ) : Container(
-                  margin: const EdgeInsets.only(top: 15),
-                    child: const Text("Không Thuộc Ngày Làm Việc Của Bệnh Viện")
-                ),
+                          );
+                        } else {
+                          return Container(); // Không hiển thị container cho buổi không có giờ
+                        }
+                      },
+                    ),
+                  )
+                // hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty
+                //     ? GridView.count(
+                //         //padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //         crossAxisCount: 3,
+                //         shrinkWrap: true,
+                //         physics: const NeverScrollableScrollPhysics(),
+                //         childAspectRatio: (1 / .4),
+                //         children: List.generate(
+                //           hospitalDetailPageViewModel
+                //               .workingDayDetailsCheck.length,
+                //           (index) {
+                //             if (hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour != null &&
+                //                 hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour != null &&
+                //                 hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour.toString().isNotEmpty &&
+                //                 hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour.toString().isNotEmpty) {
+                //               return GestureDetector(
+                //                 onTap: () {
+                //                   setState(() {
+                //                     _selectedTime = index;
+                //
+                //                     orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Sáng"? "Sáng": "");
+                //                     orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Chiều"? "Chiều": "");
+                //                     orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Tối"? "Tối": "");
+                //
+                //                     orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+                //
+                //                     print("TIME --------> "
+                //                         "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} "
+                //                         "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} "
+                //                         "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+                //                   });
+                //                 },
+                //                 child: Container(
+                //                   margin: const EdgeInsets.symmetric(
+                //                       horizontal: 5.0),
+                //                   decoration: BoxDecoration(
+                //                     color: _selectedTime == index
+                //                         ? ColorConstant.BLue02
+                //                         : const Color(0xFFf6f6f6),
+                //                     borderRadius: BorderRadius.circular(20.0),
+                //                   ),
+                //                   child: Padding(
+                //                     padding: const EdgeInsets.all(0.0),
+                //                     child: Column(
+                //                       crossAxisAlignment: CrossAxisAlignment.center,
+                //                       mainAxisAlignment: MainAxisAlignment.center,
+                //                       children: [
+                //                     Text(
+                //                       hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Sáng" ? "Sáng" :
+                //                       (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Chiều" ? "Chiều" :
+                //                       (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Tối" ? "Tối" : "")),
+                //                       style: TextStyle(
+                //                         fontSize: 15,
+                //                         fontWeight: FontWeight.w400,
+                //                         fontFamily: 'Poppins',
+                //                         color: _selectedTime == index
+                //                             ? Colors.white
+                //                             : Colors.black,
+                //                       ),
+                //                    ),
+                //                         Text(
+                //                           "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
+                //                           style: TextStyle(
+                //                             fontSize: 15,
+                //                             fontWeight: FontWeight.w400,
+                //                             fontFamily: 'Poppins',
+                //                             color: _selectedTime == index
+                //                                 ? Colors.white
+                //                                 : Colors.black,
+                //                           ),
+                //                         ),
+                //                       ],
+                //                     ),
+                //                   ),
+                //                 ),
+                //               );
+                //             } else {
+                //               return Container(); // Không hiển thị container cho buổi không có giờ
+                //             }
+                //           },
+                //         ),
+                //       )
+                //     : Container(
+                //         margin: const EdgeInsets.only(top: 15),
+                //         child: const Text(
+                //             "Không Thuộc Ngày Làm Việc Của Bệnh Viện")),
               ],
             ),
           ),
@@ -624,8 +751,8 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget shareHistory() {
-
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -649,122 +776,160 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
             },
             initiallyExpanded: _isExpanded,
             children: [
-
-              orderHospitalDataViewModel.listHistoryCheckBox.isNotEmpty ? Column(
-                children: [
-                  ...orderHospitalDataViewModel.listHistoryCheckBox.map((e) => Container(
-                      margin: const EdgeInsets.only(left: 10, right: 0),
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(width: 0.5, color: Colors.transparent)),
-                      child: Container(
-                          margin: const EdgeInsets.only(right: 0, top: 20, bottom: 10),
-                          height: 110,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(27),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 0,
-                                  blurRadius: 7,
-                                  offset: const Offset(0, 10))
-                            ],
-                          ),
-                          child: TextButton(
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Center(
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(30),
-                                        child: Image.network(
-                                          e.historyCheck.hospitalImage,
-                                          fit: BoxFit.fill,
-                                          width: 100,
-                                          height: 100,
+              orderHospitalDataViewModel.listHistoryCheckBox.isNotEmpty
+                  ? Column(
+                      children: [
+                        ...orderHospitalDataViewModel.listHistoryCheckBox.map(
+                            (e) => Container(
+                                margin:
+                                    const EdgeInsets.only(left: 10, right: 0),
+                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(
+                                        width: 0.5, color: Colors.transparent)),
+                                child: Container(
+                                    margin: const EdgeInsets.only(
+                                        right: 0, top: 20, bottom: 10),
+                                    height: 110,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(27),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            spreadRadius: 0,
+                                            blurRadius: 7,
+                                            offset: const Offset(0, 10))
+                                      ],
+                                    ),
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                                width: 190,
-                                                child: Text(e.historyCheck.hospitalName,
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontSize: 13,
-                                                        color: Color(0xff1c335b),
-                                                        fontWeight: FontWeight.w600,
-                                                        fontFamily: 'Merriweather Sans '))),
-                                            const SizedBox(
-                                              height: 3,
+                                      onPressed: () {},
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Center(
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  child: Image.network(
+                                                    e.historyCheck
+                                                        .hospitalImage,
+                                                    fit: BoxFit.fill,
+                                                    width: 100,
+                                                    height: 100,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          5, 5, 0, 0),
+                                                  child: Column(
+                                                    children: [
+                                                      SizedBox(
+                                                          width: 190,
+                                                          child: Text(
+                                                              e.historyCheck
+                                                                  .hospitalName,
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: const TextStyle(
+                                                                  fontSize: 13,
+                                                                  color: Color(
+                                                                      0xff1c335b),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontFamily:
+                                                                      'Merriweather Sans '))),
+                                                      const SizedBox(
+                                                        height: 3,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: SizedBox(
+                                                            width: 190,
+                                                            child: Text(
+                                                                e.historyCheck
+                                                                    .address,
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    height: 1,
+                                                                    fontSize:
+                                                                        13,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontFamily:
+                                                                        'Merriweather Sans'))),
+                                                      ),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: SizedBox(
+                                                            width: 190,
+                                                            child: Text(
+                                                                date_util.DateUtils.convertDateTime(e
+                                                                    .historyCheck
+                                                                    .invoiceInformation
+                                                                    .dateTimeInvoice),
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        13,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontFamily:
+                                                                        'Merriweather Sans '))),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: SizedBox(
-                                                  width: 190,
-                                                  child: Text(e.historyCheck.address,
-                                                      maxLines: 2,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                          height: 1,
-                                                          fontSize: 13,
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.w600,
-                                                          fontFamily: 'Merriweather Sans'))),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: SizedBox(
-                                                  width: 190,
-                                                  child: Text(date_util.DateUtils.convertDateTime(e.historyCheck.invoiceInformation.dateTimeInvoice),
-                                                      maxLines: 2,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.w600,
-                                                          fontFamily: 'Merriweather Sans '))),
-                                            )
-                                          ],
-                                        ),
+                                          ),
+                                          Checkbox(
+                                            value: e.checked,
+                                            onChanged: (newValue) {
+                                              setState(() {
+                                                e.checked = newValue!;
+                                                orderHospitalDataViewModel
+                                                    .setShareHistoryList();
+                                              });
+                                            },
+                                          )
+                                        ],
                                       ),
-
-                                    ],
-                                  ),
-                                ),
-                                Checkbox(
-                                  value: e.checked,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      e.checked = newValue!;
-                                      orderHospitalDataViewModel.setShareHistoryList();
-                                    });
-                                  },
-                                )
-                              ],
-                            ),
-                          ))
-                  ))
-                ],
-              ) : const Text("Không có lịch sử")
+                                    ))))
+                      ],
+                    )
+                  : const Text("Không có lịch sử")
             ],
           ),
         ),
@@ -783,12 +948,14 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
   }
 
   Widget continuous() {
+    final orderHospitalDataViewModel =
+        Provider.of<OrderHospitalDataViewModel>(context, listen: false);
 
-    final orderHospitalDataViewModel = Provider.of<OrderHospitalDataViewModel>(context,listen: false);
+    final hospitalDetailPageViewModel =
+        Provider.of<HospitalDetailPageViewModel>(context, listen: false);
 
-    final hospitalDetailPageViewModel = Provider.of<HospitalDetailPageViewModel>(context,listen: false);
-
-    final loginPageViewModel = Provider.of<LoginPageViewModel>(context,listen: false);
+    final loginPageViewModel =
+        Provider.of<LoginPageViewModel>(context, listen: false);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -804,26 +971,30 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 ),
               ),
               onPressed: () {
-
-                orderHospitalDataViewModel.setName(_controllerTextWordFullName.text);
+                orderHospitalDataViewModel
+                    .setName(_controllerTextWordFullName.text);
                 orderHospitalDataViewModel.setAge(_controllerTextWordAge.text);
-                orderHospitalDataViewModel.setServices(hospitalDetailPageViewModel.listServiceCheck);
+                orderHospitalDataViewModel
+                    .setServices(hospitalDetailPageViewModel.listServiceCheck);
                 orderHospitalDataViewModel.setSymptom(_controllerTextWord.text);
-                orderHospitalDataViewModel.setUserLogin(loginPageViewModel.userLogin);
-                orderHospitalDataViewModel.setHospital(hospitalDetailPageViewModel.hospitalDetail!);
+                orderHospitalDataViewModel
+                    .setUserLogin(loginPageViewModel.userLogin);
+                orderHospitalDataViewModel
+                    .setHospital(hospitalDetailPageViewModel.hospitalDetail!);
 
-                orderHospitalDataViewModel.validateDataOrder().isNotEmpty ? Fluttertoast.showToast(
-                    msg: orderHospitalDataViewModel.validateDataOrder(),
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0
-                ) : Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const OrderSummary()));
+                orderHospitalDataViewModel.validateDataOrder().isNotEmpty
+                    ? Fluttertoast.showToast(
+                        msg: orderHospitalDataViewModel.validateDataOrder(),
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0)
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const OrderSummary()));
               },
               child: const Padding(
                 padding: EdgeInsets.only(
