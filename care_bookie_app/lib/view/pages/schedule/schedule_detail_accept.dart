@@ -81,13 +81,16 @@ class ScheduleDetailAccept extends StatelessWidget {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(scheduleDetailPageViewModel.scheduleDetail!.hospitalName,
-                      maxLines: 2,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
+                  child: SizedBox(
+                    width: 170,
+                    child: Text(scheduleDetailPageViewModel.scheduleDetail!.hospitalName,
+                        maxLines: 2,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                            fontSize: 17,
+                            overflow: TextOverflow.ellipsis)),
+                  ),
                 ),
               ),
             ],
@@ -134,7 +137,7 @@ class ScheduleDetailAccept extends StatelessWidget {
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
               SizedBox(
-                width: 140,
+                width: 180,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text("${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.session} ${int.parse(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.date) == 8 ? "CN" : "Thứ ${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.date}"} ${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.dateExamination}",
@@ -350,14 +353,19 @@ class ScheduleDetailAccept extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                child: Text(service.serviceName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
+                child: SizedBox(
+                  width: 200,
+                  child: Text(service.serviceName,
+                      maxLines: 2,
+
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          overflow: TextOverflow.visible)),
+                ),
               ),
               SizedBox(
-                width: 200,
+                width: 150,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text("${service.price}00đ",
@@ -526,7 +534,7 @@ class ScheduleDetailAccept extends StatelessWidget {
       height: 120,
       color: Colors.white,
       child: Column(
-        children: [notifyAccept(), pending()],
+        children: [notifyAccept(), accept()],
       ),
     );
   }
@@ -559,17 +567,16 @@ class ScheduleDetailAccept extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(scheduleDetailPageViewModel.scheduleDetail!.hospitalName,
-                      maxLines: 2,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
-                ),
+              SizedBox(
+                width: 170,
+                child: Text(scheduleDetailPageViewModel.scheduleDetail!.hospitalName,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54,
+                        fontSize: 17,
+                        overflow: TextOverflow.ellipsis)),
               ),
             ],
           ), // Hospital name
@@ -582,9 +589,10 @@ class ScheduleDetailAccept extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
+              Align(
+                alignment: Alignment.centerRight,
+                child: SizedBox(
+                  width: 170,
                   child: Text(scheduleDetailPageViewModel.scheduleDetail!.addressHospital,
                       maxLines: 2,
                       style: const TextStyle(
@@ -629,11 +637,35 @@ class ScheduleDetailAccept extends StatelessWidget {
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
               SizedBox(
-                width: 180,
+                width: 170,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text("${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.session} ${int.parse(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.date) == 8 ? "CN" : "Thứ ${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.date}"} ${scheduleDetailPageViewModel.scheduleDetail!.bookInformation.dateExamination}",
                       maxLines: 2,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black54,
+                          fontSize: 17,
+                          overflow: TextOverflow.ellipsis)),
+                ),
+              ),
+            ],
+          ), // Time
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Lời nhắn",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+              SizedBox(
+                width: 170,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(scheduleDetailPageViewModel.scheduleDetail!.bookInformation.message,
+                      maxLines: 10,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
@@ -661,10 +693,10 @@ class ScheduleDetailAccept extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             Padding(
-              padding: EdgeInsets.only(left: 8.0),
+              padding: EdgeInsets.only(left: 5.0),
               child: Text("Dịch vụ",
                   style: TextStyle(
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
             ),
@@ -678,7 +710,7 @@ class ScheduleDetailAccept extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                 child: Text(service.serviceName,
                     style: const TextStyle(
                         fontWeight: FontWeight.w400,
@@ -686,7 +718,7 @@ class ScheduleDetailAccept extends StatelessWidget {
                         overflow: TextOverflow.visible)),
               ),
               SizedBox(
-                width: 200,
+                width: 150,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text("${service.price}00đ",
@@ -759,7 +791,7 @@ class ScheduleDetailAccept extends StatelessWidget {
     );
   }
 
-  Widget pending() {
+  Widget accept() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
         child: Container(

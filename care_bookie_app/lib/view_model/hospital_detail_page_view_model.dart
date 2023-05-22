@@ -80,6 +80,7 @@ class HospitalDetailPageViewModel extends ChangeNotifier {
       if(element.date.isNotEmpty) {
         if(weekday + 1 == int.parse(element.date)) {
           workingDayDetailsCheck.add(element);
+          //print("date ${element.startHour} , ${element.endHour}, ${element.date}, ${element.hospitalId}, ${element.session}");
         }
       }
     }

@@ -233,7 +233,7 @@ class _DetailClinicState extends State<DetailClinic>
                   Expanded(
                     child: SizedBox(
                       child: Text(
-                          "${hospitalDetailPageViewModel.hospitalDetail!.priceFrom}00đ - ${hospitalDetailPageViewModel.hospitalDetail!.priceTo}00đ",
+                          "${hospitalDetailPageViewModel.hospitalDetail!.priceFrom.toInt()}.000đ - ${hospitalDetailPageViewModel.hospitalDetail!.priceTo.toInt()}.000đ",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

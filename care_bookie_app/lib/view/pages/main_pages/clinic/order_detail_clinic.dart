@@ -527,135 +527,53 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                         ),
                       ),
                     )),
-                if(hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty)
-                  GridView.count(
-                    //padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    childAspectRatio: (1 / .4),
-                    children: List.generate(
-                      hospitalDetailPageViewModel
-                          .workingDayDetailsCheck.length,
-                          (index) {
-                        if (hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour != null &&
-                            hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour != null &&
-                            hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour.toString().isNotEmpty &&
-                            hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour.toString().isNotEmpty) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedTime = index;
-
-                                orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Sáng"? "Sáng": "");
-                                orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Chiều"? "Chiều": "");
-                                orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Tối"? "Tối": "");
-
-                                orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
-
-                                print("TIME --------> "
-                                    "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} "
-                                    "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} "
-                                    "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
-                              });
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 5.0),
-                              decoration: BoxDecoration(
-                                color: _selectedTime == index
-                                    ? ColorConstant.BLue02
-                                    : const Color(0xFFf6f6f6),
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(0.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Sáng" ? "Sáng" :
-                                      (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Chiều" ? "Chiều" :
-                                      (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Tối" ? "Tối" : "")),
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'Poppins',
-                                        color: _selectedTime == index
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                    Text(
-                                      "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'Poppins',
-                                        color: _selectedTime == index
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        } else {
-                          return Container(); // Không hiển thị container cho buổi không có giờ
-                        }
-                      },
-                    ),
-                  )
-                // hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty
-                //     ? GridView.count(
-                //         //padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                //         crossAxisCount: 3,
-                //         shrinkWrap: true,
-                //         physics: const NeverScrollableScrollPhysics(),
-                //         childAspectRatio: (1 / .4),
-                //         children: List.generate(
-                //           hospitalDetailPageViewModel
-                //               .workingDayDetailsCheck.length,
+                // if(hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty)
+                //   GridView.count(
+                //     //padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //     crossAxisCount: 3,
+                //     shrinkWrap: true,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     childAspectRatio: (1 / .4),
+                //     children: List.generate(
+                //       hospitalDetailPageViewModel
+                //           .workingDayDetailsCheck.length,
                 //           (index) {
-                //             if (hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour != null &&
-                //                 hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour != null &&
-                //                 hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour.toString().isNotEmpty &&
-                //                 hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour.toString().isNotEmpty) {
-                //               return GestureDetector(
-                //                 onTap: () {
-                //                   setState(() {
-                //                     _selectedTime = index;
+                //         if (hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour != null &&
+                //             hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour != null &&
+                //             hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour.toString().isNotEmpty &&
+                //             hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour.toString().isNotEmpty) {
+                //           return GestureDetector(
+                //             onTap: () {
+                //               setState(() {
+                //                 _selectedTime = index;
                 //
-                //                     orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Sáng"? "Sáng": "");
-                //                     orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Chiều"? "Chiều": "");
-                //                     orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Tối"? "Tối": "");
+                //                 orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Sáng"? "Sáng": "");
+                //                 orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Chiều"? "Chiều": "");
+                //                 orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Tối"? "Tối": "");
                 //
-                //                     orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+                //                 orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
                 //
-                //                     print("TIME --------> "
-                //                         "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} "
-                //                         "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} "
-                //                         "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
-                //                   });
-                //                 },
-                //                 child: Container(
-                //                   margin: const EdgeInsets.symmetric(
-                //                       horizontal: 5.0),
-                //                   decoration: BoxDecoration(
-                //                     color: _selectedTime == index
-                //                         ? ColorConstant.BLue02
-                //                         : const Color(0xFFf6f6f6),
-                //                     borderRadius: BorderRadius.circular(20.0),
-                //                   ),
-                //                   child: Padding(
-                //                     padding: const EdgeInsets.all(0.0),
-                //                     child: Column(
-                //                       crossAxisAlignment: CrossAxisAlignment.center,
-                //                       mainAxisAlignment: MainAxisAlignment.center,
-                //                       children: [
+                //                 print("TIME --------> "
+                //                     "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} "
+                //                     "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} "
+                //                     "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+                //               });
+                //             },
+                //             child: Container(
+                //               margin: const EdgeInsets.symmetric(
+                //                   horizontal: 5.0),
+                //               decoration: BoxDecoration(
+                //                 color: _selectedTime == index
+                //                     ? ColorConstant.BLue02
+                //                     : const Color(0xFFf6f6f6),
+                //                 borderRadius: BorderRadius.circular(20.0),
+                //               ),
+                //               child: Padding(
+                //                 padding: const EdgeInsets.all(0.0),
+                //                 child: Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.center,
+                //                   mainAxisAlignment: MainAxisAlignment.center,
+                //                   children: [
                 //                     Text(
                 //                       hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Sáng" ? "Sáng" :
                 //                       (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Chiều" ? "Chiều" :
@@ -668,33 +586,115 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                 //                             ? Colors.white
                 //                             : Colors.black,
                 //                       ),
-                //                    ),
-                //                         Text(
-                //                           "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
-                //                           style: TextStyle(
-                //                             fontSize: 15,
-                //                             fontWeight: FontWeight.w400,
-                //                             fontFamily: 'Poppins',
-                //                             color: _selectedTime == index
-                //                                 ? Colors.white
-                //                                 : Colors.black,
-                //                           ),
-                //                         ),
-                //                       ],
                 //                     ),
-                //                   ),
+                //                     Text(
+                //                       "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
+                //                       style: TextStyle(
+                //                         fontSize: 15,
+                //                         fontWeight: FontWeight.w400,
+                //                         fontFamily: 'Poppins',
+                //                         color: _selectedTime == index
+                //                             ? Colors.white
+                //                             : Colors.black,
+                //                       ),
+                //                     ),
+                //                   ],
                 //                 ),
-                //               );
-                //             } else {
-                //               return Container(); // Không hiển thị container cho buổi không có giờ
-                //             }
-                //           },
-                //         ),
-                //       )
-                //     : Container(
-                //         margin: const EdgeInsets.only(top: 15),
-                //         child: const Text(
-                //             "Không Thuộc Ngày Làm Việc Của Bệnh Viện")),
+                //               ),
+                //             ),
+                //           );
+                //         } else {
+                //           return Container(); // Không hiển thị container cho buổi không có giờ
+                //         }
+                //       },
+                //     ),
+                //   )
+                hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty
+                    ? GridView.count(
+                        //padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        crossAxisCount: 3,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        childAspectRatio: (1 / .4),
+                        children: List.generate(
+                          hospitalDetailPageViewModel
+                              .workingDayDetailsCheck.length,
+                          (index) {
+                            if (hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour != null &&
+                                hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour != null &&
+                                hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour.toString().isNotEmpty &&
+                                hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour.toString().isNotEmpty) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedTime = index;
+
+                                    orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Sáng"? "Sáng": "");
+                                    orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Chiều"? "Chiều": "");
+                                    orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Tối"? "Tối": "");
+
+                                    orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+
+                                    print("TIME --------> "
+                                        "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].session} "
+                                        "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} "
+                                        "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  decoration: BoxDecoration(
+                                    color: _selectedTime == index
+                                        ? ColorConstant.BLue02
+                                        : const Color(0xFFf6f6f6),
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                    Text(
+                                      hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Sáng" ? "Sáng" :
+                                      (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Chiều" ? "Chiều" :
+                                      (hospitalDetailPageViewModel.workingDayDetailsCheck[index].session == "Tối" ? "Tối" : "")),
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Poppins',
+                                        color: _selectedTime == index
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
+                                   ),
+                                        Text(
+                                          "${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Poppins',
+                                            color: _selectedTime == index
+                                                ? Colors.white
+                                                : Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Container(); // Không hiển thị container cho buổi không có giờ
+                            }
+                          },
+                        ),
+                      )
+                    : Container(
+                        margin: const EdgeInsets.only(top: 15),
+                        child: const Text(
+                            "Không Thuộc Ngày Làm Việc Của Bệnh Viện")),
               ],
             ),
           ),
@@ -713,7 +713,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
           ),
           child: ExpansionTile(
             title: const Text(
-              'Triệu chứng của bạn',
+              'Triệu chứng của bạn (Người thân)',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 20.0,
@@ -739,7 +739,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                   maxLines: 10,
                   maxLength: 350,
                   decoration: const InputDecoration(
-                    hintText: 'Triệu chứng của bạn',
+                    hintText: 'Triệu chứng của bạn hoặc người thân',
                   ),
                 ),
               ),

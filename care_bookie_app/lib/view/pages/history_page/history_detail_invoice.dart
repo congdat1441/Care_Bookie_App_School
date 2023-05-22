@@ -55,6 +55,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               children: [
                 infoOrderDetail(),
                 symptom(),
+                diagnose(),
                 noteFromDoctor(),
                 contentNoteDrug(),
                 price(),
@@ -80,7 +81,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               const Text("Trung tâm khám bệnh",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 15,
+                      fontSize: 18,
                       overflow: TextOverflow.visible)),
               Expanded(
                 child: Align(
@@ -108,7 +109,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
               const Text("Bác sỹ điều trị",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 15,
+                      fontSize: 18,
                       overflow: TextOverflow.visible)),
               SizedBox(
                 width: 200,
@@ -323,84 +324,56 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
             ),
           ),
         ),
-        const Divider(
-          height: 30,
-          color: Colors.grey,
-          thickness: 0.25,
-        ),
       ],
     );
   }
 
-  Widget price() {
+  Widget diagnose() {
     final historyDetailPageViewModel =
         Provider.of<HistoryDetailPageViewModel>(context, listen: false);
 
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             Padding(
               padding: EdgeInsets.only(left: 8.0),
-              child: Text("Dịch vụ",
+              child: Text("Chuẩn đoán từ Bác sỹ",
                   style: TextStyle(
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                       fontSize: 18,
                       overflow: TextOverflow.visible)),
             ),
           ],
         ),
-        ...historyDetailPageViewModel.historyDetail!.services.map((e) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                  child: Text(e.serviceName,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18,
-                          overflow: TextOverflow.visible)),
-                ),
-                SizedBox(
-                  width: 200,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text("${e.price}00đ",
-                        maxLines: 2,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.amber,
-                            fontSize: 17,
-                            overflow: TextOverflow.ellipsis)),
-                  ),
-                ),
-              ],
-            )),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 8.0, top: 10),
-              child: Text("Tổng tiền",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18,
-                      overflow: TextOverflow.visible)),
-            ),
-            Text("${historyDetailPageViewModel.historyDetail!.totalPrice}00đ",
-                maxLines: 2,
-                style: const TextStyle(
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+              //color: Colors.white,
+              borderRadius: BorderRadius.circular(25),
+              border:
+                  Border.all(color: CupertinoColors.systemGrey3, width: 0.5)),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  historyDetailPageViewModel
+                      .historyDetail!.invoiceInformation.diagnose,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: Colors.amber,
+                    color: Colors.black54,
+                    height: 1.4,
                     fontSize: 17,
-                    overflow: TextOverflow.ellipsis))
-          ],
+                  )),
+            ),
+          ),
         ),
         const Divider(
-          height: 30,
-          color: Colors.grey,
-          thickness: 0.25,
+          height: 10,
+          color: Colors.transparent,
+          thickness: 0.5,
         ),
       ],
     );
@@ -412,11 +385,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
 
     return Column(
       children: [
-        const Divider(
-          height: 50,
-          color: Colors.transparent,
-          thickness: 0.25,
-        ),
+
         Row(
           children: const [
             Padding(
@@ -487,21 +456,39 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(e.medicineName,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                                overflow: TextOverflow.visible)),
+                        SizedBox(
+                          width: 130,
+                          child: Text(e.medicineName,
+                              maxLines: 3,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                  overflow: TextOverflow.visible)),
+                        ),
+                        SizedBox(
+                          width: 50,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                                "${e.amount} ${e.medicineUnit}",
+                                maxLines: 2,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black54,
+                                    fontSize: 17,
+                                    overflow: TextOverflow.ellipsis)),
+                          ),
+                        ),
                         SizedBox(
                           width: 150,
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                                "${e.medicinePrice.toInt()} ${e.medicineUnit}",
+                                "${e.medicinePrice.toInt()}.000đ",
                                 maxLines: 2,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.black54,
+                                    color: Colors.amber,
                                     fontSize: 17,
                                     overflow: TextOverflow.ellipsis)),
                           ),
@@ -511,6 +498,104 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
                   ))
         ],
       ),
+    );
+  }
+
+  Widget price() {
+    final historyDetailPageViewModel =
+    Provider.of<HistoryDetailPageViewModel>(context, listen: false);
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Text("Dịch vụ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ),
+          ],
+        ),
+        ...historyDetailPageViewModel.historyDetail!.services.map((e) => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+              child: SizedBox(
+                width: 190,
+                child: Text(e.serviceName,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        overflow: TextOverflow.visible)),
+              ),
+            ),
+            SizedBox(
+              width: 200,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text("${e.price.toInt()}.000đ",
+                    maxLines: 2,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.amber,
+                        fontSize: 17,
+                        overflow: TextOverflow.ellipsis)),
+              ),
+            ),
+          ],
+        )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 8.0, top: 10),
+              child: Text("Giảm giá bảo hiểm",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ),
+            Text("${historyDetailPageViewModel
+                .historyDetail!.invoiceInformation.discountInsurance} %",
+                maxLines: 2,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.amber,
+                    fontSize: 17,
+                    overflow: TextOverflow.ellipsis))
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 8.0, top: 10),
+              child: Text("Tổng tiền",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      overflow: TextOverflow.visible)),
+            ),
+            Text("${historyDetailPageViewModel.historyDetail!.totalPrice}00đ",
+                maxLines: 2,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.amber,
+                    fontSize: 17,
+                    overflow: TextOverflow.ellipsis))
+          ],
+        ),
+        const Divider(
+          height: 30,
+          color: Colors.grey,
+          thickness: 0.25,
+        ),
+      ],
     );
   }
 
