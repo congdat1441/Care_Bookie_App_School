@@ -92,13 +92,16 @@ class _OrderSuccessState extends State<OrderSuccess> {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(orderHospitalDataViewModel.hospital!.hospitalName,
-                      maxLines: 2,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          fontSize: 17,
-                          overflow: TextOverflow.ellipsis)),
+                  child: SizedBox(
+                    width: 170,
+                    child: Text(orderHospitalDataViewModel.hospital!.hospitalName,
+                        maxLines: 2,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                            fontSize: 17,
+                            overflow: TextOverflow.ellipsis)),
+                  ),
                 ),
               ),
             ],

@@ -91,7 +91,7 @@ class DoctorDetailPageViewModel extends ChangeNotifier {
     workingDayDetailsCheck = [];
     for (var element in workingDayDetails) {
       if(element.date.isNotEmpty) {
-        if(weekday + 1 == int.parse(element.date)) {
+        if(weekday == int.parse(element.date)) {
           workingDayDetailsCheck.add(element);
         }
       }

@@ -1,4 +1,5 @@
 import 'package:care_bookie_app/models/user_signup.dart';
+import 'package:care_bookie_app/view/pages/login_signup_page/enter_code_register.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view_model/signup_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
+
+import 'enter_code_reset_pasword.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -138,8 +141,8 @@ class _SignupState extends State<Signup> {
                             ],
                           ),
                         ),
-                        addFirstName(),
                         addLastName(),
+                        addFirstName(),
                         addPhoneNumber(),
                         addEmail(),
                         addPassword(),
@@ -155,9 +158,10 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  Widget addFirstName() {
+
+  Widget addLastName() {
     return Selector<SignupPageViewModel, String>(
-      selector: (context, value) => value.errorFirstName,
+      selector: (context, value) => value.errorLastName,
       builder: (context, value, child) {
         return Container(
           padding: const EdgeInsets.fromLTRB(0, 10, 30, 0),
@@ -165,24 +169,15 @@ class _SignupState extends State<Signup> {
           child: Column(
             children: [
               TextFormField(
-                  controller: firstNameController,
+                  controller: lastNameController,
                   style: const TextStyle(color: Colors.black),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Add your phone number";
-                    } else if (value.length <= 5) {
-                      return "Not enough required character";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderRadius: BorderRadius.all(
-                      Radius.circular(0),
-                    )),
-                    label:
-                        Text("Họ Tên", style: TextStyle(color: Colors.black)),
-                    hintText: "Vui lòng nhập vào họ của bạn",
+                          Radius.circular(0),
+                        )),
+                    label: Text("Họ và tên đệm", style: TextStyle(color: Colors.black)),
+                    hintText: "Họ và tên đệm của bạn",
                     hintStyle: TextStyle(
                       color: Color.fromARGB(255, 94, 92, 88),
                     ),
@@ -212,9 +207,9 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  Widget addLastName() {
+  Widget addFirstName() {
     return Selector<SignupPageViewModel, String>(
-      selector: (context, value) => value.errorLastName,
+      selector: (context, value) => value.errorFirstName,
       builder: (context, value, child) {
         return Container(
           padding: const EdgeInsets.fromLTRB(0, 10, 30, 0),
@@ -222,22 +217,15 @@ class _SignupState extends State<Signup> {
           child: Column(
             children: [
               TextFormField(
-                  controller: lastNameController,
+                  controller: firstNameController,
                   style: const TextStyle(color: Colors.black),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Add your phone number";
-                    } else if (value.length <= 5) {
-                      return "Not enough required character";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderRadius: BorderRadius.all(
                       Radius.circular(0),
                     )),
-                    label: Text("Tên", style: TextStyle(color: Colors.black)),
+                    label:
+                        Text("Tên", style: TextStyle(color: Colors.black)),
                     hintText: "Vui lòng nhập vào tên của bạn",
                     hintStyle: TextStyle(
                       color: Color.fromARGB(255, 94, 92, 88),
@@ -564,23 +552,16 @@ class _SignupState extends State<Signup> {
                       password: passwordController.text,
                       phone: phoneController.text);
 
-                  bool isSuccess = false;
-                  isValid ? Fluttertoast.showToast(
-                      msg: "Đăng ký thành công, vui lòng đợi trong giây lát",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0
-                  ) : "";
+                  value.setUserSignup(userSignup);
 
-                  isValid ? isSuccess =  await value.signup(userSignup) : "";
+                  bool isSuccess = false;
+
+                  isValid ? isSuccess =  await value.getOTPByEmail() : "";
                   // ignore: use_build_context_synchronously
                   isSuccess ? Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Login()),
+                              builder: (context) => const EnterCodeOtpRegister()),
                         ) : "";
                 },
                 style: ElevatedButton.styleFrom(

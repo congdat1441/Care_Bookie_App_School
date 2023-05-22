@@ -8,11 +8,8 @@ import '../models/comment.dart';
 import '../utils/host_util.dart';
 
 class DoctorApi {
-
   Future<List<Doctor>> getAllDoctorApi() async {
-
     String url = "${HostUtil.host}api/v1/care-bookie/common/doctor/getAll";
-
 
     var response = await http.get(Uri.parse(url));
 
@@ -28,10 +25,7 @@ class DoctorApi {
   }
 
   Future<List<Doctor>> getAllDoctorByHospitalIdApi(String hospitalId) async {
-
-
     String url = "${HostUtil.host}api/v1/care-bookie/common/doctor/$hospitalId";
-
 
     var response = await http.get(Uri.parse(url));
 
@@ -47,10 +41,8 @@ class DoctorApi {
   }
 
   Future<List<Comment>> getAllCommentByDoctorIdApi(String doctorId) async {
-
-    String url = "${HostUtil.host}api/v1/care-bookie/common/doctor/comment/$doctorId";
-
-
+    String url =
+        "${HostUtil.host}api/v1/care-bookie/common/doctor/comment/$doctorId";
 
     var response = await http.get(Uri.parse(url));
 
@@ -67,26 +59,19 @@ class DoctorApi {
   }
 
   Future<Doctor> getDoctorByIdApi(String id) async {
-
-    String url = "${HostUtil.host}api/v1/care-bookie/common/doctor/information/$id";
+    String url =
+        "${HostUtil.host}api/v1/care-bookie/common/doctor/information/$id";
 
     var response = await http.get(Uri.parse(url));
 
-    if(response.statusCode == 200) {
-
+    if (response.statusCode == 200) {
       var dataJson = jsonDecode(utf8.decode(response.bodyBytes));
 
       Doctor doctor = Doctor.fromJson(dataJson);
 
       return doctor;
-
     } else {
-
       throw Exception("Failed Data");
-
     }
-
   }
-
 }
-

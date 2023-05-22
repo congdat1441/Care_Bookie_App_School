@@ -1,4 +1,4 @@
-import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
+  import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view_model/bottom_navbar_view_model.dart';
 import 'package:care_bookie_app/view_model/change_password_view_model.dart';

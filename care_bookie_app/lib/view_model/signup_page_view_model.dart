@@ -3,17 +3,19 @@ import 'package:flutter/cupertino.dart';
 import '../api_services/signup_api.dart';
 
 class SignupPageViewModel extends ChangeNotifier {
-  String firstName = '';
-  String lastName = '';
-  String phoneNumber = '';
-  String email = '';
-  String password = '';
+
+  UserSignup? userSignup;
 
   String errorPhone = '';
   String errorPassword = '';
   String errorFirstName = '';
   String errorLastName = '';
   String errorEmail = '';
+  String errorOTP = '';
+
+  void setUserSignup(UserSignup user) {
+    userSignup = user;
+  }
 
 
 
@@ -23,30 +25,6 @@ class SignupPageViewModel extends ChangeNotifier {
   String _errorMessage = '';
   String get errorMessage => _errorMessage;
 
-  void updateFirstName(String value) {
-    firstName = value;
-  }
-
-  void updateLastName(String value) {
-    lastName = value;
-  }
-
-  void updatePhoneNumber(String value) {
-    phoneNumber = value;
-  }
-
-  void updateEmail(String value) {
-    email = value;
-  }
-
-  void updatePassword(String value) {
-    password = value;
-  }
-
-  Future<bool> signup(UserSignup userSignup) async{
-    bool isSuccess = await SignupApi.createAccountUser(userSignup);
-    return isSuccess;
-  }
 
   bool validateFields(String firstName, String lastName, String phone, String email, String password) {
     bool isValid = true;
@@ -74,6 +52,21 @@ class SignupPageViewModel extends ChangeNotifier {
     return isValid;
   }
 
+  bool validateOTP(String otp) {
+    if (otp.length < 4) {
+      errorOTP = "Vui lòng nhập mã OTP";
+      notifyListeners();
+      return false;
+    }
+    return true;
+  }
+
+
+  void setErrorOTP(String value) {
+    errorOTP = value;
+    notifyListeners();
+  }
+
   void resetError() {
     errorPassword = "";
     errorPhone = "";
@@ -83,5 +76,17 @@ class SignupPageViewModel extends ChangeNotifier {
     errorEmail= "";
 
     notifyListeners();
+  }
+
+  Future<bool> getOTPByEmail() async {
+    return await SignupApi.getOTPByEmail(userSignup!);
+  }
+
+  Future<bool> checkOTPByEmail(String otp, UserSignup userSignup) async {
+    return await SignupApi.checkOTPByEmail(otp,userSignup);
+  }
+
+  Future<bool> createAccountUser(UserSignup userSignup) async {
+    return await SignupApi.createAccountUser(userSignup);
   }
 }

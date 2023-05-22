@@ -1,20 +1,22 @@
 import 'package:care_bookie_app/view/pages/login_signup_page/login.dart';
 import 'package:care_bookie_app/view/pages/login_signup_page/new_password.dart';
 import 'package:care_bookie_app/view_model/reset_password_view_model.dart';
+import 'package:care_bookie_app/view_model/signup_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'login_signup_widget/otp_input.dart';
 
-class EnterCodeOTP extends StatefulWidget {
-  const EnterCodeOTP({Key? key}) : super(key: key);
+class EnterCodeOtpRegister extends StatefulWidget {
+  const EnterCodeOtpRegister({Key? key}) : super(key: key);
 
   @override
-  State<EnterCodeOTP> createState() => _EnterCodeOTPState();
+  State<EnterCodeOtpRegister> createState() => _EnterCodeOtpRegisterState();
 }
 
-class _EnterCodeOTPState extends State<EnterCodeOTP> {
+class _EnterCodeOtpRegisterState extends State<EnterCodeOtpRegister> {
   final TextEditingController _fieldOne = TextEditingController();
   final TextEditingController _fieldTwo = TextEditingController();
   final TextEditingController _fieldThree = TextEditingController();
@@ -155,9 +157,9 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
   }
 
   Widget addOTP() {
-    return Selector<ResetPasswordViewModel, String>(
-      selector: (context, resetPasswordViewModel) => resetPasswordViewModel.errorOTP,
-      builder: (context, value, child) =>  Padding(
+    return Selector<SignupPageViewModel, String>(
+      selector: (context, signupPageViewModel) => signupPageViewModel.errorOTP,
+      builder: (context, value, child) => Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 15, 0),
         child: Column(
           children: [
@@ -195,8 +197,8 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
   }
 
   Widget resendOTPAndNext(BuildContext context) {
-
-    final resetPasswordViewModel = Provider.of<ResetPasswordViewModel>(context,listen: false);
+    final signupPageViewModel =
+        Provider.of<SignupPageViewModel>(context, listen: false);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -229,8 +231,8 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
                   ],
                 ),
                 child: ElevatedButton(
-                  onPressed: () async{
-                    await resetPasswordViewModel.getOTPByPhoneNumber();
+                  onPressed: () async {
+                    await signupPageViewModel.getOTPByEmail();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -288,20 +290,36 @@ class _EnterCodeOTPState extends State<EnterCodeOTP> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
+                    String otp =
+                        "${_fieldOne.text}${_fieldTwo.text}${_fieldThree.text}${_fieldFour.text}";
 
-                    String otp = "${_fieldOne.text}${_fieldTwo.text}${_fieldThree.text}${_fieldFour.text}";
+                    bool isValidate = signupPageViewModel.validateOTP(otp);
 
-                    bool isValidate = resetPasswordViewModel.validateOTP(otp);
-
-                    if(isValidate) {
-                      bool isSuccess =  await resetPasswordViewModel.checkOTPByPhoneNumber(otp);
-
+                    if (isValidate) {
+                      bool isSuccess =
+                          await signupPageViewModel.checkOTPByEmail(
+                              otp, signupPageViewModel.userSignup!);
                       // ignore: use_build_context_synchronously
-                      isSuccess ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AddNewPassword()))  :
-                      resetPasswordViewModel.setErrorOTP("Mã OTP không đúng");
+                      if (isSuccess) {
+                        await signupPageViewModel
+                            .createAccountUser(signupPageViewModel.userSignup!);
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()));
+                        Fluttertoast.showToast(
+                            msg: "Đăng ký tài khoản thành công",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                        );
+                      } else {
+                        signupPageViewModel.setErrorOTP("Mã OTP không đúng");
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

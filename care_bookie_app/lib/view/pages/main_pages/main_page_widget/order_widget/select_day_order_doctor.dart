@@ -98,7 +98,7 @@ class _SelectDayDoctorState extends State<SelectDayDoctor> {
             setState(() {
               currentDateTime = currentMonthList[index];
 
-              scheduleDoctorInfoPageViewModel.setWeekday(currentDateTime.weekday);
+              scheduleDoctorInfoPageViewModel.setWeekday(currentDateTime.weekday + 1);
 
               orderHospitalDataViewModel.setWeekdaySelected(currentDateTime.weekday + 1);
 

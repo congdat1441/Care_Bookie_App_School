@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../../view_model/reset_password_view_model.dart';
-import 'enter_code.dart';
+import 'enter_code_reset_pasword.dart';
 
 class ResetPassword extends StatelessWidget {
   ResetPassword({Key? key}) : super(key: key);
@@ -145,7 +144,8 @@ class ResetPassword extends StatelessWidget {
 
   Widget addPhoneNumberRegistered() {
     return Selector<ResetPasswordViewModel, String>(
-      selector: (context, resetPasswordViewModel) => resetPasswordViewModel.errorPhone,
+      selector: (context, resetPasswordViewModel) =>
+          resetPasswordViewModel.errorPhone,
       builder: (context, value, child) => Container(
         padding: const EdgeInsets.fromLTRB(0, 20, 30, 0),
         width: 330,
@@ -192,8 +192,8 @@ class ResetPassword extends StatelessWidget {
   }
 
   Widget nextButton(BuildContext context) {
-
-    final resetPasswordViewModel = Provider.of<ResetPasswordViewModel>(context,listen: false);
+    final resetPasswordViewModel =
+        Provider.of<ResetPasswordViewModel>(context, listen: false);
 
     return Container(
       width: 330,
@@ -223,25 +223,26 @@ class ResetPassword extends StatelessWidget {
               ],
             ),
             child: ElevatedButton(
-              onPressed: () async{
+              onPressed: () async {
+                bool isValidate =
+                    resetPasswordViewModel.validateFields(phoneController.text);
 
-                bool isValidate = resetPasswordViewModel.validateFields(phoneController.text);
-
-                if(isValidate) {
-
+                if (isValidate) {
                   resetPasswordViewModel.setPhone(phoneController.text);
 
-                  bool isSuccess =  await resetPasswordViewModel.getOTPByPhoneNumber();
+                  bool isSuccess =
+                      await resetPasswordViewModel.getOTPByPhoneNumber();
 
                   // ignore: use_build_context_synchronously
-                  isSuccess ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EnterCodeOTP()))  :
-                  resetPasswordViewModel.setErrorPhone("Số điện thoại không đúng");
+                  isSuccess
+                      // ignore: use_build_context_synchronously
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EnterCodeOtpResetPassword()))
+                      : resetPasswordViewModel
+                          .setErrorPhone("Số điện thoại không đúng");
                 }
-
-
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(

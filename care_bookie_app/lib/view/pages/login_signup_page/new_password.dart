@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../../view_model/reset_password_view_model.dart';
-import 'enter_code.dart';
+import 'enter_code_reset_pasword.dart';
 
 class AddNewPassword extends StatefulWidget {
   const AddNewPassword({Key? key}) : super(key: key);

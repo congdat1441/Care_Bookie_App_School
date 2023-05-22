@@ -5,10 +5,10 @@ class ChangePasswordViewModel extends ChangeNotifier {
   String? oldPassword;
   String? newPassword;
   String? passwordReset;
-
+  String? userId;
   String errorResetPassword = "";
 
-  bool validateResetPassword() {
+  bool validateResetPassword(String text) {
     if (newPassword!.isEmpty || passwordReset!.isEmpty) {
       errorResetPassword = "Vui lòng nhập đầy đủ thông tin";
       notifyListeners();
@@ -25,18 +25,31 @@ class ChangePasswordViewModel extends ChangeNotifier {
 
   void setOldPassword(String value) {
     oldPassword = value;
+    notifyListeners();
   }
 
   void setNewPassword(String value) {
-    oldPassword = value;
+    newPassword = value;
+    notifyListeners();
   }
 
   void setPasswordReset(String value) {
-    oldPassword = value;
+    passwordReset = value;
+    notifyListeners();
+  }
+
+  void setUserId(String value) {
+    userId = value;
+    notifyListeners();
+  }
+
+  void resetError() {
+    errorResetPassword = "";
+    notifyListeners();
   }
 
   Future<bool> changePassword() async {
     return await SignupApi.changePassword(
-        oldPassword!, newPassword!, passwordReset!);
+        oldPassword!, newPassword!, passwordReset!, userId!);
   }
 }

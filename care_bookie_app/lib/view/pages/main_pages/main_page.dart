@@ -112,9 +112,9 @@ class _MainPageState extends State<MainPage> {
                   SizedBox(
                     width: 240,
                     child: Text(
-                      "Chào ${value.userLogin.lastName}",
+                      "Chào ${value.userLogin.firstName}",
                       style: const TextStyle(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           fontSize: 30,
                           color: Colors.black87,
                           fontWeight: FontWeight.bold),

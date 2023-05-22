@@ -527,7 +527,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                         ),
                       ),
                     )),
-                hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty
+                hospitalDetailPageViewModel.workingDayDetailsCheck.isNotEmpty && hospitalDetailPageViewModel.workingDayDetailsCheck[0].startHour.isNotEmpty
                     ? GridView.count(
                         //padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         crossAxisCount: 3,
@@ -547,9 +547,7 @@ class _OrderDetailClinicState extends State<OrderDetailClinic> {
                                   setState(() {
                                     _selectedTime = index;
 
-                                    orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Sáng"? "Sáng": "");
-                                    orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Chiều"? "Chiều": "");
-                                    orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session =="Tối"? "Tối": "");
+                                    orderHospitalDataViewModel.setSession(hospitalDetailPageViewModel.workingDayDetailsCheck[index].session);
 
                                     orderHospitalDataViewModel.setTimeSelected("${hospitalDetailPageViewModel.workingDayDetailsCheck[index].startHour} - ${hospitalDetailPageViewModel.workingDayDetailsCheck[index].endHour}");
 

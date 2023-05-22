@@ -20,7 +20,7 @@ class PersonalInformation extends StatefulWidget {
 class _PersonalInformationState extends State<PersonalInformation> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   void dispose() {
@@ -84,8 +84,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 8.0),
       child: Column(
         children: [
-          firstName(),
           lastName(),
+          firstName(),
           email(),
           phone(),
           gender(),
@@ -171,7 +171,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             )));
   }
 
-  Widget firstName() {
+  Widget lastName() {
     return Consumer<UpdateUserPageViewModel>(
       builder: (context, updateUserPageViewModel, child) => Column(
         children: [
@@ -191,7 +191,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         color: ColorConstant.Grey01),
                   ),
                   Text(
-                    updateUserPageViewModel.userUpdate!.firstName,
+                    updateUserPageViewModel.userUpdate!.lastName,
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 16,
@@ -206,7 +206,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     context: context,
                     builder: (BuildContext context) {
                       _textEditingController.text =
-                          updateUserPageViewModel.userUpdate!.firstName;
+                          updateUserPageViewModel.userUpdate!.lastName;
                       return AlertDialog(
                         title: const Text("Sửa đổi tên"),
                         content: TextField(
@@ -253,7 +253,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
-  Widget lastName() {
+  Widget firstName() {
     return Consumer<UpdateUserPageViewModel>(
       builder: (context, updateUserPageViewModel, child) => Column(
         children: [
@@ -272,7 +272,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         color: ColorConstant.Grey01),
                   ),
                   Text(
-                    updateUserPageViewModel.userUpdate!.lastName,
+                    updateUserPageViewModel.userUpdate!.firstName,
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 16,
@@ -287,7 +287,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     context: context,
                     builder: (BuildContext context) {
                       _textEditingController.text =
-                          updateUserPageViewModel.userUpdate!.lastName;
+                          updateUserPageViewModel.userUpdate!.firstName;
                       return AlertDialog(
                         title: const Text("Sửa đổi tên"),
                         content: TextField(
