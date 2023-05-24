@@ -99,9 +99,9 @@ class UpdateUserPageViewModel extends ChangeNotifier{
   }
 
 
-  Future saveAccount()async{
+  Future<UserLogin> saveAccount()async{
     await uploadImages(images);
     setImage(listImageUrl[0]);
-    UpdateUserApi.updateAccountUser(userUpdate!);
+    return UpdateUserApi.updateAccountUser(userUpdate!);
   }
 }

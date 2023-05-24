@@ -1,5 +1,6 @@
 import 'package:care_bookie_app/models/user_login.dart';
 import 'package:care_bookie_app/view/pages/account_page/change_password_user.dart';
+import 'package:care_bookie_app/view/pages/layouts_page/navbar_layout.dart';
 import 'package:care_bookie_app/view_model/login_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -69,7 +70,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
               size: 25,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const NavbarLayout(index: 4)));
             },
           ),
           bottomOpacity: 0.0,
@@ -208,11 +209,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
                       _textEditingController.text =
                           updateUserPageViewModel.userUpdate!.lastName;
                       return AlertDialog(
-                        title: const Text("Sửa đổi tên"),
+                        title: const Text("Sửa đổi họ"),
                         content: TextField(
                           controller: _textEditingController,
                           decoration: const InputDecoration(
-                            labelText: 'Tên',
+                            labelText: 'họ',
                           ),
                         ),
                         actions: <Widget>[
@@ -226,7 +227,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             child: const Text('Lưu'),
                             onPressed: () {
                               updateUserPageViewModel
-                                  .setFirstName(_textEditingController.text);
+                                  .setLastName(_textEditingController.text);
                               Navigator.of(context).pop();
                             },
                           ),
@@ -307,7 +308,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             child: const Text('Lưu'),
                             onPressed: () {
                               updateUserPageViewModel
-                                  .setLastName(_textEditingController.text);
+                                  .setFirstName(_textEditingController.text);
                               Navigator.of(context).pop();
                             },
                           ),
@@ -817,7 +818,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
           ),
           onPressed: () async {
             if (updateUserPageViewModel.images.isNotEmpty) {
-              updateUserPageViewModel.saveAccount();
+              UserLogin userLogin = await updateUserPageViewModel.saveAccount();
+              loginPageViewModel.setUserLogin(userLogin);
               Fluttertoast.showToast(
                   msg: "Chỉnh sửa thông tin thành công",
                   toastLength: Toast.LENGTH_SHORT,
@@ -827,11 +829,12 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   textColor: Colors.white,
                   fontSize: 16.0
               );
+              
 
               loginPageViewModel.userLogin = UserLogin(
                   id: updateUserPageViewModel.userUpdate!.userId,
-                  firstName: updateUserPageViewModel.userUpdate!.firstName,
                   lastName: updateUserPageViewModel.userUpdate!.lastName,
+                  firstName: updateUserPageViewModel.userUpdate!.firstName,
                   birthDay: updateUserPageViewModel.userUpdate!.birthDay,
                   email: updateUserPageViewModel.userUpdate!.email,
                   gender: updateUserPageViewModel.userUpdate!.gender,

@@ -101,4 +101,9 @@ class LoginPageViewModel extends ChangeNotifier {
     errorMessage = "";
     notifyListeners();
   }
+
+  void setUserLogin(UserLogin user) {
+    userLogin = user;
+    notifyListeners();
+  }
 }
