@@ -526,7 +526,7 @@ class _HistoryDetailInvoiceState extends State<HistoryDetailInvoice> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
               child: SizedBox(
-                width: 190,
+                width: 170,
                 child: Text(e.serviceName,
                     style: const TextStyle(
                         fontWeight: FontWeight.w400,

@@ -1,4 +1,4 @@
 
 class HostUtil {
-  static const host = "https://1093-210-245-110-144.ngrok-free.app/";
+  static const host = "https://b534-117-2-6-32.ngrok-free.app/";
 }

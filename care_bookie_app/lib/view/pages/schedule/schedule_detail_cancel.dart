@@ -356,11 +356,14 @@ class _ScheduleDetailCancelState extends State<ScheduleDetailCancel> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                child: Text(service.serviceName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
+                child: SizedBox(
+                  width: 180,
+                  child: Text(service.serviceName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          overflow: TextOverflow.visible)),
+                ),
               ),
               SizedBox(
                 width: 200,

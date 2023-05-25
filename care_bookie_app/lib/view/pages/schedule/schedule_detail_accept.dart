@@ -710,12 +710,15 @@ class ScheduleDetailAccept extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                child: Text(service.serviceName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        overflow: TextOverflow.visible)),
+                padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: SizedBox(
+                  width: 180,
+                  child: Text(service.serviceName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          overflow: TextOverflow.visible)),
+                ),
               ),
               SizedBox(
                 width: 150,
